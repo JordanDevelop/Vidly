@@ -1,0 +1,95 @@
+<!--=== Breadcrumbs ===-->
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">Registration</h1>
+            <ul class="pull-right breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">Registration</li>
+            </ul>
+        </div><!--/container-->
+    </div><!--/breadcrumbs-->
+    <!--=== End Breadcrumbs ===-->
+
+<!--=== Content Part ===-->
+<section id="login-inner" class="sign-up-inner">
+    <!--=== Content Part ===-->
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <form class="reg-page" name="userRegister" ng-submit="signup(userRegister.$valid)">
+                    <div class="reg-header">
+                        <h2>Register a new account</h2>
+                        <p>Already Signed Up? Click <a ui-sref="login" class="color-green"> Sign In</a> to login your account.</p>
+                    </div>
+					<div id="notifications" class="bg-danger"></div>
+					<div>
+                    <label>Email<span class="color-red">*</span></label>
+
+                    <input type="email" class="form-control margin-bottom-20 textfield"  name="email" placeholder="Email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" ng-model="signupObj.email" ng-blur="userExists('email')" required>
+					<span ng-show="submitted && userRegister.email.$error.pattern || userRegister.email.$error.pattern" class="text-danger inner-error">Email must be valid.</span>
+                  	<span class="text-danger inner-error " ng-show="submitted && userRegister.email.$error.required">Email is required.</span>
+                  	</div>
+                  	<div>
+                    <label>Username</label>
+                    <input type="text" ng-model="signupObj.username" name="username" placeholder="Username" ng-pattern="/^[a-zA-Z0-9 ]*$/"  class="form-control margin-bottom-20 textfield" ng-minlength="6" ng-blur="userExists('username')" required>
+					<span ng-show="submitted && userRegister.username.$error.pattern || userRegister.username.$error.pattern" class="text-danger inner-error">Please use characters only.</span>
+
+                    <span class="text-danger inner-error " ng-show="submitted && userRegister.username.$error.required">Username is required.</span>
+                  	<p ng-show="submitted && userRegister.username.$error.minlength || userRegister.username.$error.minlength" class="text-danger inner-error">Sorry, your username needs to be a minimum of 6 characters.</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Password <span class="color-red">*</span></label>
+                            
+                            <input type="password" id="password" ng-model="signupObj.password" name="password" placeholder="Password" ng-model-options="{allowInvalid: true}" pattern-validator="((?=.*\d)(?=.*[A-Z])(?=.*\W).{8,8})" class="form-control margin-bottom-20 textfield" required>
+                            <span class="text-danger inner-error " ng-show="submitted && userRegister.password.$invalid">Password is required.</span>
+                           
+                         <password-strength ng-model="signupObj.password"></password-strength>               
+
+                        </div>                
+
+                        <div class="col-sm-6">
+                            <label>Confirm Password <span class="color-red">*</span></label>
+                            <input type="password" ng-model="signupObj.cpassword" name="cpassword" placeholder="Confirm Password" class="form-control margin-bottom-20 textfield" required>
+                            <span class="text-danger inner-error " ng-show="submitted && userRegister.cpassword.$invalid">Confirm Password is required.</span>
+                        </div>
+                    </div>
+
+                    <div id="imgloader" style="display:none">
+                        <img src="24.GIF" ng-show="loader = true" > 
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-lg-8 col-sm-8 col-md-8">
+                            <div class="checkbox">
+                                <input id="check1" type="checkbox" name="check" ng-model="check" class="textfield1" value="check1" required>
+                                <label for="check1">I read <a class="color-green" href="#">Terms and Conditions</a></label>
+                            </div>
+                                <span class="text-danger inner-error " ng-show="submitted && userRegister.check.$error.required">Terms and Conditions is required</span>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4 text-right">
+                            <button class="btn-u" ng-click="submitted=true" type="submit">Register</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="or_identified">OR</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <button class="btn-u login-reditt" type="button" ng-click="reddit()">Sign Up with Reddit</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div><!--/container-->
+    <!--=== End Content Part ===-->
+    </section>
+    <!--=== End Content Part ===-->

@@ -1,0 +1,54 @@
+<!--=== Breadcrumbs ===-->
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">Upload Video's</h1>
+            <ul class="pull-right breadcrumb">
+                <li><a ui-sref="home">Home</a></li>
+                <li class="active">Upload</li>
+            </ul>
+        </div>
+    </div><!--/breadcrumbs-->
+    <section id="upload" class="confirmation_content">
+      <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+            <div class="order-desp">
+            <h2><span>Upload</span> Video</h2>
+            </div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-md-12">
+            <div class="upload-section">
+            <!-- <p ng-show="currentUser"> Welcome {{currentUser.username}} </p>
+      			<div ng-init="redditUser()"></div>
+      				<p ng-show="currentRedditUser"> Welcome {{currentRedditUser}} </p> -->
+    <div ng-init="redditUser()"></div>
+			<div id="notifications" class="bg-danger"></div>
+            <div class="upload-comments">
+              <textarea class="form-control" ng-pattern="/^[a-zA-Z0-9. ]*$/" placeholder="Give Some Description here.." id="description" maxlength="20" required></textarea>
+              <span ng-show="userRegister.username.$error.pattern" class="text-danger inner-error">Please use characters only.</span>
+            </div>
+			     <div class="checkbox-inline" ng-show="currentUser || currentRedditUser">
+             <div class="checkbox">
+                <input id="check1" type="checkbox" name="check" value="check1">
+                <label for="check1">Is Private</label>
+             </div>
+            </div>
+
+            <div class="upload-part">
+              <button type="button" ng-click="upload($event)" id="pick" class="btn btn-primary">Upload</button>
+            </div>
+             <div id="imgloader" style="display:none">
+                    <img src="24.GIF" ng-show="loader == true"> </div>
+            <div class="file-size">
+                <span>Upload files now (max 1GB)</span>
+            </div>
+
+            </div>
+            </div>
+        </div>
+      </div>
+    </section>
+

@@ -1,0 +1,45 @@
+<section class="form-build">
+<div class="container">
+  <div class="row">
+	<div id="loginbox" class="mainbox reg-page col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" style="margin-top:50px;">
+	  <div class="reg-header">
+             <h2>Forgot Password</h2>
+          </div>
+
+<div id="notifications" class="bg-danger"></div>
+
+	<div class="panel-body" style="padding-top:30px">
+	  <div id="login-alert" class="alert alert-danger col-sm-12" style="display:none"></div>
+	  <form id="loginform" class="form-horizontal" role="form">
+		<div class="input-group" style="margin-bottom: 25px">
+		   <span class="input-group-addon">
+		      <i class="glyphicon glyphicon-user"></i>
+		   </span>
+		<input id="login-email" ng-model="resetpswd.email" class="form-control" type="text" placeholder="Enter your registered email" name="email">
+		</div>
+		<div class="form-group" style="margin-top:10px">
+		   <div class="col-sm-12 controls">
+		      <button id="btn-reset" class="btn btn-u" type="submit" ng-click="reset()">Submit</button>
+		    </div>
+		</div>
+
+        <div id="imgloader" style="display:none">
+		<img src="24.GIF" ng-show="loader == true"> </div>
+
+		<div class="form-group">
+		   <div class="col-md-12 control">
+		      <div style=" padding-top:15px; padding-left: 15px; font-size:85%">
+		         Don't have an account!
+		        <div style="border-top: 0px;"></div>
+		         <a href="/signups">Sign Up Here</a>
+		      </div>
+		  </div>
+		</div>
+	  </form>
+	</div>
+	
+	</div>
+    </div>	
+
+</div>
+</section>

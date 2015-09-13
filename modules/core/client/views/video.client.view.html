@@ -1,0 +1,226 @@
+
+<section id="high-quality-video">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Step inside the high-quality home for videos</h1>
+            <ul>
+              <li><a href="javascript:void(0);"><i class="fa fa-check-circle"></i><span>Beautiful HD playback</span></a></li>
+              <li><a href="javascript:void(0);"><i class="fa fa-check-circle"></i><span>Powerful privacy settings</span></a></li>
+              <li><a href="javascript:void(0);"><i class="fa fa-check-circle"></i><span>No disruptive ads</span></a></li>
+              <li><a href="javascript:void(0);"><i class="fa fa-check-circle"></i><span>Amazing supportive community</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  <div ng-init="redditUser()"></div>
+    <section id="video-inner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7"><!--left section start here-->
+            
+            <video  width="100%" height="400" ng-src="{{trustSrc(movie.src)}}" controls></video>
+            <div class="embend-code">
+
+              <h4><a href="">{{singleMedia[0].description}}</a> </h4>
+              <div class="row">
+                <div class="col-md-6 share">
+                  <p><i class="fa fa-share-alt"></i>Share</p>
+                  <div class="social-share">
+                    <a href="javascript:void(0);"><img ng-src="modules/core/client/img/facebook.png" alt="facebook"></a>
+                    <a href="javascript:void(0);"><img ng-src="modules/core/client/img/twitter.png" alt="twitter"></a>
+                    <a href="javascript:void(0);"><img ng-src="modules/core/client/img/reddit.png" alt="reddit"></a>
+                    <a href="javascript:void(0);"><img ng-src="modules/core/client/img/linkedin.png" alt="linkedin"></a>
+                  </div>
+                </div>
+               
+                <div class="col-md-6 video-liked">
+                   <h3><strong class="download-icon"><a href="#" ng-click="downloadLink(job)"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{media.viewscount}}</span></h3>
+                        <div class="like-dislike">
+                            <button ng-click="likeClick(media.id, $index, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{$index}}">{{media.likecount}}</div></button>
+                            <button ng-click="likeClick(media.id, $index, 'dislike')"><i class="fa fa-thumbs-down" tooltips tooltip-title="Dislike" tooltip-side="top"></i><div id="dislike{{$index}}">{{media.dislikecount}}</div></button>
+                            <!-- <p id="msg{{$index}}">{{msg}}</p> -->
+
+                          </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="main-commenting-section">
+              <h4>All Comments (1,799)</h4>
+              <div class="form-group">
+                <textarea class="form-control" placeholder="Add a public comment..."></textarea>
+              </div>
+
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Top Comments <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Top Comments</a></li>
+                  <li><a href="#">Newest First</a></li>
+                </ul>
+              </div>
+
+              <div class="comment-entry"><!--comment entry start here-->
+                <!--<div class="top-entry">
+                  <div class="user-img"><img src="img/user-1.jpg" alt="user"></div>
+                  <div class="user-desp">
+                    <h5>Vineeth kumar <span>2 weeks ago</span></h5>
+                    <p>ippo sila perukku saani lai mukki adicha maadiri irukkum saani lai mukki adicha</p>
+                    <p class="reply-review"><a href="#">Reply</a> 11<span>
+                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
+                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
+                  </div>
+                </div>
+
+                <div class="top-entry left-margin-entry">
+                  <div class="user-img"><img src="img/user-reply.jpg" alt="user"></div>
+                  <div class="user-desp">
+                    <h5>Bharat kumar <span>1 weeks ago</span></h5>
+                    <p>vijay thambi uthavikku vanthaaraa.inimelay un magan thala fannu engiyaavathu sonnan.</p>
+                    <p class="reply-review"><a href="#">Reply</a> 02<span>
+                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
+                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
+                  </div>
+                </div>
+                <div class="top-entry left-margin-entry">
+                  <div class="user-img"><img src="img/user-reply.jpg" alt="user"></div>
+                  <div class="user-desp">
+                    <h5>Bharat kumar <span>1 weeks ago</span></h5>
+                    <p>vijay thambi uthavikku vanthaaraa.inimelay un magan thala fannu engiyaavathu sonnan.</p>
+                    <p class="reply-review"><a href="#">Reply</a> 02<span>
+                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
+                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
+                  </div>
+                </div>
+                <div class="top-entry left-margin-entry">
+                  <div class="user-img"><img src="img/user-reply.jpg" alt="user"></div>
+                  <div class="user-desp">
+                    <h5>Bharat kumar <span>1 weeks ago</span></h5>
+                    <p>vijay thambi uthavikku vanthaaraa.inimelay un magan thala fannu engiyaavathu sonnan.</p>
+                    <p class="reply-review"><a href="#">Reply</a> 02<span>
+                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
+                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
+                  </div>
+                </div>-->
+                <!--second entry start here-->
+
+                <!--<div class="top-entry">
+                  <div class="user-img"><img src="img/user-1.jpg" alt="user"></div>
+                  <div class="user-desp">
+                    <h5>Vineeth kumar <span>2 weeks ago</span></h5>
+                    <p>ippo sila perukku saani lai mukki adicha maadiri irukkum saani lai mukki adicha</p>
+                    <p class="reply-review"><a href="#">Reply</a> 01<span>
+                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
+                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
+                  </div>
+                </div>
+
+                <div class="top-entry left-margin-entry">
+                  <div class="user-img"><img src="img/user-reply.jpg" alt="user"></div>
+                  <div class="user-desp">
+                    <h5>Bharat kumar <span>1 weeks ago</span></h5>
+                    <p>vijay thambi uthavikku vanthaaraa.inimelay un magan thala fannu engiyaavathu sonnan.</p>
+                    <p class="reply-review"><a href="#">Reply</a> 15<span>
+                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
+                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
+                  </div>
+                </div>
+                 <div class="top-entry">
+                  <div class="user-img"><img src="img/user-1.jpg" alt="user"></div>
+                  <div class="user-desp">
+                    <h5>Vineeth kumar <span>2 weeks ago</span></h5>
+                    <p>ippo sila perukku saani lai mukki adicha maadiri irukkum saani lai mukki adicha</p>
+                    <p class="reply-review"><a href="#">Reply</a> 0<span>
+                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
+                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
+                  </div>
+                </div>
+                <div class="top-entry">
+                  <div class="user-img"><img src="img/user-1.jpg" alt="user"></div>
+                  <div class="user-desp">
+                    <h5>Vineeth kumar <span>2 weeks ago</span></h5>
+                    <p>ippo sila perukku saani lai mukki adicha maadiri irukkum saani lai mukki adicha</p>
+                    <p class="reply-review"><a href="#">Reply</a> 0<span>
+                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
+                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
+                  </div>
+                </div>
+
+
+              </div>--><!--comment entry close here-->
+<!--
+            </div>
+          </div>--><!--left section close here-->
+
+
+          <!--<div class="col-md-5">  right section start here
+            <div class="watch-sidebar-section">
+              <h4 class="watch-sidebar-head">Up Coming Video's</h4>
+              <div class="watch-sidebar-body">
+                <ul>
+                  <li>
+                    <div class="video-speech">
+                    <div class="speech-img"><img src="img/upcoming-user-2.jpg" alt="upcoming user"></div>
+                    <div class="speech-desp">
+                      <h4><a href="#">Puli audio release function - Vijay speech</a></h4>
+                      <p>by Vidly Junk<span>2,75,249 views</span></p>
+                    </div>
+                  </div>
+                  </li>
+
+                  <li>
+                    <div class="video-speech">
+                    <div class="speech-img"><img src="img/upcoming-user-3.jpg" alt="upcoming user"></div>
+                    <div class="speech-desp">
+                      <h4><a href="#">Puli audio release function - Vijay speech</a></h4>
+                      <p>by Vidly Junk<span>2,75,249 views</span></p>
+                    </div>
+                  </div>
+                  </li>
+
+                  <li>
+                    <div class="video-speech">
+                    <div class="speech-img"><img src="img/upcoming-user.jpg" alt="upcoming user"></div>
+                    <div class="speech-desp">
+                      <h4><a href="#">Puli audio release function - Vijay speech</a></h4>
+                      <p>by Vidly Junk<span>2,75,249 views</span></p>
+                    </div>
+                  </div>
+                  </li>
+
+                  <li>
+                    <div class="video-speech">
+                    <div class="speech-img"><img src="img/upcoming-user-2.jpg" alt="upcoming user"></div>
+                    <div class="speech-desp">
+                      <h4><a href="#">Puli audio release function - Vijay speech</a></h4>
+                      <p>by Vidly Junk<span>2,75,249 views</span></p>
+                    </div>
+                  </div>
+                  </li>
+
+                  <li>
+                    <div class="video-speech">
+                    <div class="speech-img"><img src="img/upcoming-user-3.jpg" alt="upcoming user"></div>
+                    <div class="speech-desp">
+                      <h4><a href="#">Puli audio release function - Vijay speech</a></h4>
+                      <p>by Vidly Junk<span>2,75,249 views</span></p>
+                    </div>
+                  </div>
+                  </li>
+                  <div class="upcoming-load">
+                    <button type="button" class="btn load-more">Load More</button>
+                  </div>
+
+
+                </ul>
+              </div>
+            </div>
+          </div>--><!--right section close here--> 
+
+
+        </div>
+      </div>
+    </section>

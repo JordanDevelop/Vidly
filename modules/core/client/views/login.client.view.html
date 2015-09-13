@@ -1,0 +1,49 @@
+<section id="login-inner">
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                <form class="reg-page" name="userlogin" ng-submit="login(userlogin.$valid)">
+                    <div class="reg-header">
+                        <h2>Login to your account</h2>
+                    </div>
+                    <div id="notifications" class="bg-danger"></div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input type="text" placeholder="Username or Email" class="form-control" ng-model="loginObj.username" name="username" required>
+                    </div>
+                        <span class="text-danger inner-error " ng-show="submitted && userlogin.username.$error.required">Username or Email is required.</span>
+
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <input type="password" ng-model="loginObj.password" placeholder="password" name="password" class="form-control" required>
+                    </div>
+                        <span class="text-danger inner-error " ng-show="submitted && userlogin.password.$error.required">Password is required.</span>
+                    <div id="imgloader" style="display:none">
+                        <img src="24.GIF" ng-show="loader == true">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <button class="btn-u pull-right" type="submit" ng-click="submitted=true">Login</button>
+
+                        </div>
+                     
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="or_identified">OR</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <button class="btn-u login-reditt" type="button" ng-click="reddit()">Login with Reddit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h4>Forget your Password ?</h4>
+                    <p>No worries, <a class="color-green" ui-sref="forgotPassword">Click here</a> to reset your password.</p>
+                </form>
+            </div>
+        </div><!--/row-->
+    </div><!--/container-->
+</section>
