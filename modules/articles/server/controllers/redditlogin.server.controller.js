@@ -31,7 +31,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new RedditStrategy({
         clientID: REDDIT_CONSUMER_KEY,
         clientSecret: REDDIT_CONSUMER_SECRET,
-        callbackURL: "http://vidly.io/auth/reddit/callback"
+        callbackURL: "https://vidly.io/auth/reddit/callback"
         //put ur own callback url and also in reddit
     },
     function(accessToken, refreshToken, profile, done) {

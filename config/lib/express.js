@@ -21,6 +21,12 @@ var config = require('../config'),
   RedditStrategy = require('passport-reddit').Strategy,
   path = require('path');
 
+
+var options = {
+        key: '/var/www/vidly/certs/ssl.key',
+        cert: '/var/www/vidly/certs/ssl.crt'
+};
+
 /**
  * Initialize local variables
  */

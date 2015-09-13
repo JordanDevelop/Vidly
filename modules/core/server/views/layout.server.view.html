@@ -60,11 +60,7 @@
   </section>
   <footer data-ng-include="'/modules/core/client/views/footer.client.view.html'"></footer>
 
-
-
-
-
-  <script type="text/javascript">
+<script type="text/javascript">
     var socketurl=window.location.protocol;
     if(socketurl=='http:')
     {
@@ -75,12 +71,13 @@
     }
     else
     {
-      document.write("<script src='//code.jquery.com/jquery-1.11.0.min.js'><\/script>");
-      document.write('<link rel="stylesheet" type="text/css" href="//vjs.zencdn.net/4.1/video-js.css">');
-      document.write("<script type='text/javascript' src='//54.172.248.62:8005/socket.io/socket.io.js'><\/script>");
-      document.write("<script src='//vjs.zencdn.net/4.1/video.js'><\/script>");
+      document.write("<script src='https:////code.jquery.com/jquery-1.11.0.min.js'><\/script>");
+      document.write('<link rel="stylesheet" type="text/css" href="https://vjs.zencdn.net/4.1/video-js.css">');
+      document.write("<script type='text/javascript' src='https://54.172.248.62:8005/socket.io/socket.io.js'><\/script>");
+      document.write("<script src='https://vjs.zencdn.net/4.1/video.js'><\/script>");
     }
   </script>
+
 
   <!--Embedding The User Object-->
   <script type="text/javascript">
@@ -89,13 +86,13 @@
 
   <!--Load The Socket.io File-->
   <script type="text/javascript">var filepicker_api_key = '';</script>
-    <script type="text/javascript" src="//code.jquery.com/jquery.min.js"> </script>
+<!--    <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"> </script> -->
     <script type="text/javascript" src="/modules/core/client/js/bootstrap.min.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/bootbox.min.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/jquery.flexslider-min.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/jquery.quicksand.js"> </script>
     
-  <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+  <script type="text/javascript" src="https://api.filepicker.io/v1/filepicker.js"></script>
 
 
 
@@ -104,7 +101,7 @@
   {% if livereload %}
   <!--Livereload script rendered -->
   <!--<script type="text/javascript" src="{{host}}:35729/livereload.js"></script>-->
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-sanitize.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-sanitize.js"></script>
     <script type="text/javascript" src="/modules/core/client/js/toastr.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/toastr.tpl.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/angular-tooltips.min.js"> </script>
