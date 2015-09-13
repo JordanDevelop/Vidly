@@ -1,7 +1,7 @@
 {
   "name": "Vidly",
   "description": "Vidly is an online video sharing / hosting community.",
-  "version": "0.1",
+  "version": "0.4.0",
   "private": false,
   "author": "https://bitbucket.org/Vidly/",
   "license": "MIT",
