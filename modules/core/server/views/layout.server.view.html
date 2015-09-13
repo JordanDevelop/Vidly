@@ -19,15 +19,15 @@
   <meta property="og:site_name" content="{{title}}">
   <meta property="og:title" content="{{title}}">
   <meta property="og:description" content="{{description}}">
-  <meta property="og:url" content="{{url}}">
-  <meta property="og:image" content="{{url}}{{logo}}">
+  <meta property="og:url" content="https://vidly.io/">
+  <meta property="og:image" content="https://vidly.io/{{logo}}">
   <meta property="og:type" content="website">
 
   <!-- Twitter META -->
   <meta name="twitter:title" content="{{title}}">
   <meta name="twitter:description" content="{{description}}">
-  <meta name="twitter:url" content="{{url}}">
-  <meta name="twitter:image" content="{{url}}modules/core/img/brand/logo.png">
+  <meta name="twitter:url" content="https://vidly.io/">
+  <meta name="twitter:image" content="https://vidly.io/modules/core/img/brand/logo.png">
 
   <!-- Fav Icon -->
   <link href="https://vidly.io/{{favicon}}" rel="shortcut icon" type="image/x-icon">
@@ -68,17 +68,17 @@
     var socketurl=window.location.protocol;
     if(socketurl=='http:')
     {
-      document.write("<script src='http://code.jquery.com/jquery-1.11.0.min.js'><\/script>");
-      document.write('<link rel="stylesheet" type="text/css" href="http://vjs.zencdn.net/4.1/video-js.css">');
+      document.write("<script src='//code.jquery.com/jquery-1.11.0.min.js'><\/script>");
+      document.write('<link rel="stylesheet" type="text/css" href="//vjs.zencdn.net/4.1/video-js.css">');
       document.write("<script type='text/javascript' src='http://54.172.248.62:8005/socket.io/socket.io.js'><\/script>");
-      document.write("<script src='http://vjs.zencdn.net/4.1/video.js'><\/script>");
+      document.write("<script src='//vjs.zencdn.net/4.1/video.js'><\/script>");
     }
     else
     {
-      document.write("<script src='https://code.jquery.com/jquery-1.11.0.min.js'><\/script>");
-      document.write('<link rel="stylesheet" type="text/css" href="https://vjs.zencdn.net/4.1/video-js.css">');
-      document.write("<script type='text/javascript' src='http://54.172.248.62:8005/socket.io/socket.io.js'><\/script>");
-      document.write("<script src='https://vjs.zencdn.net/4.1/video.js'><\/script>");
+      document.write("<script src='//code.jquery.com/jquery-1.11.0.min.js'><\/script>");
+      document.write('<link rel="stylesheet" type="text/css" href="//vjs.zencdn.net/4.1/video-js.css">');
+      document.write("<script type='text/javascript' src='//54.172.248.62:8005/socket.io/socket.io.js'><\/script>");
+      document.write("<script src='//vjs.zencdn.net/4.1/video.js'><\/script>");
     }
   </script>
 
@@ -104,7 +104,7 @@
   {% if livereload %}
   <!--Livereload script rendered -->
   <!--<script type="text/javascript" src="{{host}}:35729/livereload.js"></script>-->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-sanitize.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-sanitize.js"></script>
     <script type="text/javascript" src="/modules/core/client/js/toastr.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/toastr.tpl.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/angular-tooltips.min.js"> </script>
