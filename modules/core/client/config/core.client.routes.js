@@ -28,6 +28,14 @@
         templateUrl: 'modules/core/client/views/signup.client.view.html',
         controller: 'HomeController'
       })
+      .state('terms', {
+        url: '/terms',
+        templateUrl: 'modules/core/client/views/terms.client.view.html'
+      })
+      .state('dmca', {
+        url: '/dmca',
+        templateUrl: 'modules/core/client/views/dmca.client.view.html'
+      })
       .state('about-us', {
         url: '/about-us',
         templateUrl: 'modules/core/client/views/about-us.client.view.html'

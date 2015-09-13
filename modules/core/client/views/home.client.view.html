@@ -1,5 +1,5 @@
- <section id="high-quality-video">
-  <div class="container">
+<section id="high-quality-video">
+  <!-- <div class="container">
     <div class="row">
       <div class="col-md-12">
         <h1>Step inside the high-quality home for videos</h1>
@@ -11,7 +11,7 @@
         </ul>
       </div>
     </div>
-  </div>
+  </div> -->
 </section>
 <div ng-init="redditUser()"></div>
 <section id="video-gallery" data-ng-controller="HomeController" ng-init="getVideos()">
@@ -25,7 +25,7 @@
 
 	              <li data-value="dog"><a href ng-click="tab = 2"  ng-class="{active:tab===2}">Most Viewed</a></li>
 
-	              <li data-value="cat"><a href ng-click="tab = 3"  ng-class="{active:tab===3}">Normal</a></li>
+	              <!-- <li data-value="cat"><a href ng-click="tab = 3"  ng-class="{active:tab===3}">Normal</a></li> -->
 
 	             
 	              <li data-value="bird"><a href ng-click="tab = 4"  ng-class="{active:tab===4}">Latest</a></li>
@@ -142,10 +142,10 @@
 	                    </div>
 	                  </div>
 	                </li>
-	                  <li ng-show="tab === 4" data-type="dog" data-id="id-1" class="col-md-4" ng-repeat="job in jobs | limitTo:paginationLimit() | orderBy: 'created':true">gfsg{{created}}
+	                  <li ng-show="tab === 4" data-type="dog" data-id="id-1" class="col-md-4" ng-repeat="job in jobs | limitTo:paginationLimit() | orderBy: 'created':true">{{created}}
 	                <a class="thumbnail" id="dog1" id="job.id" class="view-media" ng-click="openVideo(job)">
 	                  <div class="thumb-img">
-	                   <img ng-src={{job.thumbnail.url}} tooltips tooltip-title="Play" tooltip-side="right">
+	                   <img ng-src="{{job.thumbnail.url}}" tooltips tooltip-title="Play" tooltip-side="right">
 	                    <div class="you-tube-count">
 	                      <div class="row">
 	                      <div class="col-md-6"><!-- <div class="time-count">1:45:35</div> --></div>
