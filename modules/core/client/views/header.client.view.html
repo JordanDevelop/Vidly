@@ -11,6 +11,7 @@
           </button>
           <a class="navbar-brand" ui-sref="home"><img src="/modules/core/client/img/logo.png" alt="logo"></a>
         </div>
+         <div ng-init="redditUser()"></div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav left-menu">
             <li class="active"><a ui-sref="home">Home</a></li>
@@ -18,7 +19,7 @@
             <li><a href="https://blog.vidly.io">Blog</a></li>
             <li><a ui-sref="contact">Contact</a></li>
             <!-- Search Block -->
-            <!-- <li>
+            <li>
                 <i class="search fa fa-search search-btn"></i>
                 <div class="search-open">
                     <div class="input-group animated fadeInDown">
@@ -28,10 +29,13 @@
                         </span>
                     </div>
                 </div>
-            </li> -->
+            </li>
             <!-- End Search Block -->
           </ul>
-        <div ng-init="redditUser()"></div>
+          <ul class="nav navbar-nav left-menu" ng-show="currentUser.role == 'admin'">
+              <li class="active"><a ui-sref="dashboard">Dashboard</a></li>
+              <li><a ui-sref="gallery">Gallery</a></li>
+          </ul>
           <ul class="nav navbar-nav navbar-right right-menu" ng-show="!currentUser && !currentRedditUser" >
             <li class="front-login"><a ui-sref="login" ><i class="fa fa-lock"></i><span>Login</span></a></li>
             <li class="front-signup"><a ui-sref="signup"><i class="fa fa-location-arrow"></i><span>Sign Up</span></a></li>
@@ -40,14 +44,13 @@
             <li class="dropdown" dropdown>
                 <a href="#" class="dropdown-toggle username" data-toggle="dropdown" dropdown-toggle ng-show="currentUser"><i class="fa fa-user"></i> Welcome {{currentUser.username}} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li class="front-login">
+                    <li class="front-sub">
                         <a ui-sref="user" ng-click="userInfo(currentUser.username,currentUser.id)"><i class="fa fa-fw fa-user"></i> My Profile</a>
                     </li>
-                    <li class="front-login">
+                    <li class="front-sub">
                         <a ui-sref="resetPassword"><i class="fa fa-fw fa-gear"></i> Change Password</a>
                     </li>
-                    <li class="divider"></li>
-                    <li class="front-login">
+                    <li class="front-sub">
                         <a ui-sref="signout" ng-click="logout()"><i class="fa fa-fw fa-power-off"></i> Signout</a>
                     </li>
                 </ul>
@@ -55,11 +58,14 @@
         </ul>
          <ul class="nav navbar-nav navbar-right top-nav right-menu" ng-show="currentRedditUser">
             <li class="dropdown" dropdown>
-                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" dropdown-toggle ng-show="currentRedditUser"><i class="fa fa-user"></i> Welcome {{currentRedditUser}} <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" dropdown-toggle ng-show="currentRedditUser"><i class="fa fa-user"></i> Welcome {{currentRedditUser.username}} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li class="front-login">
-                        <a ui-sref="signout" ng-click="logout()"><i class="fa fa-fw fa-power-off"></i> Signout</a>
-                    </li>
+                  <li class="front-sub">
+                      <a ui-sref="user" ng-click="userInfo(currentRedditUser.username,currentRedditUser.id)"><i class="fa fa-fw fa-user"></i> My Profile</a>
+                  </li>
+                  <li class="front-login">
+                      <a ui-sref="signout" ng-click="logout()"><i class="fa fa-fw fa-power-off"></i> Signout</a>
+                  </li>
                 </ul>
             </li>
         </ul>
@@ -69,18 +75,5 @@
     </nav>
 
 </div>
-<script type="text/javascript">
-  //Search Box (Header)
-    jQuery('.search').click(function () {
-        if(jQuery('.search-btn').hasClass('fa-search')){
-            jQuery('.search-open').fadeIn(500);
-            jQuery('.search-btn').removeClass('fa-search');
-            jQuery('.search-btn').addClass('fa-times');
-        } else {
-            jQuery('.search-open').fadeOut(500);
-            jQuery('.search-btn').addClass('fa-search');
-            jQuery('.search-btn').removeClass('fa-times');
-        }
-    });
-</script>
+
 

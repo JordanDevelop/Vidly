@@ -51,8 +51,9 @@ config.zencoder = {
 
     output_url: 's3://vidly-videos-dev/zensockets/', // Output location for your transcoded videos
 
-    notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+   notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     //notification_url: 'https://vidly.io/notify/',
+    //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{
@@ -92,7 +93,8 @@ module.exports = function(app) {
     app.post('/upload', user.upload);
     app.post('/checkExistence/:value', user.existence)
     app.post('/usersignup', user.confirmSignup);
-
+    app.get('/userListing', user.listing)
+    app.get('/videoListing', user.videoListing)
     app.post('/job', user.job);
     app.get('/uploads', user.uploadHtml);
     app.get('/logins', user.loginHtml);
@@ -114,7 +116,7 @@ module.exports = function(app) {
     app.route('/updateValue').post(articles.updatevalue);
 
     app.post('/notify/:id', function(req, res) {
-        console.log('NOTIFY ID HIT BODY>>>> ', req.body);
+        //console.log('NOTIFY ID HIT BODY>>>> ', req.body);
         res.status(202).send({
             message: "Thanks, Zencoder! We will take it from here."
         });
@@ -156,15 +158,20 @@ module.exports = function(app) {
                     height: output.height
                 }
             });
-            console.log('req.body.job.pass_through', req.body.job.pass_through, jobDoc);
 
             /*Media.update({
             _id: req.body.job.pass_through
         }, jobDoc, function(err, doc) { */
             var input = JSON.stringify(jobDoc.input);
             var outputs = JSON.stringify(jobDoc.outputs);
+            var outputUrl = jobDoc.outputs.MP4.url;
+            var videoUrl = outputUrl.split(":")
+            console.log('outputs', videoUrl[1]);
             var thumbnail = JSON.stringify(jobDoc.thumbnail);
-            var query = "UPDATE uploads SET zencoder_id = " + jobDoc.zencoder_id + ", input = '" + input + "', outputs = '" + outputs + "', state= '" + jobDoc.state + "', thumbnail = '" + thumbnail + "' WHERE id = " + req.body.job.pass_through + "";
+            var thumbnailUrl = jobDoc.thumbnail.url;
+            var URL = thumbnailUrl.split(":")
+            console.log('thumbnail', URL[1]);
+            var query = "UPDATE uploads SET zencoder_id = " + jobDoc.zencoder_id + ", input = '" + input + "', outputs = '" + videoUrl[1] + "', state= '" + jobDoc.state + "', thumbnail = '" + URL[1] + "' WHERE id = " + req.body.job.pass_through + "";
             connection.query(query, function(err, doc) {
                 console.log("Updated in ROUTES=======>> ", doc);
 
