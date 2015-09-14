@@ -1,6 +1,5 @@
 var Zencoder = require('zencoder'),
     nodemailer = require('nodemailer'),
-    smtpTransport = require('nodemailer-smtp-transport'),
     md5 = require('md5'),
     path = require('path'),
     mysql = require('mysql'),
@@ -20,22 +19,13 @@ var dbconfig = require('../../../../db');
 var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
-//var smtpTransport = nodemailer.createTransport("SMTP", {
-   // service: "Gmail",
-   // auth: {
-    //    user: "mss.msstest@gmail.com",
-   //     pass: "T4nP&aCq"
-   // }
-//});
-
- var transport = nodemailer.createTransport(smtpTransport({
-        host: "smtp.office365.com", // hostname
-        port: 587,
-        auth: {
-            user: "noreply@vidly.io",
-            pass: "ApQS05c3ijm2pG7c"
-        }
-    }));
+var smtpTransport = nodemailer.createTransport("SMTP", {
+    service: "Gmail",
+    auth: {
+        user: "mss.msstest@gmail.com",
+        pass: "T4nP&aCq"
+    }
+});
 
 
 exports.view = function(req, res) {
@@ -311,15 +301,14 @@ exports.signup = function(req, res) {
                                     var emailBody = "<a href=" + fullUrl + ">Confirm link</a>";
                                     //set mail options
                                     var mailOptions = {
-                                        from: 'noreply@vidly.io',
+                                        from: 'mss.msstest@gmail.com',
                                         to: req.body.email,
                                         subject: 'Account Registeration Mail',
                                         text: 'Account Registeration Confirmation Mail text here.',
                                         html: "<p> Hello " + name + "</p> <p>Click the below link to activate your account.</p><br/>" + emailBody,
                                     };
 
-
-                                    transport.sendMail(mailOptions, function(error, info) {
+                                    smtpTransport.sendMail(mailOptions, function(error, info) {
                                         if (error) {console.log('error', error);
                                             return res.status(204).send(error);
                                         }
