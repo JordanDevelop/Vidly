@@ -1,7 +1,7 @@
 'use strict';
 var core = require('../controllers/core.server.controller');
 //var reddituser = require('../controllers/redditlogin.server.controller');
-var user = require('../controllers/user.server.controller');
+//var user = require('../controllers/user.server.controller');
 
 
 

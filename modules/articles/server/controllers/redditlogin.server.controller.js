@@ -108,7 +108,7 @@ exports.logout = function(req, res) {
 
 exports.getreddituser = function(req, res) {    if (req.session && req.session.passport && req.session.passport.user) {
         req.session.user = req.session.passport.user;
-   console.log('req', req.session.user);
+   //console.log('req', req.session.user);
 
         return res.status(200).json({
             title: 'Zensockets!',
