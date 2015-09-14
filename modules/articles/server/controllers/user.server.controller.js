@@ -21,7 +21,7 @@ var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 var smtpTransport = nodemailer.createTransport("SMTP", {
-    service: "smtp.office365.com",
+    service: "hotmail",
     auth: {
         user: "noreply@vidly.io",
         pass: "ApQS05c3ijm2pG7c"
