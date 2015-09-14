@@ -1,6 +1,5 @@
 var Zencoder = require('zencoder'),
     nodemailer = require('nodemailer'),
-     smtpTransport = require('nodemailer-smtp-transport'),
     md5 = require('md5'),
     path = require('path'),
     mysql = require('mysql'),
@@ -21,15 +20,10 @@ var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 var smtpTransport = nodemailer.createTransport("SMTP", {
-    host: "smtp.office365.com",
-    secureConnection: 'false', // use SSL
-    port: 587, // port for secure SMTP
+    service: "Gmail",
     auth: {
-        user: "noreply@vidly.io",
-        pass: "ApQS05c3ijm2pG7c"
-    },
-    tls: {
-        ciphers: 'SSLv3'
+        user: "mss.msstest@gmail.com",
+        pass: "T4nP&aCq"
     }
 });
 
@@ -307,14 +301,14 @@ exports.signup = function(req, res) {
                                     var emailBody = "<a href=" + fullUrl + ">Confirm link</a>";
                                     //set mail options
                                     var mailOptions = {
-                                        from: 'noreply@vidly.io',
+                                        from: 'mss.msstest@gmail.com',
                                         to: req.body.email,
                                         subject: 'Account Registeration Mail',
                                         text: 'Account Registeration Confirmation Mail text here.',
                                         html: "<p> Hello " + name + "</p> <p>Click the below link to activate your account.</p><br/>" + emailBody,
                                     };
 
-                                    smtpTransport.sendMail(mailOptions, function (error, info) {
+                                    smtpTransport.sendMail(mailOptions, function(error, info) {
                                         if (error) {console.log('error', error);
                                             return res.status(204).send(error);
                                         }
