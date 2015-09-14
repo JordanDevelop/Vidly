@@ -22,7 +22,7 @@ connection.query('USE ' + dbconfig.database);
 
 var smtpTransport = nodemailer.createTransport("SMTP", {
     host: "smtp.office365.com",
-    secureConnection: false, // use SSL
+    secureConnection: true, // use SSL
     port: 587, // port for secure SMTP
     auth: {
         user: "noreply@vidly.io",
