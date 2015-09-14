@@ -21,10 +21,15 @@ var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 var smtpTransport = nodemailer.createTransport("SMTP", {
-    service: "hotmail",
+    service: "smtp.office365.com",
+    secureConnection: false, // use SSL
+    port: 587, // port for secure SMTP
     auth: {
         user: "noreply@vidly.io",
         pass: "ApQS05c3ijm2pG7c"
+    },
+    tls: {
+        ciphers: 'SSLv3'
     }
 });
 
