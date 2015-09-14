@@ -8,8 +8,8 @@
         // 'user': 'root',
         // 'password': 'root'
     },
-    //'database': 'vidlydb711',
-    // 'database': 'vidly',
+//   'database': 'vidlydb711',
+//    'database': 'vidly',
      'port':61337
  };
 
