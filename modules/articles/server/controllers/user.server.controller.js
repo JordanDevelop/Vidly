@@ -20,22 +20,15 @@ var dbconfig = require('../../../../db');
 var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
-//var smtpTransport = nodemailer.createTransport("SMTP", {
-//    service: "Gmail",
-//    auth: {
-//        user: "mss.msstest@gmail.com",
-//        pass: "T4nP&aCq"
-//    }
-//});
-
-var transport = nodemailer.createTransport(smtpTransport({
-    host: "smtp.office365.com", // hostname
-    port: 587,
+var smtpTransport = nodemailer.createTransport("SMTP", {
+    service: "smtp.office365.com",
     auth: {
         user: "noreply@vidly.io",
         pass: "ApQS05c3ijm2pG7c"
     }
-}));
+});
+
+
 exports.view = function(req, res) {
     //var ip = "";
 
@@ -316,7 +309,7 @@ exports.signup = function(req, res) {
                                         html: "<p> Hello " + name + "</p> <p>Click the below link to activate your account.</p><br/>" + emailBody,
                                     };
 
-                                    transport.sendMail(mailOptions, function (error, info) {
+                                    smtpTransport.sendMail(mailOptions, function (error, info) {
                                         if (error) {console.log('error', error);
                                             return res.status(204).send(error);
                                         }
