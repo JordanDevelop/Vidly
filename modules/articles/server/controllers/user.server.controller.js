@@ -21,7 +21,7 @@ var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 var smtpTransport = nodemailer.createTransport("SMTP", {
-    service: "smtp.office365.com",
+    host: "smtp.office365.com",
     secureConnection: false, // use SSL
     port: 587, // port for secure SMTP
     auth: {
