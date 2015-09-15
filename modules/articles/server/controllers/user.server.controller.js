@@ -5,7 +5,8 @@ var Zencoder = require('zencoder'),
     mysql = require('mysql'),
     randtoken = require('rand-token'),
     fs = require('fs'),
-   
+     ses = require('node-ses')
+   , client = ses.createClient({ key: 'AKIAJAWT6TMJSMQQSMTA', secret: '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' });
     io = require('socket.io')(8005);
 
     io.sockets.on('connection', function (socket) {
@@ -307,17 +308,32 @@ exports.signup = function(req, res) {
                                         text: 'Account Registeration Confirmation Mail text here.',
                                         html: "<p> Hello " + name + "</p> <p>Click the below link to activate your account.</p><br/>" + emailBody,
                                     };
-
-                                    smtpTransport.sendMail(mailOptions, function(error, info) {
-                                        if (error) {console.log('error', error);
-                                            return res.status(204).send(error);
-                                        }
-                                        console.log('Message sent successfully');
-                                        return res.status(200).send({
-                                            status: 200,
-                                            response: req.body.username
-                                        });
+                                    client.sendEmail({
+                                        to: req.body.email
+                                        , from: 'mss.msstest@gmail.com'
+                                        , subject: 'Account Registeration Mail'
+                                        , message: "<p> Hello " + name + "</p> <p>Click the below link to activate your account.</p><br/>" + emailBody
+                                        , altText: 'Account Registeration Confirmation Mail text here.'
+                                    }, function (err, data, res) {
+                                            if (error) {console.log('error', error);
+                                                return res.status(204).send(error);
+                                            }
+                                            console.log('Message sent successfully');
+                                            return res.status(200).send({
+                                                status: 200,
+                                                response: req.body.username
+                                            });
                                     });
+                                    //smtpTransport.sendMail(mailOptions, function(error, info) {
+                                    //    if (error) {console.log('error', error);
+                                    //        return res.status(204).send(error);
+                                    //    }
+                                    //    console.log('Message sent successfully');
+                                    //    return res.status(200).send({
+                                    //        status: 200,
+                                    //        response: req.body.username
+                                    //    });
+                                    //});
                                 }
                             });
                         }
