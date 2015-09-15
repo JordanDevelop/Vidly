@@ -41,10 +41,12 @@ passport.use(new RedditStrategy({
         process.nextTick(function() {
             //check if verified by reddit
             if (profile._json.has_verified_email == true) {
-   
+    console.log('in query');
                 connection.query('SELECT * FROM users WHERE username = ?', name, function(err, userFind) {
                     //if user find in our db
-   
+                console.log('query error',err);
+                console.log('query userFind',userFind);
+                
                     if (userFind && userFind.length > 0) {
                            var user = userFind[0];
                         return done(null, user);
@@ -58,6 +60,8 @@ passport.use(new RedditStrategy({
                             isReddit: 1
                         };
                         connection.query('INSERT INTO users SET ?', user, function(err, success) {
+                         console.log('query error again',err);
+                console.log('query success',success);
                             if (success && success.length > 0) {
    
                                 var user = name;
