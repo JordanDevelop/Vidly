@@ -87,11 +87,13 @@ exports.authreddit = function(req, res, next) {
 };
 
 exports.authredditcallback = function(req, res, next) {
-   
+   console.log('req.session.state',req.session.state);
+   console.log('req.query.state',req.query.state);
     testname = req.query.state;
     var name = 'dsasda';
    
     if (req.query.state == req.session.state) {
+    console.log('here done');
         passport.authenticate('reddit', {
             successRedirect: '/upload',
             failureRedirect: '/login'
