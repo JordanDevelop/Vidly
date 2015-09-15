@@ -11,10 +11,12 @@ var xFrameOptions = require('x-frame-options')
    var Zencoder = require('zencoder'),
     express = require('express'),
     cors = require('cors'),
-   app = express(),
+    app = express(),
     path = require('path'),
-    mysql = require('mysql');
+    mysql = require('mysql'),
+    ua = require('universal-analytics');
 
+var visitor = ua('UA-67607427-1');
 
 
  //Enabling CORS

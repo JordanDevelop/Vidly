@@ -19,13 +19,14 @@ var config = require('../config'),
   consolidate = require('consolidate'),
   passport = require('passport'),
   RedditStrategy = require('passport-reddit').Strategy,
-  path = require('path');
+  path = require('path'),
+    ua = require('universal-analytics'),
+  sm = require('sitemap');
 
 
-var options = {
-        key: '/var/www/vidly/certs/ssl.key',
-        cert: '/var/www/vidly/certs/ssl.crt'
-};
+
+var visitor = ua('UA-67607427-1', {https: true});
+visitor.pageview("/").send();
 
 /**
  * Initialize local variables
@@ -236,7 +237,23 @@ module.exports.initErrorRoutes = function (app) {
  */
 module.exports.init = function (db) {
   // Initialize express app
-  var app = express();
+  var app = express()
+  , sitemap = sm.createSitemap ({
+      hostname: 'http://example.com',
+      cacheTime: 600000,        // 600 sec - cache purge period 
+      urls: [
+        { url: '/page-1/',  changefreq: 'daily', priority: 0.3 },
+        { url: '/page-2/',  changefreq: 'monthly',  priority: 0.7 },
+        { url: '/page-3/'},    // changefreq: 'weekly',  priority: 0.5 
+        { url: '/page-4/',   img: "http://urlTest.com" }
+      ]
+    });
+app.get('/sitemap.xml', function(req, res) {
+  sitemap.toXML( function (xml) {
+      res.header('Content-Type', 'application/xml');
+      res.send( xml );
+  });
+});
 
   // Initialize local variables
   this.initLocalVariables(app);
