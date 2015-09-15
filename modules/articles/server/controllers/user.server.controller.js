@@ -565,7 +565,7 @@ config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
     output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
-    cdn: 'https://c.vidly.io/' // CDN URL
+    cdn: 'https://c.vidly.io/', // CDN URL
 
     //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
 
