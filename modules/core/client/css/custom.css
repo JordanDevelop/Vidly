@@ -1986,3 +1986,6 @@ section#contact-inner {
   margin-bottom: 0;
   margin-top: 6px;
 }
+
+ul.thumbnails.row li{position:relative;}
+ul.thumbnails.row li .cross{position:absolute; top:0; right:0;}
