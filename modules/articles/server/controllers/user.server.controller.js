@@ -334,6 +334,27 @@ exports.signup = function(req, res) {
     }
 };
 
+exports.listing = function(req, res) {
+    connection.query("SELECT * FROM users WHERE username != '"+req.session.user.username+"'", function(err, data) {
+        if(data) {
+            return res.send({
+                listing: data
+            });
+        }
+    });
+}
+
+exports.videoListing = function(req, res) {
+    connection.query("SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewcount from uploads u  where u.state='finished'", function(err, data) {
+        //console.log('listing', data);
+        if(data) {
+            return res.send({
+                listing: data
+            });
+        }
+    });
+}
+
 
 exports.uploadHtml = function(req, res) {
     //console.log("UPLOAD HTML>>>>> ", req.session.user);
@@ -520,6 +541,7 @@ config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
     output_url: 's3://vidly-videos-dev/zensockets/', // Output location for your transcoded videos
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+   // notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
     //notification_url: 'https://vidly.io/notify/',
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{

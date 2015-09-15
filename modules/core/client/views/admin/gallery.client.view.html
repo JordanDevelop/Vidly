@@ -1,0 +1,50 @@
+<section id="video-gallery" ng-init="videoList()">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+              <!-- <div id="imgloader" style="display:none">
+                    <img src="24.GIF" ng-show="loader = true" > 
+                </div> -->
+              <ul class="thumbnails row">
+                  <li data-type="dog" data-id="id-1" class="col-md-4" ng-repeat="videos in allVideos">
+                        <div class="cross"><i class="fa fa-times"></i></div>
+
+                  <a class="thumbnail" id="dog1" id="" class="view-media" ng-click="">
+                    <div class="thumb-img">
+                     <img ng-src="angular.fromJson(videos.thumbnail);" tooltips tooltip-title="Play" tooltip-side="right">
+					
+                      <div class="you-tube-count">
+                        <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6"><div class="tube-count"><i class="fa fa-play" tooltips tooltip-title="Play" tooltip-side="top"></i></div></div>
+                      </div>
+                      </div>
+                    </div>
+                  </a>
+                    <div class="thumb-content">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <h3>{{videos.description}}</h3>
+
+                          <div ng-if="videos.user"> <p>by {{videos.user}} </p> </div>
+                          <div ng-if="!videos.user"> <p style="cursor:default;">by Anonymous </p> </div>
+                        </div>
+
+                        <div class="col-md-6 views-eye">
+                          <h3><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{videos.viewcount}}</span></h3>
+                          <div class="like-dislike">
+                            <button tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{$index}}">{{videos.likcount}}</div></button>
+                            <button tooltips tooltip-title="Dislike" tooltip-side="top"><i class="fa fa-thumbs-down"></i><div id="dislike{{$index}}">{{videos.dislikcount}}</div></button>
+                            
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+              </ul>
+              <button class="btn btn-danger reserve-more" ng-show="hasMoreItemsToShow()" ng-click="showMoreItems()">View More</button>
+            </div>
+        </div>
+    </div>
+</section> 
