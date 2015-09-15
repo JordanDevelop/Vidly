@@ -37,6 +37,7 @@ passport.use(new RedditStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
         var name = profile.name;
+        console.log('name',name);
         process.nextTick(function() {
             //check if verified by reddit
             if (profile._json.has_verified_email == true) {
