@@ -51,6 +51,7 @@ config.zencoder = {
 
     output_url: 's3://vidly-videos-dev/zensockets/', // Output location for your transcoded videos
 
+
    // notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     notification_url: 'https://vidly.io/notify/',
     //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
