@@ -17,19 +17,19 @@ $scope.urlProtocol = window.location.protocol;
                 $rootScope.media = response[0];
                 console.log('$scope.media', $rootScope.media);
 
-                $rootScope.singleMedia = JSON.parse($rootScope.media.outputs);
+                $rootScope.singleMedia = $rootScope.media.outputs;
                 $rootScope.movie = {
-                    src: $rootScope.singleMedia.MP4.url
+                    src: $rootScope.singleMedia
                 };
             } else {
 
                 $location.path("/p/" +response[0].id);
                 $rootScope.media = response[0];
 
-                $rootScope.singleMedia = JSON.parse($rootScope.media.outputs);
+                $rootScope.singleMedia = $rootScope.media.outputs;
 
                 $rootScope.movie = {
-                    src: $rootScope.singleMedia.MP4.url
+                    src: $rootScope.singleMedia
                 };
             }
         });
@@ -43,10 +43,7 @@ $scope.urlProtocol = window.location.protocol;
             $scope.loader = true;
             if ($scope.loginObj != null && $scope.loginObj.username != "" && $scope.loginObj.password !== "") {
                 $.post('/userlogin', $scope.loginObj, function(data) {
-                    console.log('dataUser', data.user);
-                    if(data && data.user && data.user.role == 'admin') {
-                        $state.go('dashboard');
-                    }else {
+                    
                         if (data && data.user && data.status==200 ) {
                             $scope.loader = false;
                             $("#imgloader").css("display", "none");
@@ -56,13 +53,16 @@ $scope.urlProtocol = window.location.protocol;
                             $window.sessionStorage["userData"] = JSON.stringify(User);
                             $scope.user = JSON.parse($window.sessionStorage["userData"]);
                             $scope.currentUser = $scope.user.userData;
-                            window.location.href = "/upload";
+                            if($scope.currentUser.role == 'admin') {
+                                window.location.href = "/manage";
+                            }else {
+                                window.location.href = "/upload";
+                            }
                         } else {
                             $scope.loader = false;
                             $("#imgloader").css("display", "none");
                             toastr.error('Request Failed: '+ data.message);
                         }
-                    }
                 });
             } else {
                 $scope.loader = false;
@@ -105,7 +105,7 @@ $scope.urlProtocol = window.location.protocol;
                 });
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
                 $http.get('/reddituser').success(function(response) {
-                    $scope.currentRedditUser = response.user;
+                    $scope.currentRedditUser = response.alldata;
                 });
             } else {
                 console.log("else of reddit user function");
@@ -367,11 +367,11 @@ $scope.urlProtocol = window.location.protocol;
             return $sce.trustAsResourceUrl(src);
         }
 
-        var vid = document.getElementById("myVideo");
-function enableAutoplay() { 
-    vid.autoplay = true;
-    vid.load();
-}
+//         var vid = document.getElementById("myVideo");
+// function enableAutoplay() { 
+//     vid.autoplay = true;
+//     vid.load();
+// }
 
         $scope.id = {};
         $scope.openVideo = function(data) {
@@ -391,19 +391,19 @@ function enableAutoplay() {
                     $rootScope.media = response[0];
                     console.log('$scope.media', $rootScope.media);
 
-                    $rootScope.singleMedia = JSON.parse($rootScope.media.outputs);
+                    $rootScope.singleMedia = $rootScope.media.outputs;
                     $rootScope.movie = {
-                        src: $rootScope.singleMedia.MP4.url
+                        src: $rootScope.singleMedia
                     };
                 } else {
 
                     $location.path("/p/" +response[0].id);
                     $rootScope.media = response[0];
 
-                    $rootScope.singleMedia = JSON.parse($rootScope.media.outputs);
+                    $rootScope.singleMedia = $rootScope.media.outputs;
 
                     $rootScope.movie = {
-                        src: $rootScope.singleMedia.MP4.url
+                        src: $rootScope.singleMedia
                     };
                 }
 
@@ -440,10 +440,10 @@ function enableAutoplay() {
                                     "input": JSON.parse(response.total[i].input),
                                     "input_file": response.total[i].input_file,
                                     "isPrivate": response.total[i].isPrivate,
-                                    "outputs": JSON.parse(response.total[i].outputs),
+                                    "outputs": response.total[i].outputs,
                                     "state": response.total[i].state,
                                     "submitted_at": response.total[i].submitted_at,
-                                    "thumbnail": JSON.parse(response.total[i].thumbnail),
+                                    "thumbnail": response.total[i].thumbnail,
                                     "zencoder_id": response.total[i].zencoder_id,
                                     "dislikcount": response.total[i].dislikcount,
                                     "likcount": response.total[i].likcount,
@@ -533,30 +533,32 @@ function enableAutoplay() {
                 if (response) {
                    
                     for (var i = 0; i < response.length; i++) {
-                        $scope.mediaObj = {
-                                "channel": response[i].channel,
-                                "userID":response[i].userId,
-                                "created": response[i].created,
-                                "description": response[i].description,
-                                "id": response[i].id,
-                                "input": JSON.parse(response[i].input),
-                                "input_file": response[i].input_file,
-                                "isPrivate": response[i].isPrivate,
-                                "outputs": JSON.parse(response[i].outputs),
-                                "state": response[i].state,
-                                "submitted_at": response[i].submitted_at,
-                                "thumbnail": JSON.parse(response[i].thumbnail),
-                                "zencoder_id": response[i].zencoder_id,
-                                "dislikcount": response[i].dislikecount,
-                                "likcount": response[i].likecount,
-                                "viewcount": response[i].viewscount
-                            };
+                        if(response[i] != undefined) {     
+                            $scope.mediaObj = {
+                                    "channel": response[i].channel,
+                                    "userID":response[i].userId,
+                                    "created": response[i].created,
+                                    "description": response[i].description,
+                                    "id": response[i].id,
+                                    "input": JSON.parse(response[i].input),
+                                    "input_file": response[i].input_file,
+                                    "isPrivate": response[i].isPrivate,
+                                    "outputs": JSON.parse(response[i].outputs),
+                                    "state": response[i].state,
+                                    "submitted_at": response[i].submitted_at,
+                                    "thumbnail": JSON.parse(response[i].thumbnail),
+                                    "zencoder_id": response[i].zencoder_id,
+                                    "dislikcount": response[i].dislikecount,
+                                    "likcount": response[i].likecount,
+                                    "viewcount": response[i].viewscount
+                                };
 
-                        if (response && response[i].userId) {
-                          $scope.mediaObj["user"]= response[i].user
+                            if (response && response[i].userId) {
+                              $scope.mediaObj["user"]= response[i].user
+                            }
+
+                            $rootScope.particluarUserVedio.push($scope.mediaObj);
                         }
-
-                        $rootScope.particluarUserVedio.push($scope.mediaObj);
                     };
                   
                         var pagesShown = 1;
@@ -669,8 +671,6 @@ function enableAutoplay() {
         });
 
     }
-
-
 
 ]);
 

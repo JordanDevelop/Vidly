@@ -1,82 +1,47 @@
-<section class="container">
-        <ol class="breadcrumb">
-          <li><a href="#">Dashboard</a></li>
-          <li class="active">Lising</li>
-        </ol>
-    </section>
-    <!-- Middle Start here -->
-    <section class="block-content">
-    	<div class="container">
-        	<div class="row">
-            	
-		 <div class="col-md-4 space-bottom">
-                    <div class="panel panel-default">
-                        <img src="/modules/core/client/img/admin/gallery1.jpg"/>
-                      <div class="desc">
-		        <h2>gallery <span class="close"><a href="#"><i class="fa fa-close"></i></a></span></h2>
-		      </div>
-                   </div>
-                </div>
-               
-	       
-		 <div class="col-md-4 space-bottom">
-                    <div class="panel panel-default">
-                        <img src="/modules/core/client/img/admin/gallery1.jpg"/>
-                      <div class="desc">
-		        <h2>gallery <span class="close"><a href="#"><i class="fa fa-close"></i></a></span></h2>
-		      </div>
-                   </div>
-                </div>
-               
-	       
-	       
-		 <div class="col-md-4 space-bottom">
-                    <div class="panel panel-default">
-                        <img src="/modules/core/client/img/admin/gallery1.jpg"/>
-                      <div class="desc">
-		        <h2>gallery <span class="close"><a href="#"><i class="fa fa-close"></i></a></span></h2>
-		      </div>
-                   </div>
-                </div>
-               
-	       
-	       
-		 <div class="col-md-4 space-bottom">
-                    <div class="panel panel-default">
-                        <img src="/modules/core/client/img/admin/gallery1.jpg"/>
-                      <div class="desc">
-		        <h2>gallery <span class="close"><a href="#"><i class="fa fa-close"></i></a></span></h2>
-		      </div>
-                   </div>
-                </div>
-               
-	       
-	       
-		 <div class="col-md-4 space-bottom">
-                    <div class="panel panel-default">
-                        <img src="/modules/core/client/img/admin/gallery1.jpg"/>
-                      <div class="desc">
-		        <h2>gallery <span class="close"><a href="#"><i class="fa fa-close"></i></a></span></h2>
-		      </div>
-                   </div>
-                </div>
-               
-	       
-	       
-		 <div class="col-md-4 space-bottom">
-                    <div class="panel panel-default">
-                        <img src="/modules/core/client/img/admin/gallery1.jpg"/>
-                      <div class="desc">
-		        <h2>gallery <span class="close"><a href="#"><i class="fa fa-close"></i></a></span></h2>
-		      </div>
-                   </div>
-                </div>
-               
-			</div>
-            
-			<div class="clearfix"></div>
-			
-			
-		</div>	
-    
-    </section>
+<!-- Middle Start here -->
+<section class="block-content top_spc" ng-init="usersList()">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+          <div class="well tab_wl"> 
+            <div class="table-responsive">
+              <table id="myTable" class="table table-hover">  
+                <thead>  
+                  <tr>  
+                    <th>Username</th>  
+                    <th>Email</th>  
+                    <th>Edit</th>  
+                    <th>Delete</th>  
+                    <th>Active/Inactive</th>  
+                    <th>Change type</th>  
+                  </tr>  
+                </thead>  
+                <tbody>  
+                  <tr ng-repeat="list in allUsers | pagination: curPage * pageSize | limitTo: pageSize">  
+                    <td>{{list.username}}</td>  
+                    <td>{{list.email}}</td>  
+                    <td><a class="btn btn-primary" href="#"><i class="fa fa-edit"></i></a></td> 
+                    <td><a class="btn btn-danger"  href="#"><i class="fa fa-trash-o"></i></a></td> 
+                    <td><select><option>Active</option><option>Inactive</option></select></td> 
+                    <td>
+                      <div class="checkbox-inline">
+                       <div class="checkbox">
+                          <input id="check{{$index}}" type="checkbox" ng-model="vedio.isPrivate" ng-checked="admin" name="check" ng-true-value=1 ng-false-value=0>
+                          <label for="check{{$index}}">Make Admin</label>
+                       </div>
+                      </div>
+                    </td> 
+                  </tr>             
+                </tbody>  
+              </table> 
+              <div class="pagination-div text-right" ng-show="allusersCount>'10'">
+                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">PREV</button>
+                <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                <button type="button" class="btn btn-primary" ng-disabled="curPage >= allusersCount/pageSize - 1" ng-click="curPage = curPage+1">NEXT </button>
+            </div> 
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>  
+</section>

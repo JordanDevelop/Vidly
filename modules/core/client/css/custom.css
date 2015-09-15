@@ -19,6 +19,16 @@ footer {
   position: fixed;
   width: 100%;
 }
+
+.block-content.top_spc {
+    margin-top: 96px;
+}
+.well.tab_wl table tr td a.btn {
+    border-radius: 0;
+    font-size: 15px;
+    padding: 2px 6px;
+}
+.well.tab_wl{background:#fff;}
 .navbar {
     margin-bottom: 0;
     min-height: 65px;
@@ -53,6 +63,33 @@ footer {
 	background: #f35b5b none repeat scroll 0 0;
 	color: #fff !important;
 }
+.navbar-right .dropdown-menu {
+    left: auto;
+    padding: 0;
+    right: 0;
+    width: 206px;
+}
+.nav.navbar-nav.navbar-right.right-menu .front-sub {
+    border-bottom: 1px solid #cccccc;
+    padding: 0;
+}
+.nav.navbar-nav.navbar-right.right-menu .front-sub:last-child {
+    border-bottom: none;
+}
+.nav.navbar-nav.navbar-right.right-menu .front-sub  a {
+     background: #ffffff none repeat scroll 0 0;
+    border-radius: 0px;
+    color: #000000 !important;
+    padding: 13px 11px;
+}
+.nav.navbar-nav.navbar-right.right-menu .front-sub  a:hover{
+	background: #f35b5b none repeat scroll 0 0;
+	color: #fff !important;
+}
+
+
+
+
 .nav.navbar-nav.navbar-right.right-menu .front-login a span {
     padding-left: 7px;
 }
@@ -1949,3 +1986,6 @@ section#contact-inner {
   margin-bottom: 0;
   margin-top: 6px;
 }
+
+ul.thumbnails.row li{position:relative;}
+ul.thumbnails.row li .cross{position:absolute; top:0; right:0;}

@@ -62,8 +62,13 @@
       .state('dashboard', {
           url: '/manage',
           templateUrl: 'modules/core/client/views/admin/admin.client.view.html',
-          controller: 'HomeController'
-        })
+          controller: 'AdminController'
+      })
+      .state('gallery', {
+          url: '/manage/gallery',
+          templateUrl: 'modules/core/client/views/admin/gallery.client.view.html',
+          controller: 'AdminController'
+      })
       .state('resetPassword', {
         url: '/reset',
         templateUrl: 'modules/core/client/views/reset.client.view.html',
