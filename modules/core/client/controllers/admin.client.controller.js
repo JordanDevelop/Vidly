@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminController', ['$scope','$window','$http', '$sce', function($scope, $window, $http, $sce) {
+app.controller('AdminController', ['$scope','$window','$http', function($scope, $window, $http) {
 
 	if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
         $scope.user = JSON.parse($window.sessionStorage["userData"]);
@@ -20,17 +20,9 @@ app.controller('AdminController', ['$scope','$window','$http', '$sce', function(
         };
     }
 
-    $scope.trustSrc = function(src) {
-
-  
-         return $sce.trustAsResourceUrl(JSON.parse(src
-            ));
-    }
-
     $scope.videoList = function() {
     	$http.get('/videoListing').success(function(response) {
     		$scope.allVideos = response.listing;
-            console.log('video', $scope.allVideos);
     	});
     }	
 

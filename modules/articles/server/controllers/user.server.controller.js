@@ -20,12 +20,11 @@ var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 var smtpTransport = nodemailer.createTransport("SMTP", {
- 
-    host: 'smtp.office365.com',
-    port: '587',
-    auth: { user: 'noreply@vidly.io', pass: 'ApQS05c3ijm2pG7c' },
-    secure: 'false',
-    tls: { ciphers: 'SSLv3' }
+    service: "Gmail",
+    auth: {
+        user: "mss.msstest@gmail.com",
+        pass: "T4nP&aCq"
+    }
 });
 
 
@@ -540,8 +539,8 @@ config.filepicker = 'Av4QSKNOQSObS35rGlB8Bz';
 config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
     output_url: 's3://vidly-videos-dev/zensockets/', // Output location for your transcoded videos
-    notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
-   // notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
+   // notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
     //notification_url: 'https://vidly.io/notify/',
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{
