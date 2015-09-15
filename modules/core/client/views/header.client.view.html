@@ -13,7 +13,7 @@
         </div>
          <div ng-init="redditUser()"></div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav left-menu" ng-show="currentUser.role == 'user' || currentRedditUser.role == 'user' || !currentUser || !currentRedditUser">
+          <ul class="nav navbar-nav left-menu" ng-hide="currentUser.role == 'admin' || currentRedditUser.role == 'admin'">
             <li class="active"><a ui-sref="home">Home</a></li>
             <li><a ui-sref="upload">Upload</a></li>
             <li><a href="https://blog.vidly.io">Blog</a></li>

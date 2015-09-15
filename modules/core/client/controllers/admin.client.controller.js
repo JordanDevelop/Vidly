@@ -1,16 +1,17 @@
 'use strict';
 
-app.controller('AdminController', ['$scope','$window','$http', '$sce', function($scope, $window, $http, $sce) {
+app.controller('AdminController', ['$scope','$window','$http', function($scope, $window, $http) {
 
 	if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
         $scope.user = JSON.parse($window.sessionStorage["userData"]);
         $scope.currentUser = $scope.user.userData;
     }
 
+    //for listing of users
     $scope.usersList = function() {
     	$http.get('/userListing').success(function(res, header, status, config) {
             $scope.allUsers = res.listing;
-    		$scope.curPage = 0;
+            $scope.curPage = 0;
             $scope.pageSize = 10;
             $scope.allusersCount = $scope.allUsers.length;
     	});
@@ -20,19 +21,20 @@ app.controller('AdminController', ['$scope','$window','$http', '$sce', function(
         };
     }
 
-    $scope.trustSrc = function(src) {
-
-  
-         return $sce.trustAsResourceUrl(JSON.parse(src
-            ));
-    }
-
+    //for listing of videos
     $scope.videoList = function() {
     	$http.get('/videoListing').success(function(response) {
     		$scope.allVideos = response.listing;
-            console.log('video', $scope.allVideos);
     	});
     }	
+
+    //for edit user
+    $scope.editUser = function(userId) {
+        console.log('userId', userId);
+        $scope.userId = userId;
+        $http.post('/edit')
+
+    }
 
 }]);
 

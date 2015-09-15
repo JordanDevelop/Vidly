@@ -11,12 +11,10 @@ var xFrameOptions = require('x-frame-options')
    var Zencoder = require('zencoder'),
     express = require('express'),
     cors = require('cors'),
-    app = express(),
+   app = express(),
     path = require('path'),
-    mysql = require('mysql'),
-    ua = require('universal-analytics');
+    mysql = require('mysql');
 
-var visitor = ua('UA-67607427-1');
 
 
  //Enabling CORS
@@ -53,9 +51,9 @@ config.zencoder = {
 
     output_url: 's3://vidly-videos-dev/zensockets/', // Output location for your transcoded videos
 
-    notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+   // notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     //notification_url: 'https://vidly.io/notify/',
-//    notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
+    notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{
@@ -95,8 +93,9 @@ module.exports = function(app) {
     app.post('/upload', user.upload);
     app.post('/checkExistence/:value', user.existence)
     app.post('/usersignup', user.confirmSignup);
-    app.get('/userListing', user.listing)
-    app.get('/videoListing', user.videoListing)
+    app.get('/userListing', user.listing);
+    app.get('/edit/:id', user.edit);
+    app.get('/videoListing', user.videoListing);
     app.post('/job', user.job);
     app.get('/uploads', user.uploadHtml);
     app.get('/logins', user.loginHtml);

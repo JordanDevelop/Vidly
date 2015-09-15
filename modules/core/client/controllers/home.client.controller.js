@@ -375,7 +375,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.id = {};
         $scope.openVideo = function(data) {
-
+console.log('dataid', data);
             $scope.id.video_id = data.id;
 
             if (data.id) {
