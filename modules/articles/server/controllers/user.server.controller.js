@@ -311,16 +311,16 @@ exports.signup = function(req, res) {
                                     };
                                     client.sendEmail({
                                         to: req.body.email
-                                        , from: 'mss.msstest@gmail.com'
+                                        , from: 'noreply@vidly.io'
                                         , subject: 'Account Registeration Mail'
                                         , message: "<p> Hello " + name + "</p> <p>Click the below link to activate your account.</p><br/>" + emailBody
                                         , altText: 'Account Registeration Confirmation Mail text here.'
                                     }, function (err, data, res) {
                                             if (error) {console.log('error', error);
-                                                return res.status(204).send(error);
+                                                return res.send(error);
                                             }
                                             console.log('Message sent successfully');
-                                            return res.status(200).send({
+                                            return res.statusCode(200).send({
                                                 status: 200,
                                                 response: req.body.username
                                             });
