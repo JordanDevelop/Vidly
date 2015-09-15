@@ -74,7 +74,7 @@
 
 	                <a class="thumbnail" id="dog1" id="job.id" class="view-media" ng-click="openVideo(job)">
 	                  <div class="thumb-img">
-	                   <img ng-src={{job.thumbnail.url}} tooltips tooltip-title="Play" tooltip-side="right">
+	                   <img ng-src="{{job.thumbnail}}" tooltips tooltip-title="Play" tooltip-side="right">
 	                    <div class="you-tube-count">
 	                      <div class="row">
 	                      <div class="col-md-6"><!-- <div class="time-count">1:45:35</div> --></div>
@@ -145,7 +145,7 @@
 	                  <li ng-show="tab === 4" data-type="dog" data-id="id-1" class="col-md-4" ng-repeat="job in jobs | limitTo:paginationLimit() | orderBy: 'created':true">{{created}}
 	                <a class="thumbnail" id="dog1" id="job.id" class="view-media" ng-click="openVideo(job)">
 	                  <div class="thumb-img">
-	                   <img ng-src="{{job.thumbnail.url}}" tooltips tooltip-title="Play" tooltip-side="right">
+	                   <img ng-src="{{job.thumbnail}}" tooltips tooltip-title="Play" tooltip-side="right">
 	                    <div class="you-tube-count">
 	                      <div class="row">
 	                      <div class="col-md-6"><!-- <div class="time-count">1:45:35</div> --></div>
