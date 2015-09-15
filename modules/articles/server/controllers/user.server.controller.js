@@ -362,9 +362,11 @@ exports.listing = function(req, res) {
     });
 }
 
-exports.edit = function(req, res) {
-    connection.query("SELECT * FROM users WHERE id = '"+req.body.userId+"'", function(err, res) {
-        console.log('err', err, 'res', res);
+exports.updateUserData = function(req, res) {console.log('req------>', req.body);
+    connection.query('UPDATE users SET isActive = '+ req.body.val +' WHERE id ='+ req.body.userId , function(err, response) {
+        if(response) {
+            return res.send('Updated successfully!');
+        }
     });
 }
 

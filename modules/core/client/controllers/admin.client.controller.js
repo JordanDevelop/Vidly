@@ -28,12 +28,16 @@ app.controller('AdminController', ['$scope','$window','$http', function($scope, 
     	});
     }	
 
-    //for edit user
-    $scope.editUser = function(userId) {
-        console.log('userId', userId);
-        $scope.userId = userId;
-        $http.post('/edit')
-
+    //for edit details
+    $scope.userData = {};
+    $scope.selectValue = function(val, userId, value) {
+        console.log('value', value, 'userId', userId);
+        $scope.userData.userId = userId; 
+        $scope.userData.value = value; 
+        $scope.userData.val = val; 
+        $http.post('/updateUserData', $scope.userData).success(function(response) {
+            console.log('response', response);
+        });
     }
 
 }]);

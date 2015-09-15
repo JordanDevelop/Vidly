@@ -10,7 +10,7 @@
     },
 
     'database': 'vidlydb711',
-    //'database': 'vidly',
+    // 'database': 'vidly',
     'port':61337
  };
  
