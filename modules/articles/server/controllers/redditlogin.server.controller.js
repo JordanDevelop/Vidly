@@ -16,8 +16,8 @@ var dbconfig = require('../../../../db');
 var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
-var REDDIT_CONSUMER_KEY = "DRiZeimles1i_w";
-var REDDIT_CONSUMER_SECRET = "f-Cj_BizGJPhI_Q7u9o2GbHqaAU";
+var REDDIT_CONSUMER_KEY = "HrDqC32DOzsTtw";
+var REDDIT_CONSUMER_SECRET = "5aYBvF6fLEtlFXxGQmHLN8kjjmk";
 var testname = "";
 
 passport.serializeUser(function(user, done) {
