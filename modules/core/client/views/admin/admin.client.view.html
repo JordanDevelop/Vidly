@@ -10,27 +10,32 @@
                   <tr>  
                     <th>Username</th>  
                     <th>Email</th>  
-                    <th>Edit</th>  
-                    <th>Delete</th>  
                     <th>Active/Inactive</th>  
                     <th>Change type</th>  
+                    <th>Edit</th>  
+                    <th>Delete</th>  
                   </tr>  
                 </thead>  
                 <tbody>  
                   <tr ng-repeat="list in allUsers | pagination: curPage * pageSize | limitTo: pageSize">  
                     <td>{{list.username}}</td>  
                     <td>{{list.email}}</td>  
-                    <td><a class="btn btn-primary" href="#"><i class="fa fa-edit"></i></a></td> 
-                    <td><a class="btn btn-danger"  href="#"><i class="fa fa-trash-o"></i></a></td> 
-                    <td><select><option>Active</option><option>Inactive</option></select></td> 
+                    <td>
+                      <select name="isActive" ng-model="list.isActive">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </select>
+                    </td> 
                     <td>
                       <div class="checkbox-inline">
                        <div class="checkbox">
-                          <input id="check{{$index}}" type="checkbox" ng-model="vedio.isPrivate" ng-checked="admin" name="check" ng-true-value=1 ng-false-value=0>
+                          <input id="check{{$index}}" type="checkbox" ng-model="list.makeAdmin" ng-checked="admin" name="check" ng-true-value=1 ng-false-value=0>
                           <label for="check{{$index}}">Make Admin</label>
                        </div>
                       </div>
                     </td> 
+                    <td><a class="btn btn-primary" href="#" ng-click="editUser(list.id)"><i class="fa fa-edit"></i></a></td> 
+                    <td><a class="btn btn-danger"  href="#"><i class="fa fa-trash-o"></i></a></td> 
                   </tr>             
                 </tbody>  
               </table> 

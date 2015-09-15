@@ -7,10 +7,11 @@ app.controller('AdminController', ['$scope','$window','$http', function($scope, 
         $scope.currentUser = $scope.user.userData;
     }
 
+    //for listing of users
     $scope.usersList = function() {
     	$http.get('/userListing').success(function(res, header, status, config) {
             $scope.allUsers = res.listing;
-    		$scope.curPage = 0;
+            $scope.curPage = 0;
             $scope.pageSize = 10;
             $scope.allusersCount = $scope.allUsers.length;
     	});
@@ -20,11 +21,20 @@ app.controller('AdminController', ['$scope','$window','$http', function($scope, 
         };
     }
 
+    //for listing of videos
     $scope.videoList = function() {
     	$http.get('/videoListing').success(function(response) {
     		$scope.allVideos = response.listing;
     	});
     }	
+
+    //for edit user
+    $scope.editUser = function(userId) {
+        console.log('userId', userId);
+        $scope.userId = userId;
+        $http.post('/edit')
+
+    }
 
 }]);
 

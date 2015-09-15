@@ -93,8 +93,9 @@ module.exports = function(app) {
     app.post('/upload', user.upload);
     app.post('/checkExistence/:value', user.existence)
     app.post('/usersignup', user.confirmSignup);
-    app.get('/userListing', user.listing)
-    app.get('/videoListing', user.videoListing)
+    app.get('/userListing', user.listing);
+    app.get('/edit/:id', user.edit);
+    app.get('/videoListing', user.videoListing);
     app.post('/job', user.job);
     app.get('/uploads', user.uploadHtml);
     app.get('/logins', user.loginHtml);

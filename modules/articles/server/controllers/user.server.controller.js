@@ -314,15 +314,16 @@ exports.signup = function(req, res) {
                                         , subject: 'Account Registeration Mail'
                                         , message: "<p> Hello " + name + "</p> <p>Click the below link to activate your account.</p><br/>" + emailBody
                                         , altText: 'Account Registeration Confirmation Mail text here.'
-                                    }, function (err, data, res) {
+                                    }, function (err, data, res) {console.log('response-------------------->' ,res, data, err);
                                             if (error) {console.log('error', error);
                                                 return res.status(204).send(error);
-                                            }
+                                            }else{
                                             console.log('Message sent successfully');
                                             return res.status(200).send({
                                                 status: 200,
                                                 response: req.body.username
                                             });
+                                            }
                                     });
                                     //smtpTransport.sendMail(mailOptions, function(error, info) {
                                     //    if (error) {console.log('error', error);
@@ -356,6 +357,12 @@ exports.listing = function(req, res) {
                 listing: data
             });
         }
+    });
+}
+
+exports.edit = function(req, res) {
+    connection.query("SELECT * FROM users WHERE id = '"+req.body.userId+"'", function(err, res) {
+        console.log('err', err, 'res', res);
     });
 }
 
