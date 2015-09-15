@@ -34,6 +34,7 @@
     "cors": "^2.7.1",
     "crypto": "0.0.3",
     "express": "^4.13.1",
+    "express-mysql-session": "^0.4.1",
     "express-session": "^1.11.3",
     "forever": "~0.14.2",
     "glob": "^5.0.13",

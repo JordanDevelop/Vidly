@@ -5,6 +5,8 @@
  */
 var config = require('../config'),
   express = require('express'),
+  session = require('express-session'),
+  SessionStore = require('express-mysql-session'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
@@ -23,7 +25,22 @@ var config = require('../config'),
     ua = require('universal-analytics'),
   sm = require('sitemap');
 
-
+var options = {
+    host: '10.0.10.193',
+    port: 61337,
+    user: 'VV_JyIThFn',
+    password: 'KU6caDkvZ7B74#',
+    database: 'vidlydb711'
+};
+// var options = {
+//     host: 'localhost',
+//     port: 61337,
+//     user: 'root',
+//     password: 'root',
+//     database: 'vidly'
+// };
+ 
+var sessionStore = new SessionStore(options);
 
 var visitor = ua('UA-67607427-1', {https: true});
 visitor.pageview("/").send();
@@ -126,7 +143,7 @@ module.exports.initViewEngine = function (app) {
 /**
  * Configure Express session
  */
-module.exports.initSession = function (app, db) {
+module.exports.initSession = function (app, db) {console.log('here');
   // Express MongoDB session storage
   app.use(session({
     saveUninitialized: true,
@@ -136,10 +153,7 @@ module.exports.initSession = function (app, db) {
       maxAge: config.sessionExpiration
     },
     key: config.sessionKey,
-    store: new MongoStore({
-      mongooseConnection: db.connection,
-      collection: config.sessionCollection
-    })
+    store: sessionStore
   }));
 };
 
