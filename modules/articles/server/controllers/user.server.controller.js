@@ -320,10 +320,12 @@ exports.signup = function(req, res) {
                                                 return res.send(error);
                                             }
                                             console.log('Message sent successfully');
-                                            return res.statusCode(200).send({
-                                                status: 200,
-                                                response: req.body.username
-                                            });
+                                            if (res.statusCode == 200) {
+                                                return res.send({
+                                                    status: 200,
+                                                    response: req.body.username
+                                                });
+                                            }
                                     });
                                     //smtpTransport.sendMail(mailOptions, function(error, info) {
                                     //    if (error) {console.log('error', error);
