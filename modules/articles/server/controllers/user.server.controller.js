@@ -20,11 +20,12 @@ var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
 var smtpTransport = nodemailer.createTransport("SMTP", {
-    service: "Gmail",
-    auth: {
-        user: "mss.msstest@gmail.com",
-        pass: "T4nP&aCq"
-    }
+ 
+    host: 'smtp.office365.com',
+    port: '587',
+    auth: { user: 'noreply@vidly.io', pass: 'ApQS05c3ijm2pG7c' },
+    secure: 'false',
+    tls: { ciphers: 'SSLv3' }
 });
 
 

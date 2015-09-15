@@ -5,7 +5,7 @@ module.exports = {
     title: 'Vidly.io',
     description: 'Host and share your videos!',
     keywords: 'vidly, video hosting, videos, video sharing',
-    googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID'
+    googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'UA-67607427-1'
   },
   port: process.env.PORT || 61337,
   templateEngine: 'swig',
