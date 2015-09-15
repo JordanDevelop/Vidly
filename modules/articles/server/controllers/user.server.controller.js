@@ -315,12 +315,12 @@ exports.signup = function(req, res) {
                                         , subject: 'Account Registeration Mail'
                                         , message: "<p> Hello " + name + "</p> <p>Click the below link to activate your account.</p><br/>" + emailBody
                                         , altText: 'Account Registeration Confirmation Mail text here.'
-                                    }, function (err, data, res) {
+                                    }, function (err, data, resp) {
                                             if (error) {console.log('error', error);
                                                 return res.send(error);
                                             }
                                             console.log('Message sent successfully');
-                                            if (res.statusCode == 200) {
+                                            if (resp.statusCode == 200) {
                                                 return res.send({
                                                     status: 200,
                                                     response: req.body.username
