@@ -25,7 +25,7 @@ var xFrameOptions = require('x-frame-options')
 //});
 // app.get('/media/:id', function (req, res, next) {
 //     res.get('X-Frame-Options')
-     
+
 //  res.json({msg: 'This is CORS-enabled for all origins!'});
 //});
    var allowCrossDomain = function (req, res, next) {
@@ -51,8 +51,9 @@ config.zencoder = {
 
     output_url: 's3://vidly-videos-dev/zensockets/', // Output location for your transcoded videos
 
-    notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
-    //notification_url: 'https://vidly.io/notify/',
+
+   // notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    notification_url: 'https://vidly.io/notify/',
     //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
@@ -61,6 +62,8 @@ config.zencoder = {
             base_url: config.zencoder.output_url,
             public: true,
             thumbnails: {
+                width: 375,
+                height: 220,
                 number: 1,
                 base_url: config.zencoder.output_url,
                 filename: '{{number}}_' + id,

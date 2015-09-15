@@ -267,7 +267,7 @@ exports.existence = function(req, res) {
 }
 
 exports.signup = function(req, res) {
-    
+
     if (req.body) {
 
         //Check if enter email alredy exists
@@ -275,7 +275,7 @@ exports.signup = function(req, res) {
             if (err) {
                 console.log("errrr????", err, "rows-->>", rows);
             } else {
-                
+
                 if (rows.length == 0) {
                     console.log("req.body>>>>>>", req.body);
                     var random_no = randomToken();
@@ -565,7 +565,9 @@ config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
     output_url: 's3://vidly-videos-dev/zensockets/', // Output location for your transcoded videos
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
-   // notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
+
+    //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
+
     //notification_url: 'https://vidly.io/notify/',
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{
@@ -573,6 +575,8 @@ config.zencoder = {
             base_url: config.zencoder.output_url,
             public: true,
             thumbnails: {
+                width: 375,
+                height: 220,
                 number: 1,
                 base_url: config.zencoder.output_url,
                 filename: '{{number}}_' + id,
