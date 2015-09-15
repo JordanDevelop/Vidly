@@ -25,7 +25,7 @@ var xFrameOptions = require('x-frame-options')
 //});
 // app.get('/media/:id', function (req, res, next) {
 //     res.get('X-Frame-Options')
-     
+
 //  res.json({msg: 'This is CORS-enabled for all origins!'});
 //});
    var allowCrossDomain = function (req, res, next) {
@@ -61,6 +61,8 @@ config.zencoder = {
             base_url: config.zencoder.output_url,
             public: true,
             thumbnails: {
+                width: 375,
+                height: 220,
                 number: 1,
                 base_url: config.zencoder.output_url,
                 filename: '{{number}}_' + id,

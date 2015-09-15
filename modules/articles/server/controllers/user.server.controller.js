@@ -267,7 +267,7 @@ exports.existence = function(req, res) {
 }
 
 exports.signup = function(req, res) {
-    
+
     if (req.body) {
 
         //Check if enter email alredy exists
@@ -275,7 +275,7 @@ exports.signup = function(req, res) {
             if (err) {
                 console.log("errrr????", err, "rows-->>", rows);
             } else {
-                
+
                 if (rows.length == 0) {
                     console.log("req.body>>>>>>", req.body);
                     var random_no = randomToken();
@@ -573,6 +573,8 @@ config.zencoder = {
             base_url: config.zencoder.output_url,
             public: true,
             thumbnails: {
+                width: 375,
+                height: 220,
                 number: 1,
                 base_url: config.zencoder.output_url,
                 filename: '{{number}}_' + id,

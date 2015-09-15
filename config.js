@@ -20,6 +20,8 @@ config.zencoder = {
         base_url: config.zencoder.output_url,
         public: true,
         thumbnails: {
+          width: 375,
+          height: 220,
           number: 1,
           base_url: config.zencoder.output_url,
           filename: '{{number}}_' + id,
