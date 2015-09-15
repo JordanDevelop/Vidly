@@ -565,6 +565,7 @@ config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
     output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    cdn: 'https://c.vidly.io/' // CDN URL
 
     //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
 
@@ -572,19 +573,19 @@ config.zencoder = {
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{
             label: 'MP4',
-            base_url: config.zencoder.output_url,
+            base_url: config.zencoder.cdn,
             public: true,
             thumbnails: {
                 width: 375,
                 height: 220,
                 number: 1,
-                base_url: config.zencoder.output_url,
+                base_url: config.zencoder.cdn,
                 filename: '{{number}}_' + id,
                 public: true
             }
         }, {
             label: 'WebM',
-            base_url: config.zencoder.output_url,
+            base_url: config.zencoder.cdn,
             format: 'webm',
             public: true
         }]
