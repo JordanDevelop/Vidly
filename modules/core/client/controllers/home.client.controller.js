@@ -77,7 +77,7 @@ $scope.urlProtocol = window.location.protocol;
        $scope.redditUser = function() {
 
 
-console.log("In Reddit user function");
+
 
             if ($location.path().indexOf("id") > -1) {
                 
@@ -112,6 +112,7 @@ console.log("In Reddit user function");
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
 
                 $http.get('/reddituser').success(function(response) {
+                console.log("In Reddit user function",response);
                     if(response.alldata != undefined){
                         $scope.currentRedditUser = response.alldata;
                     }else if(response.message) {
