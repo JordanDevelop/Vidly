@@ -69,7 +69,7 @@ passport.use(new RedditStrategy({
                 console.log('query success',success);
                             if (success && !err) {
    
-                                var user = name;
+                                var user ={"username": name};
                                 return done(null, user);
                             } else {
                                 return done("An error with Signup has been occured,Try Again", null);
