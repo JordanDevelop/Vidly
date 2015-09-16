@@ -53,6 +53,7 @@ passport.use(new RedditStrategy({
                 
                     if (userFind && userFind.length > 0) {
                            var user = userFind[0];
+                           console.log('found user',user);
                         return done(null, user);
                     }
    
