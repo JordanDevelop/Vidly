@@ -114,7 +114,10 @@ exports.logout = function(req, res) {
     res.redirect('/');
 };
 
-exports.getreddituser = function(req, res) {    if (req.session && req.session.passport && req.session.passport.user) {
+exports.getreddituser = function(req, res) { 
+console.log('in getreddit user');
+if (req.session && req.session.passport && req.session.passport.user) {
+console.log('verifued getreddit user');
         req.session.user = req.session.passport.user;
    //console.log('req', req.session.user);
 
