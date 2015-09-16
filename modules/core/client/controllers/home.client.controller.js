@@ -639,18 +639,7 @@ console.log('dataid', data);
         }
 
         }
-
-/* $scope.getUserInfo = function(){
-             console.log('i am ');
-             $scope.uiRouterState = $state;
-             console.log($scope.uiRouterState);
-             $scope.email = $stateParams.email;
-             $http.get('/allUserVedioAndInfo').success(function(res){
-             console.log(res);
-            });
-        }*/
-
-        
+       
 
         $scope.logout = function() {
             $http.get('/signout').success(function(res) {
