@@ -112,10 +112,20 @@ console.log("In Reddit user function");
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
 
                 $http.get('/reddituser').success(function(response) {
+<<<<<<< HEAD
                     if(response.alldata){
                         $scope.currentRedditUser = response.alldata;
                     }else if(response.message) {
                         toastr.error('Request failed: '+response.message);
+=======
+                console.log('response',response);
+                if(response && response.alldata){
+                    $scope.currentRedditUser = response.alldata;
+                    }else{
+                    if(response){
+                     toastr.error('Error:'+response.message);
+                     }
+>>>>>>> ebffcc79da386e34a7a8773960da0a49d435475f
                     }
                 });
             } else {

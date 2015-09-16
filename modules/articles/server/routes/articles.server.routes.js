@@ -52,8 +52,13 @@ config.zencoder = {
     output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
     cdn: 'https://c.vidly.io/', // CDN URL
 
+<<<<<<< HEAD
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     //notification_url: 'https://vidly.io/notify/',
+=======
+   // notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    notification_url: 'https://vidly.io/notify/',
+>>>>>>> ebffcc79da386e34a7a8773960da0a49d435475f
     //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
