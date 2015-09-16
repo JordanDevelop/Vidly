@@ -12,7 +12,7 @@
                     <th>Email</th>  
                     <th>Active/Inactive</th>  
                     <th>Change type</th>  
-                    <th>Edit</th>  
+                    <!-- <th>Edit</th>  --> 
                     <th>Delete</th>  
                   </tr>  
                 </thead>  
@@ -21,7 +21,7 @@
                     <td>{{list.username}}</td>  
                     <td>{{list.email}}</td>  
                     <td>
-                      <select name="isActive" ng-model="list.isActive">
+                      <select name="isActive" ng-model="list.isActive" ng-change="selectValue(list.isActive, list.id, isActive)">
                         <option value="1">Active</option>
                         <option value="0">Inactive</option>
                       </select>
@@ -29,17 +29,17 @@
                     <td>
                       <div class="checkbox-inline">
                        <div class="checkbox">
-                          <input id="check{{$index}}" type="checkbox" ng-model="list.makeAdmin" ng-checked="admin" name="check" ng-true-value=1 ng-false-value=0>
+                          <input id="check{{$index}}" type="checkbox" ng-model="list.makeAdmin" ng-checked="list.makeAdmin" ng-change="checkValue(list.makeAdmin, list.id, makeAdmin)" name="check" ng-true-value=1 ng-false-value=0>
                           <label for="check{{$index}}">Make Admin</label>
                        </div>
                       </div>
                     </td> 
-                    <td><a class="btn btn-primary" href="#" ng-click="editUser(list.id)"><i class="fa fa-edit"></i></a></td> 
+                    <!-- <td><a class="btn btn-primary" href="#" ng-click="editUser(list.id)"><i class="fa fa-edit"></i></a></td>  -->
                     <td><a class="btn btn-danger"  href="#"><i class="fa fa-trash-o"></i></a></td> 
                   </tr>             
                 </tbody>  
               </table> 
-              <div class="pagination-div text-right" ng-show="allusersCount>'10'">
+              <div class="pagination-div text-right" ng-show="numberOfPages()>'0'">
                 <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">PREV</button>
                 <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                 <button type="button" class="btn btn-primary" ng-disabled="curPage >= allusersCount/pageSize - 1" ng-click="curPage = curPage+1">NEXT </button>

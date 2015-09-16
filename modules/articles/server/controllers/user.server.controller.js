@@ -362,9 +362,11 @@ exports.listing = function(req, res) {
     });
 }
 
-exports.edit = function(req, res) {
-    connection.query("SELECT * FROM users WHERE id = '"+req.body.userId+"'", function(err, res) {
-        console.log('err', err, 'res', res);
+exports.updateUserData = function(req, res) {console.log('req------>', req.body);
+    connection.query('UPDATE users SET isActive = '+ req.body.val +' WHERE id ='+ req.body.userId , function(err, response) {
+        if(response) {
+            return res.send('Updated successfully!');
+        }
     });
 }
 
@@ -527,16 +529,36 @@ exports.resetPwd = function(req, res) {
                                 text: 'Your Vidly Account Password is Attached here.',
                                 html: "<p>Password: </p><br/>" + token,
                             };
-                            smtpTransport.sendMail(mailOptions, function(error, info) {
-                                if (error) {
-                                    return console.log(error);
-                                } else {
-                                    return res.status(200).send({
-                                        status: 200,
-                                        message: "Your Password is sent successfully to Your EmailId"
+                            console.log('rows', rows[0]);
+                            client.sendEmail({
+                                        to: rows[0].email
+                                        , from: 'noreply@vidly.io'
+                                        , subject: 'Your Vidly Account Password'
+                                        , message: "<p> Hello " + rows[0].username + ",</p> <p>Your Vidly Account Password is:</p>" + token,
+                                         altText: 'Vidly Account Password.'
+
+                                    }, function (err, data, resp) {
+                                            if (err) {console.log('error', err);
+                                                return res.send(err);
+                                            }
+                                            console.log('Message sent successfully');
+                                            if (resp.statusCode == 200) {
+                                                return res.send({
+                                                    status: 200,
+                                                    message: "Your Password is sent successfully to Your EmailId"
+                                                });
+                                            }
                                     });
-                                }
-                            });
+                            // smtpTransport.sendMail(mailOptions, function(error, info) {
+                            //     if (error) {
+                            //         return console.log(error);
+                            //     } else {
+                            //         return res.status(200).send({
+                            //             status: 200,
+                            //             message: "Your Password is sent successfully to Your EmailId"
+                            //         });
+                            //     }
+                            // });
                         } else {
                             return res.status(200).send({
                             message: "Something wrong occured, Please try Again!"

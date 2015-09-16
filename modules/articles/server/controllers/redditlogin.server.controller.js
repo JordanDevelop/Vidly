@@ -18,7 +18,11 @@ connection.query('USE ' + dbconfig.database);
 
 var REDDIT_CONSUMER_KEY = "HrDqC32DOzsTtw";
 var REDDIT_CONSUMER_SECRET = "5aYBvF6fLEtlFXxGQmHLN8kjjmk";
+// var REDDIT_CONSUMER_KEY = "DRiZeimles1i_w";
+// var REDDIT_CONSUMER_SECRET = "f-Cj_BizGJPhI_Q7u9o2GbHqaAU";
 var testname = "";
+
+var activereddituser="true";
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -75,7 +79,9 @@ passport.use(new RedditStrategy({
                     }
                 });
             } else {
-                return done("Please Verify Your EmailId on Reddit before Login", null);
+  console.log("har baar call ho rha hai");
+                activereddituser="false";            
+                return done(null, null);
             }
         });
     }
@@ -104,6 +110,8 @@ exports.authredditcallback = function(req, res, next) {
             failureRedirect: '/login'
         })(req, res, next);
     } else {
+
+        console.log('reddit callback error');
         next(new Error(403));
     }
 };
@@ -114,23 +122,54 @@ exports.logout = function(req, res) {
     res.redirect('/');
 };
 
+<<<<<<< HEAD
+exports.getreddituser = function(req, res) {   
+
+
+console.log('activereddituser', activereddituser);
+
+ if (req.session && req.session.passport && req.session.passport.user) {
+=======
 exports.getreddituser = function(req, res) { 
 console.log('in getreddit user');
 if (req.session && req.session.passport && req.session.passport.user) {
 console.log('verifued getreddit user');
+>>>>>>> ebffcc79da386e34a7a8773960da0a49d435475f
         req.session.user = req.session.passport.user;
    //console.log('req', req.session.user);
-
+console.log("IN Get Reddit user function if session");
         return res.status(200).json({
             title: 'Zensockets!',
             user: req.session.user.username,
             alldata: req.session.user
         });
+<<<<<<< HEAD
+    }
+
+    
+
+    else if(activereddituser=="false")
+    {
+        activereddituser = "true";
+       return res.status(200).send({
+            message: "Please Verify Your EmailId on Reddit before Login"
+        });
+    } 
+
+
+    else {
+
+           return res.status(200).send({
+            status: "ok"
+=======
     } else {
     console.log('get reddit user error');
         return res.status(200).send({
             message: "Unsuccessful Signup,if with Reddit!"
+>>>>>>> ebffcc79da386e34a7a8773960da0a49d435475f
         });
+
+        
     }
 };
 
