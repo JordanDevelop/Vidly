@@ -108,7 +108,9 @@ $scope.urlProtocol = window.location.protocol;
                 if(response && response.alldata){
                     $scope.currentRedditUser = response.alldata;
                     }else{
+                    if(response){
                      toastr.error('Error:'+response.message);
+                     }
                     }
                 });
             } else {
