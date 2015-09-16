@@ -53,6 +53,7 @@ passport.use(new RedditStrategy({
                 
                     if (userFind && userFind.length > 0) {
                            var user = userFind[0];
+                           console.log('found user',user);
                         return done(null, user);
                     }
    
@@ -66,9 +67,9 @@ passport.use(new RedditStrategy({
                         connection.query('INSERT INTO users SET ?', user, function(err, success) {
                          console.log('query error again',err);
                 console.log('query success',success);
-                            if (success && success.length > 0) {
+                            if (success && !err) {
    
-                                var user = name;
+                                var user ={"username": name};
                                 return done(null, user);
                             } else {
                                 return done("An error with Signup has been occured,Try Again", null);
