@@ -66,7 +66,7 @@ passport.use(new RedditStrategy({
                         connection.query('INSERT INTO users SET ?', user, function(err, success) {
                          console.log('query error again',err);
                 console.log('query success',success);
-                            if (success && success.length > 0) {
+                            if (success && !err) {
    
                                 var user = name;
                                 return done(null, user);
