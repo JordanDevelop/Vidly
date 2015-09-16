@@ -49,8 +49,8 @@ config.filepicker = 'Av4QSKNOQSObS35rGlB8Bz';
 config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
 
-    output_url: 's3://vidly-videos-dev/zensockets/', // Output location for your transcoded videos
-
+    output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
+    cdn: 'https://c.vidly.io/', // CDN URL
 
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     //notification_url: 'https://vidly.io/notify/',

@@ -3,6 +3,8 @@
 app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr',
     function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr) {
 
+
+
 $scope.urlProtocol = window.location.protocol;
     if($stateParams.id) {
         $http.post('/view', $scope.id).success(function(res) {
@@ -73,6 +75,10 @@ $scope.urlProtocol = window.location.protocol;
 
 
        $scope.redditUser = function() {
+
+
+console.log("In Reddit user function");
+
             if ($location.path().indexOf("id") > -1) {
                 
                 var myparams = [];
@@ -104,8 +110,13 @@ $scope.urlProtocol = window.location.protocol;
                     }
                 });
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
+
                 $http.get('/reddituser').success(function(response) {
-                    $scope.currentRedditUser = response.alldata;
+                    if(response.alldata){
+                        $scope.currentRedditUser = response.alldata;
+                    }else if(response.message) {
+                        toastr.error('Request failed: '+response.message);
+                    }
                 });
             } else {
                 console.log("else of reddit user function");

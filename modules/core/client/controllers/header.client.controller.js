@@ -8,7 +8,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Menu
 
   }
  // console.log('reddit', $rootScope.currentRedditUser);
-
+$rootScope.test="dsdadaa";
    if($window.sessionStorage["redditUser"] != null || $window.sessionStorage["redditUser"] != undefined) {console.log('here');
 
      $scope.userReddit =  JSON.parse($window.sessionStorage["redditUser"]);

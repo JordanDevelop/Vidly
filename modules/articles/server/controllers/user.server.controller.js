@@ -529,16 +529,36 @@ exports.resetPwd = function(req, res) {
                                 text: 'Your Vidly Account Password is Attached here.',
                                 html: "<p>Password: </p><br/>" + token,
                             };
-                            smtpTransport.sendMail(mailOptions, function(error, info) {
-                                if (error) {
-                                    return console.log(error);
-                                } else {
-                                    return res.status(200).send({
-                                        status: 200,
-                                        message: "Your Password is sent successfully to Your EmailId"
+                            console.log('rows', rows[0]);
+                            client.sendEmail({
+                                        to: rows[0].email
+                                        , from: 'noreply@vidly.io'
+                                        , subject: 'Your Vidly Account Password'
+                                        , message: "<p> Hello " + rows[0].username + ",</p> <p>Your Vidly Account Password is:</p>" + token,
+                                         altText: 'Vidly Account Password.'
+
+                                    }, function (err, data, resp) {
+                                            if (err) {console.log('error', err);
+                                                return res.send(err);
+                                            }
+                                            console.log('Message sent successfully');
+                                            if (resp.statusCode == 200) {
+                                                return res.send({
+                                                    status: 200,
+                                                    message: "Your Password is sent successfully to Your EmailId"
+                                                });
+                                            }
                                     });
-                                }
-                            });
+                            // smtpTransport.sendMail(mailOptions, function(error, info) {
+                            //     if (error) {
+                            //         return console.log(error);
+                            //     } else {
+                            //         return res.status(200).send({
+                            //             status: 200,
+                            //             message: "Your Password is sent successfully to Your EmailId"
+                            //         });
+                            //     }
+                            // });
                         } else {
                             return res.status(200).send({
                             message: "Something wrong occured, Please try Again!"
@@ -565,8 +585,9 @@ config.filepicker = 'Av4QSKNOQSObS35rGlB8Bz';
 // Zencoder specific configuration
 config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
-    output_url: 's3://vidly-videos-dev/zensockets/', // Output location for your transcoded videos
+    output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    cdn: 'https://c.vidly.io/', // CDN URL
 
     //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
 
