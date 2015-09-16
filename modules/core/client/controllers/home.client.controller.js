@@ -105,7 +105,11 @@ $scope.urlProtocol = window.location.protocol;
                 });
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
                 $http.get('/reddituser').success(function(response) {
+                if(response && response.alldata){
                     $scope.currentRedditUser = response.alldata;
+                    }else{
+                     toastr.error('Error:'+response.message);
+                    }
                 });
             } else {
                 console.log("else of reddit user function");
