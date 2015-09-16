@@ -554,10 +554,10 @@ console.log('dataid', data);
                                     "input": JSON.parse(response[i].input),
                                     "input_file": response[i].input_file,
                                     "isPrivate": response[i].isPrivate,
-                                    "outputs": JSON.parse(response[i].outputs),
+                                    "outputs": response[i].outputs,
                                     "state": response[i].state,
                                     "submitted_at": response[i].submitted_at,
-                                    "thumbnail": JSON.parse(response[i].thumbnail),
+                                    "thumbnail": response[i].thumbnail,
                                     "zencoder_id": response[i].zencoder_id,
                                     "dislikcount": response[i].dislikecount,
                                     "likcount": response[i].likecount,
@@ -639,18 +639,7 @@ console.log('dataid', data);
         }
 
         }
-
-/* $scope.getUserInfo = function(){
-             console.log('i am ');
-             $scope.uiRouterState = $state;
-             console.log($scope.uiRouterState);
-             $scope.email = $stateParams.email;
-             $http.get('/allUserVedioAndInfo').success(function(res){
-             console.log(res);
-            });
-        }*/
-
-        
+       
 
         $scope.logout = function() {
             $http.get('/signout').success(function(res) {
