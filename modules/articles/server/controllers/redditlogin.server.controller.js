@@ -127,6 +127,7 @@ console.log('verifued getreddit user');
             alldata: req.session.user
         });
     } else {
+    console.log('get reddit user error');
         return res.status(204).send({
             message: "Unsuccessful Signup,if with Reddit!"
         });
