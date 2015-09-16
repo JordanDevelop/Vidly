@@ -3,8 +3,6 @@
 app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr',
     function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr) {
 
-
-
 $scope.urlProtocol = window.location.protocol;
     if($stateParams.id) {
         $http.post('/view', $scope.id).success(function(res) {
@@ -75,8 +73,6 @@ $scope.urlProtocol = window.location.protocol;
 
 
        $scope.redditUser = function() {
-
-
 
 
             if ($location.path().indexOf("id") > -1) {
@@ -379,15 +375,8 @@ $scope.urlProtocol = window.location.protocol;
             return $sce.trustAsResourceUrl(src);
         }
 
-//         var vid = document.getElementById("myVideo");
-// function enableAutoplay() { 
-//     vid.autoplay = true;
-//     vid.load();
-// }
-
         $scope.id = {};
         $scope.openVideo = function(data) {
-console.log('dataid', data);
             $scope.id.video_id = data.id;
 
             if (data.id) {
@@ -489,14 +478,13 @@ console.log('dataid', data);
             });
         }
 
-        if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
-            $scope.user = JSON.parse($window.sessionStorage["userData"]);
-            $scope.currentUser = $scope.user.userData;
-
-        }
+    if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
+        $scope.user = JSON.parse($window.sessionStorage["userData"]);
+        $scope.currentUser = $scope.user.userData;
+    }
  
-    $scope.downloadLink = function(video) {  
-        $scope.videolink = video.outputs.MP4.url;       
+    $scope.downloadLink = function(video) { 
+        $scope.videolink = video.outputs;       
         var elVideo = document.createElement("a");
         elVideo.setAttribute("href", $scope.videolink);
         elVideo.setAttribute("download", 'video.mp4');
@@ -522,7 +510,7 @@ console.log('dataid', data);
                     toastr.error('Request Failed: '+ response.message);
                 }
                 else {
-                   // console.log(response.msg);
+                    console.log(response.msg);
                 }
             });
         }else if(value == 'username' && username != undefined){
@@ -530,7 +518,7 @@ console.log('dataid', data);
                 if(response.message) {
                     toastr.error('Request Failed:'+ response.message);
                 }else {
-                   // console.log(response.msg);
+                    console.log(response.msg);
                 }
             });
         }
@@ -538,8 +526,9 @@ console.log('dataid', data);
     }
 
     $scope.userInfo = function(user,userID) {
+        console.log(user, userID);
         $rootScope.usersName = user;
-        $location.path("/u/" +user);
+        // $location.path("/u/" +user);
          $rootScope.particluarUserVedio = [];
          $http.get('/allUserVedioAndInfo/'+userID).success(function(response, header, status, config) {
                 if (response) {
@@ -547,29 +536,31 @@ console.log('dataid', data);
                     for (var i = 0; i < response.length; i++) {
                         if(response[i] != undefined) {     
                             $scope.mediaObj = {
-                                    "channel": response[i].channel,
-                                    "userID":response[i].userId,
-                                    "created": response[i].created,
-                                    "description": response[i].description,
-                                    "id": response[i].id,
-                                    "input": JSON.parse(response[i].input),
-                                    "input_file": response[i].input_file,
-                                    "isPrivate": response[i].isPrivate,
-                                    "outputs": response[i].outputs,
-                                    "state": response[i].state,
-                                    "submitted_at": response[i].submitted_at,
-                                    "thumbnail": response[i].thumbnail,
-                                    "zencoder_id": response[i].zencoder_id,
-                                    "dislikcount": response[i].dislikecount,
-                                    "likcount": response[i].likecount,
-                                    "viewcount": response[i].viewscount
-                                };
+                                "channel": response[i].channel,
+                                "userID":response[i].userId,
+                                "created": response[i].created,
+                                "description": response[i].description,
+                                "id": response[i].id,
+                                "input": JSON.parse(response[i].input),
+                                "input_file": response[i].input_file,
+                                "isPrivate": response[i].isPrivate,
+                                "outputs": response[i].outputs,
+                                "state": response[i].state,
+                                "submitted_at": response[i].submitted_at,
+                                "thumbnail": response[i].thumbnail,
+                                "zencoder_id": response[i].zencoder_id,
+                                "dislikcount": response[i].dislikecount,
+                                "likcount": response[i].likecount,
+                                "viewcount": response[i].viewscount
+                            };
 
                             if (response && response[i].userId) {
                               $scope.mediaObj["user"]= response[i].user
                             }
 
                             $rootScope.particluarUserVedio.push($scope.mediaObj);
+                        }else {
+                            $scope.msg = 'No Videos yet!';
                         }
                     };
                   
@@ -586,6 +577,7 @@ console.log('dataid', data);
                         $rootScope.MoreItems = function() {
                             pagesShown = pagesShown + 1;       
                         };  
+                        $location.path("/u/" +user);
                 } else {
                     console.log("empty response");
                 }
@@ -602,7 +594,6 @@ console.log('dataid', data);
         if(!$scope.currentUser && !$scope.currentRedditUser) {
             $state.go('login');
         }else {
-
             var count = 0;
             $scope.likeValue.video_id = id;
             $scope.likeValue.lik_dis = value;
@@ -610,7 +601,7 @@ console.log('dataid', data);
 
                 if(value == 'like') {
 
-                    if(response.message == 'You have already liked this video') {
+                    if(response.message) {
                         //$("#msg"+index).text('You have already review this video');
                         toastr.info('Info: You have already review this video');
                     }
@@ -623,7 +614,7 @@ console.log('dataid', data);
                         $("#likeanchor"+index).text(count);
                     }
                 }else {
-                    if(response.message == 'You have already liked this video') {
+                    if(response.message) {
                         //$("#msg"+index).text('You have already review this video');
                         toastr.info('Info: You have already review this video');
                     }

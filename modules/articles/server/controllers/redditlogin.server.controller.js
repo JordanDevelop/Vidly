@@ -45,7 +45,7 @@ passport.use(new RedditStrategy({
         process.nextTick(function() {
             //check if verified by reddit
             if (profile._json.has_verified_email == true) {
-    console.log('in query');
+  
                 connection.query('SELECT * FROM users WHERE username = ?', name, function(err, userFind) {
                     //if user find in our db
                 console.log('query error',err);
