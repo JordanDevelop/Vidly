@@ -169,13 +169,13 @@ module.exports = function(app) {
             var input = JSON.stringify(jobDoc.input);
             var outputs = JSON.stringify(jobDoc.outputs);
             var outputUrl = jobDoc.outputs.MP4.url;
-            var videoUrl = outputUrl.split(":")
+            var videoUrl = outputUrl.split("/")
             console.log('outputs', videoUrl[1]);
             var thumbnail = JSON.stringify(jobDoc.thumbnail);
             var thumbnailUrl = jobDoc.thumbnail.url;
-            var URL = thumbnailUrl.split(":")
+            var URL = thumbnailUrl.split("/")
             console.log('thumbnail', URL[1]);
-            var query = "UPDATE uploads SET zencoder_id = " + jobDoc.zencoder_id + ", input = '" + input + "', outputs = '" + videoUrl[1] + "', state= '" + jobDoc.state + "', thumbnail = '" + URL[1] + "' WHERE id = " + req.body.job.pass_through + "";
+            var query = "UPDATE uploads SET zencoder_id = " + jobDoc.zencoder_id + ", input = '" + input + "', outputs = '" +"//c.vidly.io/"+videoUrl[videoUrl.length-1] + "', state= '" + jobDoc.state + "', thumbnail = '" +"//c.vidly.io/"+ URL[URL.length-1] + "' WHERE id = " + req.body.job.pass_through + "";
             connection.query(query, function(err, doc) {
                 console.log("Updated in ROUTES=======>> ", doc);
 
