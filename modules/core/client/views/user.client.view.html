@@ -15,7 +15,7 @@
       </div>
     </section>
 
-   <section id="user-content" ng-init="currentUser ? userInfo(currentUser.username, currentUser.id) : '' ">
+   <section id="user-content" ng-init="currentUser ? userInfo(currentUser.username, currentUser.id) : redditredirect() ">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -48,7 +48,7 @@
                       </div>
                     </div>
                   </a> 
-                  <div class="checkbox-inline" ng-show="currentUser || currentRedditUser">
+                  <div class="checkbox-inline" ng-show="currentUser || userid">
                        <div class="checkbox">
                           <input id="check{{$index}}" type="checkbox" ng-model="vedio.isPrivate" ng-checked="vedio.isPrivate" name="check" ng-change="checkBoxValue(vedio.isPrivate, vedio.id)" ng-true-value=1 ng-false-value=0>
                           <label for="check{{$index}}">Is Private</label>

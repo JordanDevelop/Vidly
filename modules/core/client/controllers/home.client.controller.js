@@ -108,7 +108,6 @@ $scope.urlProtocol = window.location.protocol;
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
 
                 $http.get('/reddituser').success(function(response) {
-                console.log("In Reddit user function",response);
                     if(response.alldata != undefined){
                         $scope.currentRedditUser = response.alldata;
                     }else if(response.message) {
@@ -478,6 +477,14 @@ $scope.urlProtocol = window.location.protocol;
             });
         }
 
+
+        $scope.redirecttouser=function(un)
+        {
+console.log('un', un);
+          $location.path("/u/"+un);
+
+        }
+
     if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
         $scope.user = JSON.parse($window.sessionStorage["userData"]);
         $scope.currentUser = $scope.user.userData;
@@ -525,8 +532,34 @@ $scope.urlProtocol = window.location.protocol;
 
     }
 
+    $scope.redditredirect=function()
+    {
+
+
+            $http.get('/reddituser').success(function(response) {
+                    if(response.alldata != undefined){
+                        
+                      
+                        $scope.userid=response.alldata.id;
+                         $scope.username=response.alldata.username;
+if($stateParams.name==$scope.username)
+    {
+$scope.userInfo($scope.username,$scope.userid);
+
+    };
+                         
+                       
+ 
+
+                    }
+                })
+
+    }
+
     $scope.userInfo = function(user,userID) {
-        console.log(user, userID);
+  
+
+      
         $rootScope.usersName = user;
         // $location.path("/u/" +user);
          $rootScope.particluarUserVedio = [];
@@ -541,7 +574,7 @@ $scope.urlProtocol = window.location.protocol;
                                 "created": response[i].created,
                                 "description": response[i].description,
                                 "id": response[i].id,
-                                "input": JSON.parse(response[i].input),
+                                "input": response[i].input,
                                 "input_file": response[i].input_file,
                                 "isPrivate": response[i].isPrivate,
                                 "outputs": response[i].outputs,
