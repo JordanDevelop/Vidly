@@ -122,32 +122,15 @@ exports.logout = function(req, res) {
     res.redirect('/');
 };
 
-<<<<<<< HEAD
-exports.getreddituser = function(req, res) {   
-
-
-console.log('activereddituser', activereddituser);
-
- if (req.session && req.session.passport && req.session.passport.user) {
-=======
 exports.getreddituser = function(req, res) { 
-console.log('in getreddit user');
 if (req.session && req.session.passport && req.session.passport.user) {
-console.log('verifued getreddit user');
->>>>>>> ebffcc79da386e34a7a8773960da0a49d435475f
         req.session.user = req.session.passport.user;
-   //console.log('req', req.session.user);
-console.log("IN Get Reddit user function if session");
         return res.status(200).json({
             title: 'Zensockets!',
             user: req.session.user.username,
             alldata: req.session.user
         });
-<<<<<<< HEAD
-    }
-
-    
-
+    }  
     else if(activereddituser=="false")
     {
         activereddituser = "true";
@@ -155,21 +138,10 @@ console.log("IN Get Reddit user function if session");
             message: "Please Verify Your EmailId on Reddit before Login"
         });
     } 
-
-
     else {
-
-           return res.status(200).send({
-            status: "ok"
-=======
-    } else {
-    console.log('get reddit user error');
-        return res.status(200).send({
-            message: "Unsuccessful Signup,if with Reddit!"
->>>>>>> ebffcc79da386e34a7a8773960da0a49d435475f
-        });
-
-        
+       return res.status(200).send({
+        status: "ok"
+        });  
     }
 };
 
