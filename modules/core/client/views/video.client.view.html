@@ -37,8 +37,8 @@
                 <div class="col-md-6 video-liked">
                    <h3><strong class="download-icon"><a href="#" ng-click="downloadLink(job)"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{media.viewscount}}</span></h3>
                         <div class="like-dislike">
-                            <button ng-click="likeClick(media.id, $index, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{$index}}">{{media.likecount}}</div></button>
-                            <button ng-click="likeClick(media.id, $index, 'dislike')"><i class="fa fa-thumbs-down" tooltips tooltip-title="Dislike" tooltip-side="top"></i><div id="dislike{{$index}}">{{media.dislikecount}}</div></button>
+                            <button ng-click="likeClick(media.id, 0, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor0">{{media.likecount}}</div></button>
+                            <button ng-click="likeClick(media.id, 0, 'dislike')"><i class="fa fa-thumbs-down" tooltips tooltip-title="Dislike" tooltip-side="top"></i><div id="dislike0">{{media.dislikecount}}</div></button>
                             <!-- <p id="msg{{$index}}">{{msg}}</p> -->
 
                           </div>
