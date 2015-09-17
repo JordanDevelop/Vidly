@@ -82,6 +82,7 @@ module.exports = function(app) {
 
     //Reddituser routes
     //app.get('/login',reddituser.login);
+
     app.route('/auth/reddit').get(reddituser.authreddit);
     app.get('/reddituser', reddituser.getreddituser);
     app.get('/auth/reddit/callback', reddituser.authredditcallback);
@@ -91,6 +92,7 @@ module.exports = function(app) {
     // app.get('/users/:name', user.home);
     app.post('/auth/signup', user.signup);
     app.post('/userlogin', user.login);
+    app.post('/changeUsernsfw',user.changeUsernsfw);
     app.get('/signout', user.signout);
     app.post('/users', user.home);
     app.post('/upload', user.upload);
