@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr',
-    function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr) {
+app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr','$localStorage',
+    function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage) {
 
 $scope.urlProtocol = window.location.protocol;
     if($stateParams.id) {
@@ -480,7 +480,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.redirecttouser=function(un)
         {
-console.log('un', un);
+
           $location.path("/u/"+un);
 
         }
@@ -532,36 +532,52 @@ console.log('un', un);
 
     }
 
-    $scope.redditredirect=function()
-    {
-
-
+    $scope.redditredirect=function() {
+        var uid= $localStorage.userid;
+        var uname= $localStorage.username;
+        if (uid && uname) {
+           $scope.userid = uid;
+           $scope.username = uname;
+           $scope.userInfo($scope.username, $scope.userid);
+        }
+        else {
             $http.get('/reddituser').success(function(response) {
-                    if(response.alldata != undefined){
-                        
-                      
-                        $scope.userid=response.alldata.id;
-                         $scope.username=response.alldata.username;
-if($stateParams.name==$scope.username)
-    {
-$scope.userInfo($scope.username,$scope.userid);
-
-    };
-                         
-                       
- 
-
-                    }
-                })
-
+                if (response.alldata != undefined) {
+                    $scope.userid = response.alldata.id;
+                    $scope.username = response.alldata.username;
+                    if ($stateParams.name == $scope.username) {
+                        $scope.userInfo($scope.username, $scope.userid);
+                    };
+                }
+            });
+        }
     }
 
-    $scope.userInfo = function(user,userID) {
-  
 
-      
+
+$scope.test=function(name,id)
+{
+    $localStorage.testid=id;
+    $location.path("/u/"+name);
+
+}
+
+
+    $scope.userInfo = function(user,userID) {
+
+       $localStorage.userid=userID;
+       $localStorage.username=user;       ;
+
         $rootScope.usersName = user;
         // $location.path("/u/" +user);
+
+      
+        if($localStorage.testid)
+        {
+      
+           userID=$localStorage.testid;
+
+        }
          $rootScope.particluarUserVedio = [];
          $http.get('/allUserVedioAndInfo/'+userID).success(function(response, header, status, config) {
                 if (response) {
@@ -610,7 +626,13 @@ $scope.userInfo($scope.username,$scope.userid);
                         $rootScope.MoreItems = function() {
                             pagesShown = pagesShown + 1;       
                         };  
+                        
+                        if (!$localStorage.testid) 
+                        {
                         $location.path("/u/" +user);
+                    }
+
+
                 } else {
                     console.log("empty response");
                 }
