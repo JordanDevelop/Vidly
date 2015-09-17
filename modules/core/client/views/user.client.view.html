@@ -15,7 +15,7 @@
       </div>
     </section>
 
-   <section id="user-content" ng-init="currentUser ? userInfo(currentUser.username, currentUser.id) : redditredirect() ">
+   <section id="user-content" ng-init="currentUser ? userInfo(currentUser.username, currentUser.id,'test') : redditredirect()">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -37,6 +37,7 @@
           <ul class="thumbnails row user-thumbnails" >
 
           <li data-type="dog" class="col-md-4 paginationclass" ng-repeat="vedio in particluarUserVedio | limitTo:pagination()"> 
+         
            <a class="thumbnail" id="dog1" id="job.id" class="view-media" ng-click="openVideo(vedio)">
                     <div class="thumb-img">
                      <img ng-src="{{vedio.thumbnail}}" tooltips tooltip-title="Play" tooltip-side="right">
@@ -48,8 +49,8 @@
                       </div>
                     </div>
                   </a> 
-                  <div class="checkbox-inline" ng-show="currentUser || userid">
-                       <div class="checkbox">
+                  <div class="checkbox-inline" ng-if="currentUser.id == vedio.userID || matchId == vedio.userID">
+                       <div class="checkbox" >
                           <input id="check{{$index}}" type="checkbox" ng-model="vedio.isPrivate" ng-checked="vedio.isPrivate" name="check" ng-change="checkBoxValue(vedio.isPrivate, vedio.id)" ng-true-value=1 ng-false-value=0>
                           <label for="check{{$index}}">Is Private</label>
                        </div>
@@ -59,7 +60,7 @@
                         <div class="col-md-6">
                           <h3>{{vedio.description}}</h3>
 
-                          <div ng-if="vedio.user" ng-click="userInfo(vedio.user,vedio.userID)"> <p>by {{vedio.user}} </p> </div>
+                          <div ng-if="vedio.user" ng-click="userInfo(vedio.user,vedio.userID,'asdsasad')"> <p>by {{vedio.user}} </p> </div>
                           <div ng-if="!vedio.user"> <p style="cursor:default;">by Anonymous </p> </div>
                         </div>
 
