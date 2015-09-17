@@ -478,12 +478,12 @@ $scope.urlProtocol = window.location.protocol;
         }
 
 
-        $scope.redirecttouser=function(un)
-        {
+        // $scope.redirecttouser=function(un)
+        // {
 
-          $location.path("/u/"+un);
+        //   $location.path("/u/"+un);
 
-        }
+        // }
 
     if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
         $scope.user = JSON.parse($window.sessionStorage["userData"]);
@@ -533,20 +533,40 @@ $scope.urlProtocol = window.location.protocol;
     }
 
     $scope.redditredirect=function() {
+
+
         var uid= $localStorage.userid;
         var uname= $localStorage.username;
         if (uid && uname) {
+
+          
            $scope.userid = uid;
            $scope.username = uname;
-           $scope.userInfo($scope.username, $scope.userid);
+           $scope.userInfo($scope.username, $scope.userid,'');
         }
-        else {
+
+        else if($localStorage.testid)
+        {
+
+         
+
+        
+            $scope.username=$stateParams.name;
+
+           $scope.userInfo($scope.username, $localStorage.testid,'');
+
+        }
+        else
+        {
+            
+            
             $http.get('/reddituser').success(function(response) {
                 if (response.alldata != undefined) {
+                    $scope.matchId = response.alldata.id;
                     $scope.userid = response.alldata.id;
                     $scope.username = response.alldata.username;
                     if ($stateParams.name == $scope.username) {
-                        $scope.userInfo($scope.username, $scope.userid);
+                        $scope.userInfo($scope.username, $scope.userid,'redditcase');
                     };
                 }
             });
@@ -555,15 +575,19 @@ $scope.urlProtocol = window.location.protocol;
 
 
 
-$scope.test=function(name,id)
-{
-    $localStorage.testid=id;
-    $location.path("/u/"+name);
+    $scope.redirecttouser=function(name,id)
+    {
 
-}
+        $localStorage.testid=id;
+        $location.path("/u/"+name);
+
+    }
 
 
-    $scope.userInfo = function(user,userID) {
+    $scope.userInfo = function(user,userID,cases) {
+
+
+       console.log("???????????????",user,"?????????????????????",userID);
 
        $localStorage.userid=userID;
        $localStorage.username=user;       ;
@@ -572,9 +596,9 @@ $scope.test=function(name,id)
         // $location.path("/u/" +user);
 
       
-        if($localStorage.testid)
+        if($localStorage.testid && cases != 'redditcase')
         {
-      
+           
            userID=$localStorage.testid;
 
         }
@@ -632,6 +656,15 @@ $scope.test=function(name,id)
                         $location.path("/u/" +user);
                     }
 
+                    if (cases == 'redditcase') 
+                        {
+
+                            $localStorage.testid="";
+                            $localStorage.userid="";
+                            $localStorage.username="";
+                        $location.path("/u/" +user);
+                    }
+
 
                 } else {
                     console.log("empty response");
@@ -643,6 +676,12 @@ $scope.test=function(name,id)
   
     }
 
+
+
+
+
+
+   
 
     $scope.likeValue = {};
     $scope.likeClick = function (id, index, value) {
