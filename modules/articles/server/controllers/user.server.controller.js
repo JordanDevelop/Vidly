@@ -237,14 +237,7 @@ exports.login = function(req, res) {
     }
 };
 
-function randomToken() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (var i = 0; i < 5; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    console.log(text);
-    return text;
-}
+
 
 exports.existence = function(req, res) {
     if(req.params.value) {
@@ -396,13 +389,71 @@ exports.uploadHtml = function(req, res) {
     }
 };
 
+
+function randomToken(randomdes) {
+    var text = "";
+    if(randomdes && randomdes!=''){
+     var possible = randomdes;
+    for (var i = 0; i < 4; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+       console.log(text);
+      return text;
+
+    }else{
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    console.log(text);
+    return text;
+    }
+}
+exports.changeUsernsfw = function(req,res){
+
+   if (req.body) {
+            
+            console.log('Seesion is maintned');
+            if (req.body.userid) {
+                var query = 'UPDATE users SET is_nsfw = ' + req.body.nfsw + ' WHERE id = "' + req.body.userid +'"';
+            } else {
+                console.log("Invalid User");
+            }
+         
+        connection.query(query, function(err, data) {
+            console.log("----------->>>>>> ", data);
+            if (err) {
+                return res.status(400).send({
+                    message: "Something wrong occured, Try Again."
+                });
+            } else {
+                return res.send({
+                    message: "success"
+                });
+            }
+        });
+   }
+   else {
+        return res.status(400).send({
+            message: "Some Error has been occured!"
+        });
+    }
+}
+
 exports.upload = function(req, res) {
     if (req.body) {
-        var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ', description = "' + req.body.description + '" WHERE id = "' + req.body.mediaId + '"';
+        
+        var desid = randomToken(req.body.description);
+        
+         console.log(desid);
+
+
+
+        var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description +  '" WHERE id = "' + req.body.mediaId + '"';
+      
         if (req.session && req.session.user) {
+            console.log('Seesion is maintyned');
             if (req.session.user.id) {
                 req.body.userId = req.session.user.id;
-                var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ', description = "' + req.body.description + '" WHERE userId = "' + req.session.user.id + '"and id = "' + req.body.mediaId + '"';
+                var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ',nsfw = ' + req.body.NFWS + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description + '" WHERE userId = "' + req.session.user.id + '"and id = "' + req.body.mediaId + '"';
             } else {
                 console.log("M REDDIT USER>>>>> ", req.session.user);
             }
