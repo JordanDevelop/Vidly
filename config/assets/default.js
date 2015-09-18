@@ -8,7 +8,7 @@ module.exports = {
         'public/lib/bootstrap/dist/css/bootstrap-theme.css'
       ],
       js: [
-        'public/lib/angular/angular.js',
+        //'public/lib/angular/angular.js',
         'public/lib/angular-resource/angular-resource.js',
         'public/lib/angular-animate/angular-animate.js',
         'public/lib/angular-ui-router/release/angular-ui-router.js',
@@ -19,7 +19,8 @@ module.exports = {
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },
     css: [
-      'modules/*/client/css/*.css'
+      'modules/*/client/css/*.css',
+      'modules/*/client/fonts/*.css'
     ],
     js: [
       'modules/core/client/app/config.js',

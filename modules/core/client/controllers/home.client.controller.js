@@ -602,11 +602,7 @@ $scope.urlProtocol = window.location.protocol;
     }
 
   }
-   $scope.redirecttouser = function (un) {
-
-       $location.path("/u/" + un);
-   }
-
+   
     if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
         $scope.user = JSON.parse($window.sessionStorage["userData"]);
         $scope.currentUser = $scope.user.userData;
