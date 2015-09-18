@@ -5,9 +5,7 @@
         'user': 'VV_JyIThFn',
    'password': 'KU6caDkvZ7B74#'
 
- 		// 'host': 'localhost',
-   //      'user': 'root',
- 		// 'password': 'root'
+
     },
     'database': 'vidlydb711',
     //'database': 'vidly',
