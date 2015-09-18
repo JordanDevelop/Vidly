@@ -6,21 +6,20 @@ app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$st
 
 
 
-/*-----------make user makeUsernfsw Enabled Start-------------------*//*
-
-             
-$('#nfwsuser').change(function () {
-    alert('changed');
- });*/   
+/*-----------make user makeUsernfsw Enabled Start-------------------*/ 
+$rootScope.Useris_nsfw = false;
 $scope.makeUsernfsw = function(id){
+    
     var nfsw = '';
     var userid = id;
     if($('#nfwsuser').is(":checked")){
 
         nfsw = 1;
+        $rootScope.Useris_nsfw = true;
     }else{
 
         nfsw = 0;
+        $rootScope.Useris_nsfw = false;
     }
     var data =
     {
@@ -29,7 +28,11 @@ $scope.makeUsernfsw = function(id){
     }
      $http.post('/changeUsernsfw', data).success(function(res) {
            if(res.message =='success'){
-            toastr.success('You are now NFWS user');
+            if(nfsw===1){
+            toastr.success('NSFW activated.');
+            }else{
+                toastr.success('NSFW deactivated.');
+            }
            }else{
             toastr.error('Error ! has been occured');
            }
@@ -46,11 +49,11 @@ $scope.urlProtocol = window.location.protocol;
         $http.post('/view', $scope.id).success(function(res) {
 
         });
-        $scope.paramVideoId = $stateParams.id;
+        $scope.paramVideoId = $stateParams.v_id;
         $http.get('/media/' + $scope.paramVideoId).success(function(response) {
             if ($scope.currentUser && response[0].isPrivate == 1) {
 
-                 $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].id);
+                 $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].v_id);
 
                 $rootScope.media = response[0];
                 console.log('$scope.media', $rootScope.media);
@@ -60,19 +63,25 @@ $scope.urlProtocol = window.location.protocol;
                     src: $rootScope.singleMedia
                 };
             } else {
-
+                console.log(response);
+                if(response.length > 0){
                 $location.path("/p/" +response[0].id);
                 $rootScope.media = response[0];
+                
 
                 $rootScope.singleMedia = $rootScope.media.outputs;
-
+                
                 $rootScope.movie = {
                     src: $rootScope.singleMedia
                 };
+            }else{
+                console.log('error page not found');
+            }
+
             }
         });
     }
-        // This provides Authentication context.
+        
         $scope.CurrentUser = $stateParams.name;
 
         $scope.loginObj = {};
@@ -91,6 +100,7 @@ $scope.urlProtocol = window.location.protocol;
                             $window.sessionStorage["userData"] = JSON.stringify(User);
                             $scope.user = JSON.parse($window.sessionStorage["userData"]);
                             $scope.currentUser = $scope.user.userData;
+                            $scope.is_nsfwUser = $scope.user.userData.is_nsfw;    
 
                             if($scope.currentUser.role == 'admin') {
                                 window.location.href = "/manage";
@@ -264,7 +274,7 @@ $scope.urlProtocol = window.location.protocol;
                             $scope.loader = false;
                             $("#imgloader").css("display", "none");
                             toastr.success('Success: Your Password has been Updated successfully');
-                            //window.location.href = "/";
+                           
                         } else if (data && data.message) {
                             $scope.loader = false;
                             $("#imgloader").css("display", "none");
@@ -291,7 +301,7 @@ $scope.urlProtocol = window.location.protocol;
             window.location.href = "/auth/reddit";
         }
 
-        // checkbox select
+       
         $('input[type="checkbox"]').click(function() {
             if ($(this).prop("checked") == true) {
                 checked = true;
@@ -306,32 +316,18 @@ $scope.urlProtocol = window.location.protocol;
             }else {
                 var socket = io('https://vidly.io:8005');
             }
-           
-
-            // Setup things like filepicker and bootstrap
             filepicker.setKey('Av4QSKNOQSObS35rGlB8Bz');
-
-            // check if localStorage exists so we can use that to store session info
-            // We want a person to still be able to listen for notifications in case they
-            // refreshed the page while a video was processing.
             var personalChannel;
             if (localStorage) {
                 if (localStorage.personalChannel) {
-                    // use the channel they've already got if one exists
                     personalChannel = localStorage.personalChannel
                 } else {
-                    // Nothing already there, so create a new one
                     personalChannel = Math.random().toString(36).substring(7);
                     localStorage.personalChannel = personalChannel;
                 }
             } else {
-                // The user doesn't support localStorage, but give them a channel anyway
                 personalChannel = Math.random().toString(36).substring(7);
             }
-
-            // Filepicker Button
-            //$('#pick').click(function(e) {
-                //alert(e);
                 e.preventDefault();
                 var desc = $("#description").val();
                 var length = desc.length;
@@ -342,8 +338,6 @@ $scope.urlProtocol = window.location.protocol;
                 }else{
                     NFWS = 0;
                 }
-
-
                 var isValidKeywords = validatekeywords(keywords);
                 if(!isValidKeywords){
                   toastr.error('Request Failed: You can enter maximum 4 keywords!');
@@ -352,21 +346,14 @@ $scope.urlProtocol = window.location.protocol;
 
                 if (length >= 5 && desc != null) {
                     filepicker.pick(function(FPFile) {
-                        // Disable the picker button while we wait
                         $('#pick').addClass('disabled');
-                        // Set the input source to the newly uploaded file and pass along the user's channel
                         var videoSrc = FPFile.url;
-                        
-                        // Build a request body with the input file and pass the personal channel to the server
                         var request_body = {
                             input_file: videoSrc,
                             channel: personalChannel
                         };
-                        // Actually POST the request
                         $.post('/job', request_body, function(data) {
-                            // enable the button again
                             $('#pick').removeClass('disabled');
-                            //console.log("DATA---> ", data);
                             var saveObj = {
                                 mediaId: data.internal_record,
                                 isPrivate: checked,
@@ -382,15 +369,44 @@ $scope.urlProtocol = window.location.protocol;
                             });
                         });
                     }, function(FPError) {
-                        // Yikes...something went wrong.
                         console.log(FPError.toString());
                     });
                 } else {
                     toastr.error('Request Failed: Give Some minimum 5 chracters Description for Your File to Upload');
+                } 
+            socket.on('system', function(data) {
+                console.log('here', data);
+            }); 
+            socket.on(personalChannel, function(data) {
+              
+                if (data.type == 'job.create') {  
+                    if (!data.error) {
+                         toastr.success('Success: File is currently processing.');
+                    } else {
+                         toastr.error('Request Failed: We were unable to create a job at this time. Sorry about that.');
+                    }
+                } else {
+                    jobState(data);
                 }
-
-
-
+            }); 
+            function jobState(notification) {
+                switch (notification.state) {
+                    case 'failed':
+                        toastr.error('Request Failed: Some of the outputs may have succeeded, but at least one failed.');
+                        break;
+                    case 'finished':
+                        toastr.success('Success: Congratulations, the job is finished.');
+                        $('#jobs').prepend('<div class="col-sm-3 job-item">' +
+                            '  <div class="thumbnail">' +
+                            '    <div class="video-thumb">' +
+                            '      <a href="/media/' + notification._id + '" class="view-media"><img src="' + notification.thumbnail.url + '"/></a>' +
+                            '    </div>' +
+                            '  </div>' +
+                            '</div>');
+                        break;
+                }
+            }
+        }
 
  /*-------To validate the keyword of vedio start-------------*/
     
@@ -416,78 +432,28 @@ $scope.urlProtocol = window.location.protocol;
 
 /*-------To validate the keyword of vedio End-------------*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-            //});
-
-            // Listen for system-wide messages
-            socket.on('system', function(data) {
-                console.log('here', data);
-            });
-
-            // Listen for user-specific messages
-            socket.on(personalChannel, function(data) {
-              
-                if (data.type == 'job.create') { // Just the initial job created callback
-                    if (!data.error) {
-                         toastr.success('Success: File is currently processing.');
-                    } else {
-                         toastr.error('Request Failed: We were unable to create a job at this time. Sorry about that.');
-                    }
-                } else {
-                    jobState(data);
-                }
-            });
-
-            function jobState(notification) {
-                switch (notification.state) {
-                    case 'failed':
-                        toastr.error('Request Failed: Some of the outputs may have succeeded, but at least one failed.');
-                        break;
-                    case 'finished':
-                        toastr.success('Success: Congratulations, the job is finished.');
-                        $('#jobs').prepend('<div class="col-sm-3 job-item">' +
-                            '  <div class="thumbnail">' +
-                            '    <div class="video-thumb">' +
-                            '      <a href="/media/' + notification._id + '" class="view-media"><img src="' + notification.thumbnail.url + '"/></a>' +
-                            '    </div>' +
-                            '  </div>' +
-                            '</div>');
-                        break;
-                }
-            }
-        }
-
         $scope.trustSrc = function(src) {
             return $sce.trustAsResourceUrl(src);
         }
 
         $scope.id = {};
         $scope.openVideo = function(data) {
-            $scope.id.video_id = data.id;
+            
+            $scope.id.video_id = data.v_id;
 
-            if (data.id) {
+
+            if (data.v_id) {
                     $http.post('/view', $scope.id).success(function(res) {
 
                     });
                 }
-            $http.get('/media/' + data.id).success(function(response, header, status, config) { 
+            $http.get('/media/' + data.v_id).success(function(response, header, status, config) { 
                 if ($scope.currentUser && response[0].isPrivate == 1) {
 
-                     $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].id);
+                     $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].v_id);
 
                     $rootScope.media = response[0];
-                    console.log('$scope.media', $rootScope.media);
+                     
 
                     $rootScope.singleMedia = $rootScope.media.outputs;
                     $rootScope.movie = {
@@ -495,8 +461,9 @@ $scope.urlProtocol = window.location.protocol;
                     };
                 } else {
 
-                    $location.path("/p/" +response[0].id);
+                    $location.path("/p/" +response[0].v_id);
                     $rootScope.media = response[0];
+                    console.log('$rootScope.media',$rootScope.media);
 
                     $rootScope.singleMedia = $rootScope.media.outputs;
 
@@ -511,19 +478,13 @@ $scope.urlProtocol = window.location.protocol;
         }
 
 
-
-
-
-   
-
-
-
+ 
 
 
         $scope.getVideos = function() {
-            $scope.Useris_nsfw = false;
+            
             if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
-                $scope.Useris_nsfw = true;
+                $rootScope.Useris_nsfw = true;
             }
             $("#imgloader").css("display", "block");
             $scope.loader = true;
@@ -535,10 +496,9 @@ $scope.urlProtocol = window.location.protocol;
                     $http.get('/signout').success(function(res) {
                         sessionStorage.removeItem('userData');
                         $scope.currentUser = '';
-                        $location.path('/');
-                        //$state.go('home');
+                        $location.path('/'); 
                     });
-                }//else{
+                } 
                     if (response.total) {
                         $("#imgloader").css("display", "none");
                         $scope.loader = false;
@@ -560,7 +520,8 @@ $scope.urlProtocol = window.location.protocol;
                                     "dislikcount": response.total[i].dislikcount,
                                     "likcount": response.total[i].likcount,
                                     "viewcount": response.total[i].viewcount,
-                                    "nsfw": response.total[i].nsfw    
+                                    "nsfw": response.total[i].nsfw,
+                                    "v_id": response.total[i].v_id    
                                 };
 
                             if (response.total && response.total[i].userId) {
@@ -584,7 +545,7 @@ $scope.urlProtocol = window.location.protocol;
                     } else {
                         console.log("empty response");
                     }
-                //}
+                 
             }).error(function(err, header, status, config) {
                 console.log(err, header, status, config);
             });
@@ -597,7 +558,7 @@ $scope.urlProtocol = window.location.protocol;
    
    
     return function(mediaObj){
-         console.log('mediaObj',mediaObj)
+         
       if (mediaObj[prop] == val) return true;
     }
 
@@ -706,18 +667,13 @@ $scope.urlProtocol = window.location.protocol;
     }
 
 
-    $scope.userInfo = function(user,userID,cases) {
-
-
-       console.log("???????????????",user,"?????????????????????",userID);
-
+    $scope.userInfo = function(user,userID,cases,is_nsfw) { 
        $localStorage.userid=userID;
-       $localStorage.username=user;       ;
+       $localStorage.username=user;       
 
         $rootScope.usersName = user;
-        // $location.path("/u/" +user);
-
-      
+        $rootScope.is_nsfw_user = is_nsfw;
+        console.log('useruseruseruser',user); 
         if($localStorage.testid && cases != 'redditcase')
         {
            
@@ -747,6 +703,7 @@ $scope.urlProtocol = window.location.protocol;
                                 "dislikcount": response[i].dislikecount,
                                 "likcount": response[i].likecount,
                                 "viewcount": response[i].viewscount
+                                
                             };
 
                             if (response && response[i].userId) {
@@ -797,14 +754,7 @@ $scope.urlProtocol = window.location.protocol;
 
   
     }
-
-
-
-
-
-
-   
-
+ 
     $scope.likeValue = {};
     $scope.likeClick = function (id, index, value) {
         if(!$scope.currentUser && !$scope.currentRedditUser) {
@@ -818,7 +768,7 @@ $scope.urlProtocol = window.location.protocol;
                 if(value == 'like') {
 
                     if(response.message) {
-                        //$("#msg"+index).text('You have already review this video');
+                        
                         toastr.info('Info: You have already review this video');
                     }
                     if (response.likecount != undefined) {
@@ -831,7 +781,7 @@ $scope.urlProtocol = window.location.protocol;
                     }
                 }else {
                     if(response.message) {
-                        //$("#msg"+index).text('You have already review this video');
+                        
                         toastr.info('Info: You have already review this video');
                     }
                     if (response.dislikecount != undefined) {
@@ -860,20 +810,17 @@ $scope.urlProtocol = window.location.protocol;
             });
         }
 
-        // Expose view variables
+        
         $scope.$state = $state;
-        // $scope.authentication = Authentication;
-
-        // Get the topbar menu
+      
         $scope.menu = Menus.getMenu('topbar');
-
-        // Toggle the menu items
+ 
         $scope.isCollapsed = false;
         $scope.toggleCollapsibleMenu = function() {
             $scope.isCollapsed = !$scope.isCollapsed;
         };
 
-        // Collapsing the menu after navigation
+        
         $scope.$on('$stateChangeSuccess', function() {
             $scope.isCollapsed = false;
         });

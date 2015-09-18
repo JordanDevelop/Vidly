@@ -30,7 +30,7 @@ var smtpTransport = nodemailer.createTransport("SMTP", {
 
 
 exports.view = function(req, res) {
-    //var ip = "";
+    
 
     var ipstr = req.connection.remoteAddress
 
@@ -642,7 +642,7 @@ config.zencoder = {
 
     //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
 
-    //notification_url: 'https://vidly.io/notify/',
+    notification_url: 'https://vidly.io/notify/',
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{
             label: 'MP4',
