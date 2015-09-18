@@ -69,7 +69,7 @@ exports.updatevalue = function(req, res){
 
 exports.play = function (req, res) {
 
-    connection.query("SELECT *,(select count(count) from likes where video_id=u.id and count=1) as likecount,(select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikecount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewscount  FROM uploads u WHERE u.id='" + req.params.id + "'", function (err, media) {
+    connection.query("SELECT *,(select count(count) from likes where video_id=u.id and count=1) as likecount,(select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikecount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewscount  FROM uploads u WHERE u.v_id='" + req.params.id + "'", function (err, media) {
    
         if (!err && media) {
             //console.log("testtest", media);

@@ -6,9 +6,14 @@
    'password': 'KU6caDkvZ7B74#'
 
 
-    },
-    'database': 'vidlydb711',
+
+//    },
+//    'database': 'vidlydb711',
     //'database': 'vidly',
+
+    },
+
+     'database': 'vidlydb711',
     'port':61337
  };
  
