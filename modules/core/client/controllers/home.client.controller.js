@@ -7,19 +7,29 @@ app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$st
 
 
 /*-----------make user makeUsernfsw Enabled Start-------------------*/ 
-$rootScope.Useris_nsfw = false;
+ 
+ 
 $scope.makeUsernfsw = function(id){
+
     
+    var user = JSON.parse(window.localStorage.getItem("userData"));
+    window.localStorage.removeItem("userData");
+      
+     $localStorage['userData'] = '';
     var nfsw = '';
     var userid = id;
     if($('#nfwsuser').is(":checked")){
-
-        nfsw = 1;
-        $rootScope.Useris_nsfw = true;
+         nfsw = 1;
+         user.userData.is_nsfw = 1;
+          window.localStorage.setItem("userData", JSON.stringify(user));
+         
+         
     }else{
 
         nfsw = 0;
-        $rootScope.Useris_nsfw = false;
+        user.userData.is_nsfw = 0;
+        window.localStorage.setItem("userData", JSON.stringify(user)); 
+         
     }
     var data =
     {
@@ -97,8 +107,9 @@ $scope.urlProtocol = window.location.protocol;
                             var User = {
                                 "userData": data.user
                             }
-                            $window.sessionStorage["userData"] = JSON.stringify(User);
-                            $scope.user = JSON.parse($window.sessionStorage["userData"]);
+                            //$localStorage.userData = JSON.stringify(User);
+                            window.localStorage.setItem("userData", JSON.stringify(User));
+                            $scope.user = JSON.parse(window.localStorage.getItem("userData")); 
                             $scope.currentUser = $scope.user.userData;
                             $scope.is_nsfwUser = $scope.user.userData.is_nsfw;    
 
@@ -146,9 +157,9 @@ $scope.urlProtocol = window.location.protocol;
                         var User = {
                             "userData": data.user
                         }
-                        $window.sessionStorage["userData"] = JSON.stringify(User);
-                        $scope.user = JSON.parse($window.sessionStorage["userData"]);
-                        $scope.currentUser = $scope.user.userData;
+                         window.localStorage.set("userData", JSON.stringify(User));
+                         $scope.user = JSON.parse(window.localStorage.get("userData")); 
+                         $scope.currentUser = $scope.user.userData;
                         window.location.href = "/upload";
                     } else {
                         toastr.error('Request Failed: Invalid Username');
@@ -266,8 +277,8 @@ $scope.urlProtocol = window.location.protocol;
                         var User = {
                             "userData": data.user[0]
                         }
-                        $window.sessionStorage["userData"] = JSON.stringify(User);
-                        $scope.user = JSON.parse($window.sessionStorage["userData"]);
+                        window.localStorage.set("userData", JSON.stringify(User));
+                        $scope.user = JSON.parse(window.localStorage.get("userData")); 
                         $scope.currentUser = $scope.user.userData;
                         
                         if (data && !data.message) {
@@ -477,14 +488,16 @@ $scope.urlProtocol = window.location.protocol;
             });
         }
 
-
  
+         
 
 
         $scope.getVideos = function() {
             
+            console.log('$scope.currentUser',$scope.currentUser);
+
             if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
-                $rootScope.Useris_nsfw = true;
+                $scope.Useris_nsfw = true;
             }
             $("#imgloader").css("display", "block");
             $scope.loader = true;
@@ -568,8 +581,8 @@ $scope.urlProtocol = window.location.protocol;
        $location.path("/u/" + un);
    }
 
-    if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
-        $scope.user = JSON.parse($window.sessionStorage["userData"]);
+    if (window.localStorage.getItem("userData") != null || window.localStorage.getItem("userData") != undefined) {
+        $scope.user = JSON.parse(window.localStorage.getItem("userData"));
         $scope.currentUser = $scope.user.userData;
     }
  
@@ -672,7 +685,7 @@ $scope.urlProtocol = window.location.protocol;
        $localStorage.username=user;       
 
         $rootScope.usersName = user;
-        $rootScope.is_nsfw_user = is_nsfw;
+        $scope.is_nsfw_user = is_nsfw;
         console.log('useruseruseruser',user); 
         if($localStorage.testid && cases != 'redditcase')
         {
@@ -801,8 +814,8 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.logout = function() {
             $http.get('/signout').success(function(res) {
-                sessionStorage.removeItem('userData');
-                sessionStorage.removeItem('username');
+                window.localStorage.removeItem("userData");
+                $localStorage.username='';
                 $scope.currentUser = '';
                 $scope.signupUser = '';
                 $scope.currentRedditUser = '';
