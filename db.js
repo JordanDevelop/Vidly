@@ -9,7 +9,7 @@
    //      'user': 'root',
  		// 'password': 'root'
     },
-    'database': 'vidlydb713',
+    'database': 'vidlydb711',
     // 'database': 'vidly',
     'port':61337
  };
