@@ -6,26 +6,26 @@
 -- Generation Time: Sep 17, 2015 at 08:32 PM
 -- Server version: 5.5.43-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
- 
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
- 
- 
+
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
- 
+
 --
 -- Database: `vidly`
 --
- 
+
 -- --------------------------------------------------------
- 
+
 --
 -- Table structure for table `likes`
 --
- 
+
 CREATE TABLE IF NOT EXISTS `likes` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `count` int(255) NOT NULL,
@@ -34,11 +34,11 @@ CREATE TABLE IF NOT EXISTS `likes` (
   `user_id` int(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=78 ;
- 
+
 --
 -- Dumping data for table `likes`
 --
- 
+
 INSERT INTO `likes` (`id`, `count`, `dislike_count`, `video_id`, `user_id`) VALUES
 (42, 1, 0, 0, 0),
 (43, 1, 0, 55, 74),
@@ -76,13 +76,13 @@ INSERT INTO `likes` (`id`, `count`, `dislike_count`, `video_id`, `user_id`) VALU
 (75, 1, 0, 51, 107),
 (76, 1, 0, 55, 78),
 (77, 1, 0, 64, 78);
- 
+
 -- --------------------------------------------------------
- 
+
 --
 -- Table structure for table `uploads`
 --
- 
+
 CREATE TABLE IF NOT EXISTS `uploads` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `userId` varchar(255) NOT NULL,
@@ -105,11 +105,11 @@ CREATE TABLE IF NOT EXISTS `uploads` (
   `created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=117 ;
- 
+
 --
 -- Dumping data for table `uploads`
 --
- 
+
 INSERT INTO `uploads` (`id`, `userId`, `v_id`, `keywords`, `mediaId`, `zencoder_id`, `input`, `outputs`, `state`, `thumbnail`, `description`, `isPrivate`, `nsfw`, `Active`, `Delete`, `input_file`, `channel`, `submitted_at`, `created`) VALUES
 (101, '', '', '', '', '186524415', '{"id":186495359,"format":"mpeg4","frame_rate":25,"duration_in_ms":5312,"audio_sample_rate":48000,"audio_bitrate_in_kbps":384,"audio_codec":"aac","height":720,"width":1280,"file_size_in_bytes":1055736,"video_codec":"h264","total_bitrate_in_kbps":1589,"channels":"6","video_bitrate_in_kbps":1205,"state":"finished","md5_checksum":null}', '//vidly-videos-dev.s3.amazonaws.com/zensockets/308cdc5138fbe686a540f7d7878c3e60.mp4', 'finished', '//vidly-videos-dev.s3.amazonaws.com/zensockets/0_101.png', 'dfd', 0, 1, 1, 0, 'https://www.filepicker.io/api/file/rsVViK5VToSC6micS3A2', '2k1xdu', '2015-09-14', '2015-09-17 14:07:52'),
 (102, '', '', '', '', '186528248', '{"id":186499192,"format":"mpeg4","frame_rate":25,"duration_in_ms":5312,"audio_sample_rate":48000,"audio_bitrate_in_kbps":384,"audio_codec":"aac","height":720,"width":1280,"file_size_in_bytes":1055736,"video_codec":"h264","total_bitrate_in_kbps":1589,"channels":"6","video_bitrate_in_kbps":1205,"state":"finished","md5_checksum":null}', '//vidly-videos-dev.s3.amazonaws.com/zensockets/9b543c5f97e338024eb576f69a79b64b.mp4', 'finished', '//vidly-videos-dev.s3.amazonaws.com/zensockets/0_102.png', 'fdfs', 0, 0, 1, 0, 'https://www.filepicker.io/api/file/rijd0xmiRpyzgXog2qeJ', '2k1xdu', '2015-09-14', '2015-09-14 13:30:24'),
@@ -127,13 +127,13 @@ INSERT INTO `uploads` (`id`, `userId`, `v_id`, `keywords`, `mediaId`, `zencoder_
 (114, '', 'fjjg', 'fgjfgjfgjfgjfgjfgjfgjfgj', '', '', '', '', 'transcoding', '', 'fgjfgj', 1, 0, 1, 0, 'https://www.filepicker.io/api/file/NWmJEEgSxWp0EaDuJH3f', 'lla2qb', '2015-09-17', '2015-09-17 11:01:19'),
 (115, '141', '', '', '', '', '', '', 'transcoding', '', '', 0, 0, 1, 0, 'https://www.filepicker.io/api/file/MfADVe76RMmtr2T3Jvfb', 'lla2qb', '2015-09-17', '2015-09-17 11:06:56'),
 (116, '141', 'ssdd', 'sdgsdg', '', '', '', '', 'transcoding', '', 'dssdg', 1, 1, 1, 0, 'https://www.filepicker.io/api/file/ERSELjJMQzuCrmcjPfWD', 'lla2qb', '2015-09-17', '2015-09-17 11:09:42');
- 
+
 -- --------------------------------------------------------
- 
+
 --
 -- Table structure for table `users`
 --
- 
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
@@ -150,11 +150,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=142 ;
- 
+
 --
 -- Dumping data for table `users`
 --
- 
+
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `IsDelete`, `isActive`, `is_nsfw`, `isReddit`, `makeAdmin`, `random_no`, `created`, `updatedAt`) VALUES
 (43, 'shweta21', 'shwetas@mastersoftwaresolutions.com', '3346319e7aba1929137a976bb9abfd06', 'user', 0, 0, NULL, 0, 0, '', '2015-09-07', '2015-09-15 11:33:37'),
 (75, 'shail', 'shailendra@mastersoftwaresolutions.com', '05e34a96e3c8e850e4a8677e370ea9c5', 'user', 0, 1, NULL, 0, 0, 'UC7K9', '2015-09-02', '0000-00-00 00:00:00'),
@@ -170,13 +170,13 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `IsDelete`, 
 (139, 'megha31', 'meghathareja@mastersoftwaresolutions.com', '61cc0e405f4b518d264c089ac8b642ef', 'admin', 0, 1, NULL, 0, 0, 'fNPmi', '2015-09-14', '2015-09-14 09:39:27'),
 (140, 'gsg123', 'sdf@gmail.com', '61cc0e405f4b518d264c089ac8b642ef', 'user', 0, 0, NULL, 0, 0, '7u4Vo', '2015-09-15', '2015-09-15 06:26:27'),
 (141, '123456', 'gdc@gmail.com', '61cc0e405f4b518d264c089ac8b642ef', 'user', 0, 1, 1, 0, 0, 'CHoAh', '2015-09-15', '2015-09-17 13:36:16');
- 
+
 -- --------------------------------------------------------
- 
+
 --
 -- Table structure for table `views`
 --
- 
+
 CREATE TABLE IF NOT EXISTS `views` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `view_count` int(255) NOT NULL,
@@ -184,11 +184,11 @@ CREATE TABLE IF NOT EXISTS `views` (
   `video_id` int(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
- 
+
 --
 -- Dumping data for table `views`
 --
- 
+
 INSERT INTO `views` (`id`, `view_count`, `ip`, `video_id`) VALUES
 (2, 1, '127.0.0.1', 51),
 (3, 1, '127.0.0.1', 52),
@@ -232,7 +232,7 @@ INSERT INTO `views` (`id`, `view_count`, `ip`, `video_id`) VALUES
 (41, 1, '192.168.0.148', 102),
 (42, 1, '192.168.0.1', 101),
 (43, 1, '::ffff:127.0.0.1', 101);
- 
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

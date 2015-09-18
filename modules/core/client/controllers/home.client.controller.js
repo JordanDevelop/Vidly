@@ -3,6 +3,44 @@
 app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr','$localStorage',
     function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage) {
 
+
+
+
+/*-----------make user makeUsernfsw Enabled Start-------------------*//*
+
+             
+$('#nfwsuser').change(function () {
+    alert('changed');
+ });*/   
+$scope.makeUsernfsw = function(id){
+    var nfsw = '';
+    var userid = id;
+    if($('#nfwsuser').is(":checked")){
+
+        nfsw = 1;
+    }else{
+
+        nfsw = 0;
+    }
+    var data =
+    {
+      userid:id,
+      nfsw:nfsw
+    }
+     $http.post('/changeUsernsfw', data).success(function(res) {
+           if(res.message =='success'){
+            toastr.success('You are now NFWS user');
+           }else{
+            toastr.error('Error ! has been occured');
+           }
+        });
+
+}
+/*-----------make user makeUsernfsw Enabled End-------------------*/
+
+
+        
+
 $scope.urlProtocol = window.location.protocol;
     if($stateParams.id) {
         $http.post('/view', $scope.id).success(function(res) {
@@ -53,6 +91,7 @@ $scope.urlProtocol = window.location.protocol;
                             $window.sessionStorage["userData"] = JSON.stringify(User);
                             $scope.user = JSON.parse($window.sessionStorage["userData"]);
                             $scope.currentUser = $scope.user.userData;
+
                             if($scope.currentUser.role == 'admin') {
                                 window.location.href = "/manage";
                             }else {
@@ -263,7 +302,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.upload = function(e) {
             if($scope.urlProtocol == 'http:') {
-                var socket = io('http://192.168.0.148:8005');
+                var socket = io('http://192.168.0.163:8005');
             }else {
                 var socket = io('https://vidly.io:8005');
             }
@@ -295,7 +334,23 @@ $scope.urlProtocol = window.location.protocol;
                 //alert(e);
                 e.preventDefault();
                 var desc = $("#description").val();
-                if (desc && desc != null) {
+                var length = desc.length;
+                var keywords = $("#keywords").val();
+                var NFWS = '';
+                if($('#nfws').is(":checked")){
+                    NFWS = 1;
+                }else{
+                    NFWS = 0;
+                }
+
+
+                var isValidKeywords = validatekeywords(keywords);
+                if(!isValidKeywords){
+                  toastr.error('Request Failed: You can enter maximum 4 keywords!');
+                  return false;  
+                }      
+
+                if (length >= 5 && desc != null) {
                     filepicker.pick(function(FPFile) {
                         // Disable the picker button while we wait
                         $('#pick').addClass('disabled');
@@ -315,10 +370,13 @@ $scope.urlProtocol = window.location.protocol;
                             var saveObj = {
                                 mediaId: data.internal_record,
                                 isPrivate: checked,
-                                description: desc
+                                description: desc,
+                                keywords:keywords,
+                                NFWS : NFWS
                             }
                             checked = false;
                             $("#description").val("");
+                            $("#keywords").val("");
                             $.post('/upload', saveObj, function(response) {
                                 console.log("Uploaded-->> ", response);
                             });
@@ -328,8 +386,48 @@ $scope.urlProtocol = window.location.protocol;
                         console.log(FPError.toString());
                     });
                 } else {
-                    toastr.error('Request Failed: Give Some Description for Your File to Upload');
+                    toastr.error('Request Failed: Give Some minimum 5 chracters Description for Your File to Upload');
                 }
+
+
+
+
+ /*-------To validate the keyword of vedio start-------------*/
+    
+
+            function validatekeywords(keywords)
+               {
+                  var isSeprateBycomma = (keywords.split(",").indexOf("") === -1 ? 1:0);
+                      if(isSeprateBycomma){
+                        var keywordsarray = keywords.split(",");
+                         if( keywordsarray.length >= 5){
+                           return 0;
+                         }else{
+
+                           return isSeprateBycomma;
+                         }
+                  
+                     }else{
+                        
+                        return isSeprateBycomma;
+                     }
+                
+                }
+
+/*-------To validate the keyword of vedio End-------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
             //});
 
             // Listen for system-wide messages
@@ -412,7 +510,21 @@ $scope.urlProtocol = window.location.protocol;
             });
         }
 
+
+
+
+
+   
+
+
+
+
+
         $scope.getVideos = function() {
+            $scope.Useris_nsfw = false;
+            if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
+                $scope.Useris_nsfw = true;
+            }
             $("#imgloader").css("display", "block");
             $scope.loader = true;
             $scope.jobs = [];
@@ -447,7 +559,8 @@ $scope.urlProtocol = window.location.protocol;
                                     "zencoder_id": response.total[i].zencoder_id,
                                     "dislikcount": response.total[i].dislikcount,
                                     "likcount": response.total[i].likcount,
-                                    "viewcount": response.total[i].viewcount
+                                    "viewcount": response.total[i].viewcount,
+                                    "nsfw": response.total[i].nsfw    
                                 };
 
                             if (response.total && response.total[i].userId) {
@@ -478,12 +591,21 @@ $scope.urlProtocol = window.location.protocol;
         }
 
 
-        // $scope.redirecttouser=function(un)
-        // {
+ 
 
-        //   $location.path("/u/"+un);
+   $scope.isnfsw = function(prop, val){
+   
+   
+    return function(mediaObj){
+         console.log('mediaObj',mediaObj)
+      if (mediaObj[prop] == val) return true;
+    }
 
-        // }
+  }
+   $scope.redirecttouser = function (un) {
+
+       $location.path("/u/" + un);
+   }
 
     if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
         $scope.user = JSON.parse($window.sessionStorage["userData"]);
@@ -762,3 +884,5 @@ function validateName(Name) {
     var re = /^[a-zA-Z0-9 ]*$/;
     return re.test(Name);
 }
+
+

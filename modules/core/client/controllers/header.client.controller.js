@@ -46,6 +46,9 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Menu
     $scope.$on('$stateChangeSuccess', function () {
       $scope.isCollapsed = false;
     });
+
+ 
+
   }
 ]);
 

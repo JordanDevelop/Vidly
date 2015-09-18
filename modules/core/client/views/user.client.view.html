@@ -24,7 +24,7 @@
               
               <li ng-class="{active:tab===1}"><a href ng-click="tab = 1">Video's</a></li>
               
-               <!-- <li ng-class="{active:tab===3}"><a href ng-click="tab = 3">User Info</a></li> -->
+               <li ng-class="{active:tab===3}"><a href ng-click="tab = 3">User Info</a></li>
                
                 </ul>
                 
@@ -79,12 +79,23 @@
                     </div>
                   </li>
           </ul>
+
           <button class="btn btn-danger reserve-more" ng-show="hasMoreItemsTo()" ng-click="MoreItems()">View More</button>
           </div>
                   
-                 
-                 <!-- <form ng-show="tab === 3">
+                  
+                 <form ng-show="tab === 3">
                       <img src="/modules/core/client/img/user-icon.png" alt="user icon">
+                     
+
+                      <div class="checkbox-inline" >
+                              <input id="nfwsuser" type="checkbox" name="nfws" ng-click="makeUsernfsw(currentUser.id)">
+                              <label for="nfws">NSFW</label>
+                            
+                     </div>
+                            
+
+
                       <div class="row">
                         <div class="john-address">
                           <address>
@@ -98,8 +109,17 @@
                           </address>
                         </div>
 
+
+
+                       
+
                       </div>
-                    </form> -->
+
+
+
+                    </form>
+
+                     
             </div>
 
         </div>
