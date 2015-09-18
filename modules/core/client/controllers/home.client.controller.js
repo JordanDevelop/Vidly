@@ -522,7 +522,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.getVideos = function() {
             $scope.Useris_nsfw = false;
-            if($scope.currentUser.is_nsfw == 1){
+            if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
                 $scope.Useris_nsfw = true;
             }
             $("#imgloader").css("display", "block");
@@ -602,11 +602,10 @@ $scope.urlProtocol = window.location.protocol;
     }
 
   }
-        $scope.redirecttouser=function(un)
-        {
- 
-          $location.path("/u/"+un);
- 
+   $scope.redirecttouser = function (un) {
+
+       $location.path("/u/" + un);
+   }
 
     if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
         $scope.user = JSON.parse($window.sessionStorage["userData"]);
@@ -892,6 +891,5 @@ function validateName(Name) {
     var re = /^[a-zA-Z0-9 ]*$/;
     return re.test(Name);
 }
-
 
 
