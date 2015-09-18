@@ -15,7 +15,7 @@
       </div>
     </section>
 
-   <section id="user-content" ng-init="currentUser ? userInfo(currentUser.username, currentUser.id,'test') : redditredirect()">
+   <section id="user-content" ng-init="currentUser ? userInfo(currentUser.username, currentUser.id,'test',currentUser.is_nsfw) : redditredirect()">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -87,9 +87,9 @@
                  <form ng-show="tab === 3">
                       <img src="/modules/core/client/img/user-icon.png" alt="user icon">
                      
-
+                       
                       <div class="checkbox-inline" >
-                              <input id="nfwsuser" type="checkbox" name="nfws" ng-click="makeUsernfsw(currentUser.id)">
+                              <input id="nfwsuser" type="checkbox" ng-checked="is_nsfw_user" name="nfws" ng-click="makeUsernfsw(currentUser.id)">
                               <label for="nfws">NSFW</label>
                             
                      </div>
