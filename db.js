@@ -9,8 +9,8 @@
  		// 'password': 'root'
     },
     'database': 'vidlydb713',
-    //'database': 'vidly',
-    'port':61337
+    // 'database': 'vidly',
+    // 'port':61337
  };
  
 
