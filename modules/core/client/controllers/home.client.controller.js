@@ -563,11 +563,7 @@ $scope.urlProtocol = window.location.protocol;
     }
 
   }
-   $scope.redirecttouser = function (un) {
-
-       $location.path("/u/" + un);
-   }
-
+   
     if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
         $scope.user = JSON.parse($window.sessionStorage["userData"]);
         $scope.currentUser = $scope.user.userData;
@@ -630,18 +626,12 @@ $scope.urlProtocol = window.location.protocol;
 
         else if($localStorage.testid)
         {
-
-         
-
-        
             $scope.username=$stateParams.name;
-
-           $scope.userInfo($scope.username, $localStorage.testid,'');
+            $scope.userInfo($scope.username, $localStorage.testid,'');
 
         }
         else
         {
-            
             
             $http.get('/reddituser').success(function(response) {
                 if (response.alldata != undefined) {
@@ -660,11 +650,11 @@ $scope.urlProtocol = window.location.protocol;
 
     $scope.redirecttouser=function(name,id)
     {
-
         $localStorage.testid=id;
         $location.path("/u/"+name);
 
     }
+
 
 
     $scope.userInfo = function(user,userID,cases,is_nsfw) { 
