@@ -55,7 +55,7 @@ config.zencoder = {
 
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     
-    //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
+//    notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
 
 
 
