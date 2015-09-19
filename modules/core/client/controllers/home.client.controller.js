@@ -66,14 +66,12 @@ $scope.urlProtocol = window.location.protocol;
                  $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].v_id);
 
                 $rootScope.media = response[0];
-                console.log('$scope.media', $rootScope.media);
 
                 $rootScope.singleMedia = $rootScope.media.outputs;
                 $rootScope.movie = {
                     src: $rootScope.singleMedia
                 };
             } else {
-                console.log(response);
                 if(response.length > 0){
                 $location.path("/p/" +response[0].id);
                 $rootScope.media = response[0];
@@ -142,7 +140,7 @@ $scope.urlProtocol = window.location.protocol;
                 
                 var myId = myparams.split('&')[0];
                 var myNo = myparams.split('&')[1];
-                console.log("again check-->> ", myId, myNo);
+                
                 var id = myId.split('=')[1];
                 var random_no = myNo.split('=')[1];
                 
@@ -152,7 +150,7 @@ $scope.urlProtocol = window.location.protocol;
                     "random_no": random_no
                 }
                 $.post('/usersignup', confirmSignup, function(data) {
-                    console.log('data', data);
+                    
                     if (data && data.user) {
                         var User = {
                             "userData": data.user
@@ -382,7 +380,7 @@ $scope.urlProtocol = window.location.protocol;
                             $("#description").val("");
                             $("#keywords").val("");
                             $.post('/upload', saveObj, function(response) {
-                                console.log("Uploaded-->> ", response);
+                                
                             });
                         });
                     }, function(FPError) {
@@ -392,7 +390,7 @@ $scope.urlProtocol = window.location.protocol;
                     toastr.error('Request Failed: Give Some minimum 5 chracters Description for Your File to Upload');
                 } 
             socket.on('system', function(data) {
-                console.log('here', data);
+                
             }); 
             socket.on(personalChannel, function(data) {
               
@@ -480,7 +478,6 @@ $scope.urlProtocol = window.location.protocol;
 
                     $location.path("/p/" +response[0].v_id);
                     $rootScope.media = response[0];
-                    console.log('$rootScope.media',$rootScope.media);
 
                     $rootScope.singleMedia = $rootScope.media.outputs;
 
@@ -499,8 +496,6 @@ $scope.urlProtocol = window.location.protocol;
 
 
         $scope.getVideos = function() {
-            
-            console.log('$scope.currentUser',$scope.currentUser);
 
             if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
                 $scope.Useris_nsfw = true;
@@ -611,7 +606,6 @@ $scope.urlProtocol = window.location.protocol;
     $scope.checkvalue.isPrivate = value;
     $scope.checkvalue.videoId = videoId;
         $http.post('/updateValue', $scope.checkvalue).success(function(response){
-            console.log('response', response)
             toastr.success('Success: Updated successfully!');
         });
    }
@@ -696,8 +690,7 @@ $scope.urlProtocol = window.location.protocol;
        $localStorage.username=user;       
 
         $rootScope.usersName = user;
-        $scope.is_nsfw_user = is_nsfw;
-        console.log('useruseruseruser',user); 
+        $scope.is_nsfw_user = is_nsfw; 
         if($localStorage.testid && cases != 'redditcase')
         {
            

@@ -1,4 +1,6 @@
 node_modules
-public/lib
-db.js
+public/*
+*db.js
+modules/articles/server/controllers/*
+modules/articles/server/routes/*
 *~
