@@ -53,9 +53,9 @@ config.zencoder = {
     cdn: 'https://c.vidly.io/', // CDN URL
 
 
-    notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    //notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     
-    //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
+    notification_url: 'http://mastersoftwaretechnologies.com:61337/notify',
 
 
 

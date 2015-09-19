@@ -35,13 +35,9 @@
   <!-- Fav Icon -->
   <link href="https://vidly.io/{{favicon}}" rel="shortcut icon" type="image/x-icon">
 
-
-  
-
-
   <!-- Application CSS Files -->
-  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/modules/core/client/css/custom.css">
+   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+ <!-- <link rel="stylesheet" href="/modules/core/client/css/custom.css">
   <link rel="stylesheet" href="/modules/core/client/css/flexslider.css">
   <link rel="stylesheet" href="/modules/core/client/css/font-awesome.css">
   <link rel="stylesheet" href="/modules/core/client/fonts/stylesheet.css">
@@ -49,7 +45,10 @@
   <link rel="stylesheet" href="/modules/core/client/css/jquery.custom-scrollbar.css">
   
   <link rel="stylesheet" href="/stylesheets/style.css">
-  <link rel="stylesheet" href="/modules/core/client/css/minify/angular-tooltips.min.css">
+  <link rel="stylesheet" href="/modules/core/client/css/minify/angular-tooltips.min.css"> -->
+  <link rel="stylesheet" href="dist/css/style.min.css">
+  <link rel="stylesheet" href="dist/fonts/stylesheet.css">
+  <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'> -->
 
 <!--
   {% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %} -->
@@ -111,19 +110,20 @@
 
 
 <script type="text/javascript" src="lib/angular/angular.js"></script>
+
   <!-- {% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
   <script type="text/javascript" src="/modules/core/client/controllers/admin.client.controller.js"></script>
   {% if livereload %} -->
   <!--Livereload script rendered -->
   <!--<script type="text/javascript" src="{{host}}:35729/livereload.js"></script>-->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-sanitize.js"></script>
+   <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-sanitize.js"></script>-->
    <!-- <script type="text/javascript" src="/modules/core/client/js/toastr.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/toastr.tpl.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/angular-tooltips.min.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/jquery.custom-scrollbar.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/jquery.dataTables.min.js"> </script>
     <script type="text/javascript" src="/modules/core/client/js/ngStorage.min.js"> </script>-->
-    <script type="text/javascript" src="dist/application.js"> </script>
+    <script src="dist/js/app.min.js"></script>
     
 
   {% endif %}
