@@ -500,6 +500,8 @@ $scope.urlProtocol = window.location.protocol;
             if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
                 $scope.Useris_nsfw = true;
             }
+            $scope.novedioFoundmsg_msg = false;
+            $scope.novedioFoundmsg = false;
             $("#imgloader").css("display", "block");
             $scope.loader = true;
             $scope.jobs = [];
@@ -543,8 +545,9 @@ $scope.urlProtocol = window.location.protocol;
                             if (response.total && response.total[i].userId) {
                               $scope.mediaObj["user"]= response.total[i].user
                             }
-                            $scope.novedioFoundmsg = true
-
+                            
+                             $scope.novedioFoundmsg_msg = true;
+                             $scope.novedioFoundmsg = false;
                             $scope.jobs.push($scope.mediaObj);
                         };
 
@@ -560,8 +563,11 @@ $scope.urlProtocol = window.location.protocol;
                             pagesShown = pagesShown + 1;
                         };
                     } else {
+
+                        $scope.novedioFoundmsg_msg = false;
+                        $scope.novedioFoundmsg = true;
                          $("#imgloader").css("display", "none");
-                         $scope.novedioFoundmsg = false; 
+                          
                     }
                  
             }).error(function(err, header, status, config) {

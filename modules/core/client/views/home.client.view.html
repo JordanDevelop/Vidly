@@ -16,7 +16,7 @@
 </section>
 <div ng-init="redditUser()"></div>
 <section id="video-gallery" data-ng-controller="HomeController" ng-init="getVideos()">
-    <div class="container" ng-if="novedioFoundmsg">
+    <div class="container" ng-show="novedioFoundmsg_msg">
         <div class="row">
           	<div class="col-md-12">
 	            <ul class="filter nav nav-pills" id="filter" ng-init="tab = 1">
@@ -217,7 +217,7 @@
         </div>
     </div>
 
-    <div class="row" ng-if="!novedioFoundmsg">
+    <div ng-show="novedioFoundmsg" class="row">
             
            <div class="alert alert-danger"><h2><b>Sorry no vedio found</b></h2></div>      
           
