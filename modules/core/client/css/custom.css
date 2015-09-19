@@ -4,6 +4,7 @@
 }
 body{
 	font-family: 'open_sanslight' !important;
+    padding: 0px !important;
 }
 html {
     min-height: 100%;
@@ -37,7 +38,7 @@ footer {
     padding-bottom: 22px;
     padding-top: 22px;
     color: #fff !important;
-    font-size: 16px;
+    font-size: 18px !important;
     transition: height 0.4s ease 0s, opacity 0.3s ease 0s;
     font-family: 'open_sansregular' !important;
 }
@@ -113,7 +114,7 @@ footer {
 section#high-quality-video {
   background: #fff none repeat scroll 0 0;
   margin-top: 65px;
-  padding: 30px 0;
+  padding: 0px 0;
   text-align: center;
   width: 100%;
 }
@@ -677,7 +678,7 @@ section#user-content {
 /*about us page css start here*/
 
 .breadcrumbs {
-  background: rgba(0, 0, 0, 0) url("../img/breadcrumbs.png") repeat scroll 0 0;
+  background: rgba(0, 0, 0, 0) url("../../../modules/core/client/img/breadcrumbs.png") repeat scroll 0 0;
   border-bottom: 1px solid #eee;
   margin-top: 65px;
   overflow: hidden;
@@ -1018,7 +1019,7 @@ section#contact-inner {
     color: #777;
     text-decoration: none;
 }
-..who li a:focus {
+.who li a:focus {
     color: #777;
     text-decoration: none;
     outline: none;
@@ -1990,3 +1991,11 @@ section#contact-inner {
 ul.thumbnails.row li{position:relative;}
 ul.thumbnails.row li  a.cross{position:absolute; top:-10px; right:-10px; z-index:9; background:rgba(0, 0, 0, 0.6); padding:0px 5px; color:#fff; font-size:20px; line-height:normal; cursor:pointer; border-radius:50%;}
 ul.thumbnails.row li  a.cross:hover{background:rgba(0, 0, 0, 1);}
+#description.form-control{
+    width: 100%;
+}
+.upload-part #pick.btn.btn-primary {
+  margin: 0;
+  width: auto;      
+}
+

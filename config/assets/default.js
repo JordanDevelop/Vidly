@@ -22,6 +22,9 @@ module.exports = {
       'modules/*/client/css/*.css',
       'modules/*/client/fonts/*.css'
     ],
+    fonts: [
+      'modules/*/client/fonts/*.*', 
+    ],
     js: [
       'modules/core/client/app/config.js',
       'modules/core/client/app/init.js',
