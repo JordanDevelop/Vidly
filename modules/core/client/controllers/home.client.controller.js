@@ -1,9 +1,9 @@
 'use strict';
 
-app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr','$localStorage',
-    function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage) {
+app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr','$localStorage','$timeout',
+    function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage,$timeout) {
 
-
+ 
 
 
 /*-----------make user makeUsernfsw Enabled Start-------------------*/ 
@@ -342,10 +342,16 @@ $scope.urlProtocol = window.location.protocol;
                 var length = desc.length;
                 var keywords = $("#keywords").val();
                 var NFWS = '';
+                var Private = '';
                 if($('#nfws').is(":checked")){
                     NFWS = 1;
                 }else{
                     NFWS = 0;
+                }
+                 if($('#check1').is(":checked")){
+                    Private = 'checked';
+                }else{
+                   Private = 0;
                 }
                 var isValidKeywords = validatekeywords(keywords);
                 if(!isValidKeywords){
@@ -365,7 +371,7 @@ $scope.urlProtocol = window.location.protocol;
                             $('#pick').removeClass('disabled');
                             var saveObj = {
                                 mediaId: data.internal_record,
-                                isPrivate: checked,
+                                isPrivate: Private,
                                 description: desc,
                                 keywords:keywords,
                                 NFWS : NFWS
@@ -499,7 +505,8 @@ $scope.urlProtocol = window.location.protocol;
             $scope.jobs = [];
             $scope.mediaObj = {};
             $http.get('/media').success(function(response, header, status, config) {
-                
+               
+
                 if(response.testsession == '1') {
                     $http.get('/signout').success(function(res) {
                         sessionStorage.removeItem('userData');
@@ -508,6 +515,7 @@ $scope.urlProtocol = window.location.protocol;
                     });
                 } 
                     if (response.total) {
+                        
                         $("#imgloader").css("display", "none");
                         $scope.loader = false;
                         for (var i = 0; i < response.total.length; i++) {
@@ -535,6 +543,7 @@ $scope.urlProtocol = window.location.protocol;
                             if (response.total && response.total[i].userId) {
                               $scope.mediaObj["user"]= response.total[i].user
                             }
+                            $scope.novedioFoundmsg = true
 
                             $scope.jobs.push($scope.mediaObj);
                         };
@@ -551,10 +560,12 @@ $scope.urlProtocol = window.location.protocol;
                             pagesShown = pagesShown + 1;
                         };
                     } else {
-                        console.log("empty response");
+                         $("#imgloader").css("display", "none");
+                         $scope.novedioFoundmsg = false; 
                     }
                  
             }).error(function(err, header, status, config) {
+
                 console.log(err, header, status, config);
             });
         }
@@ -573,7 +584,7 @@ $scope.urlProtocol = window.location.protocol;
   }
 
    $scope.redirecttouser = function (un) {
-
+        console.log(un);
        $location.path("/u/" + un);
    }
 
@@ -662,9 +673,14 @@ $scope.urlProtocol = window.location.protocol;
 
     $scope.redirecttouser=function(name,id)
     {
+        console.log('window.localStorage.getItem("userData")',window.localStorage.getItem("userData"));
         $localStorage.testid=id;
+        if(window.localStorage.getItem("userData"))
+        {  
         $location.path("/u/"+name);
-
+        }else{
+        $location.path("/p/u/"+name);
+        }
     }
 
 
@@ -808,6 +824,10 @@ $scope.urlProtocol = window.location.protocol;
                 $scope.signupUser = '';
                 $scope.currentRedditUser = '';
                 $state.go('home');
+               /* $Timeout(function(){
+                    $window.location.reload()
+                ,1000});*/
+            $timeout(function () { $window.location.reload() }, 1000); 
             });
         }
 
