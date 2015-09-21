@@ -1,6 +1,7 @@
 node_modules
 public/*
 *db.js
-modules/articles/server/controllers/*
+modules/articles/server/controllers/articles.server.controller.js
+modules/articles/server/controllers/redditlogin.server.controller.js
 modules/articles/server/routes/*
 *~
