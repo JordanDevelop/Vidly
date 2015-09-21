@@ -34,7 +34,7 @@ exports.view = function(req, res) {
 
     var ipstr = req.connection.remoteAddress
 
-    var video_id = req.body.video_id;
+    var video_id = req.body.video_id||req.body.id;
     connection.query("SELECT * FROM views WHERE ip ='" + ipstr + "' AND video_id = '" + video_id + "'", function(err, ipresult) {console.log('ipresult11111111111111111111111', ipresult);
         if (err) {
             console.log("Errors", err);
@@ -150,7 +150,7 @@ exports.confirmSignup = function(req, res) {
                 });
             } else {
                 if (rows && rows.length > 0) {
-                    if (rows[0].random_no = req.body.random_no) {
+                    if (rows[0].random_no == req.body.random_no) {
                         var query = 'UPDATE users SET isActive = true WHERE (id = ' + rows[0].id + ')';
                         console.log("query>>", query);
                         connection.query(query, function(err, newuser1) {

@@ -1,18 +1,14 @@
 'use strict';
 
-app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr','$localStorage',
-    function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage) {
+app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr','$localStorage','$timeout',
+    function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage,$timeout) {
 
-$scope.toggleClose = 0;
 
-$scope.toggle = function(itemPos) {
-    console.log('here', itemPos);
-   if ($scope.toggleClose === itemPos) {
-       $scope.toggleClose = 0;
-   }
-   else {
-       $scope.toggleClose = itemPos;
-   }
+$scope.toggle = function() {
+    $('.navbar-toggle').addClass('collapsed');
+    $("button").attr("aria-expanded","false");
+    $(".navbar-collapse").attr("aria-expanded","false");
+    $( ".navbar-collapse" ).removeClass( "in" );
 }
 
 
@@ -63,28 +59,24 @@ $scope.makeUsernfsw = function(id){
         
 
 $scope.urlProtocol = window.location.protocol;
-    if($stateParams.id) {
-        $http.post('/view', $scope.id).success(function(res) {
+
+       if($stateParams.id) {
+        $http.post('/view', $stateParams).success(function(res) {
 
         });
-        $scope.paramVideoId = $stateParams.v_id;
+        $scope.paramVideoId = $stateParams.id;
         $http.get('/media/' + $scope.paramVideoId).success(function(response) {
             if ($scope.currentUser && response[0].isPrivate == 1) {
-
                  $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].v_id);
-
                 $rootScope.media = response[0];
-
                 $rootScope.singleMedia = $rootScope.media.outputs;
                 $rootScope.movie = {
                     src: $rootScope.singleMedia
                 };
             } else {
                 if(response.length > 0){
-                $location.path("/p/" +response[0].id);
+                $location.path("/p/" +response[0].v_id);
                 $rootScope.media = response[0];
-                
-
                 $rootScope.singleMedia = $rootScope.media.outputs;
                 
                 $rootScope.movie = {
@@ -140,31 +132,32 @@ $scope.urlProtocol = window.location.protocol;
 
        $scope.redditUser = function() {
 
-
+console.log('here', $location.path());
             if ($location.path().indexOf("id") > -1) {
-                
+                console.log('here1');
                 var myparams = [];
                 myparams = $location.path().split('/')[2];
-                
+                console.log('myparams', myparams);
                 var myId = myparams.split('&')[0];
                 var myNo = myparams.split('&')[1];
-                
+                console.log('myId', myId, 'myNo', myNo);
                 var id = myId.split('=')[1];
                 var random_no = myNo.split('=')[1];
-                
+                console.log('id', id, 'random_no', random_no);
 
                 var confirmSignup = {
                     "id": id,
                     "random_no": random_no
                 }
+                console.log('confirmSignup', confirmSignup);
                 $.post('/usersignup', confirmSignup, function(data) {
-                    
+                    console.log('data', data);
                     if (data && data.user) {
                         var User = {
                             "userData": data.user
                         }
-                         window.localStorage.set("userData", JSON.stringify(User));
-                         $scope.user = JSON.parse(window.localStorage.get("userData")); 
+                         window.localStorage.setItem("userData", JSON.stringify(User));
+                         $scope.user = JSON.parse(window.localStorage.getItem("userData")); 
                          $scope.currentUser = $scope.user.userData;
                         window.location.href = "/upload";
                     } else {
@@ -461,7 +454,6 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.id = {};
         $scope.openVideo = function(data) {
-            console.log('data', data);
             $scope.id.video_id = data.v_id;
 
 
@@ -471,7 +463,6 @@ $scope.urlProtocol = window.location.protocol;
                     });
                 }
             $http.get('/media/' + data.v_id).success(function(response, header, status, config) { 
-                console.log('response', response[0]);
                 if ($scope.currentUser && response[0].isPrivate == 1) {
 
                      $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].v_id);
@@ -599,7 +590,6 @@ $scope.urlProtocol = window.location.protocol;
   }
 
    $scope.redirecttouser = function (un) {
-        console.log(un);
        $location.path("/u/" + un);
    }
 
@@ -688,7 +678,7 @@ $scope.urlProtocol = window.location.protocol;
 
     $scope.redirecttouser=function(name,id)
     {
-        console.log('window.localStorage.getItem("userData")',window.localStorage.getItem("userData"));
+        // console.log('window.localStorage.getItem("userData")',window.localStorage.getItem("userData"));
         $localStorage.testid=id;
         if(window.localStorage.getItem("userData"))
         {  
@@ -724,6 +714,7 @@ $scope.urlProtocol = window.location.protocol;
                                 "created": response[i].created,
                                 "description": response[i].description,
                                 "id": response[i].id,
+                                "v_id": response[i].v_id,
                                 "input": response[i].input,
                                 "input_file": response[i].input_file,
                                 "isPrivate": response[i].isPrivate,
