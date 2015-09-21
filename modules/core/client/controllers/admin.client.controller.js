@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AdminController', ['$scope','$window','$http', function($scope, $window, $http) {
+app.controller('AdminController', ['$scope','$window','$http','toastr', function($scope, $window, $http, toastr) {
 
 	if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
         $scope.user = JSON.parse($window.sessionStorage["userData"]);
@@ -31,12 +31,12 @@ app.controller('AdminController', ['$scope','$window','$http', function($scope, 
     //for edit details
     $scope.userData = {};
     $scope.selectValue = function(val, userId, value) {
-        console.log('value', value, 'userId', userId);
+        console.log('value', value, 'userId', userId, 'val', val);
         $scope.userData.userId = userId; 
         $scope.userData.value = value; 
         $scope.userData.val = val; 
         $http.post('/updateUserData', $scope.userData).success(function(response) {
-            console.log('response', response);
+            toastr.success('Success: '+response);
         });
     }
 

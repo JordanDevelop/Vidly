@@ -34,7 +34,7 @@ exports.view = function(req, res) {
 
     var ipstr = req.connection.remoteAddress
 
-    var video_id = req.body.video_id;
+    var video_id = req.body.video_id||req.body.id;
     connection.query("SELECT * FROM views WHERE ip ='" + ipstr + "' AND video_id = '" + video_id + "'", function(err, ipresult) {console.log('ipresult11111111111111111111111', ipresult);
         if (err) {
             console.log("Errors", err);
@@ -150,7 +150,7 @@ exports.confirmSignup = function(req, res) {
                 });
             } else {
                 if (rows && rows.length > 0) {
-                    if (rows[0].random_no = req.body.random_no) {
+                    if (rows[0].random_no == req.body.random_no) {
                         var query = 'UPDATE users SET isActive = true WHERE (id = ' + rows[0].id + ')';
                         console.log("query>>", query);
                         connection.query(query, function(err, newuser1) {
@@ -349,21 +349,36 @@ exports.signup = function(req, res) {
 };
 
 exports.listing = function(req, res) {
-    connection.query("SELECT * FROM users WHERE username != '"+req.session.user.username+"'", function(err, data) {
-        if(data) {
-            return res.send({
-                listing: data
-            });
-        }
-    });
+    //console.log('req', req.session.user);
+    if(req.session.user != undefined) {
+        connection.query("SELECT * FROM users WHERE username != '"+req.session.user.username+"'", function(err, data) {
+            if(data) {
+                return res.send({
+                    listing: data
+                });
+            }
+        });
+    }else {
+        return res.send({
+            message: 'You are not login!'
+        })
+    }
 }
 
 exports.updateUserData = function(req, res) {console.log('req------>', req.body);
-    connection.query('UPDATE users SET isActive = '+ req.body.val +' WHERE id ='+ req.body.userId , function(err, response) {
-        if(response) {
-            return res.send('Updated successfully!');
-        }
-    });
+    if(req.body.value == 'isActive') {
+        connection.query('UPDATE users SET isActive = '+ req.body.val +' WHERE id ='+ req.body.userId , function(err, response) {
+            if(response) {
+                return res.send('Updated successfully!');
+            }
+        });
+    }else {
+        connection.query('UPDATE users SET makeAdmin = '+ req.body.val +' WHERE id ='+ req.body.userId , function(err, response) {
+            if(response) {
+                return res.send('Updated successfully.');
+            }
+        });
+    }
 }
 
 exports.videoListing = function(req, res) {
@@ -640,9 +655,9 @@ config.filepicker = 'Av4QSKNOQSObS35rGlB8Bz';
 config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
     output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
-    //notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     cdn: 'https://c.vidly.io/', // CDN URL
-    notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
+    //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{

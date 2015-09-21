@@ -205,21 +205,24 @@ app.config(function(toastrConfig) {
    
    $rootScope.$on('$stateChangeStart', function(event,toState, toParams, fromState, fromParams) {
     
-  /* ====Tow seprate module were injected over here one for logged user and other for not loggedin user===*/
+  /* ====Two seprate module were injected over here one for logged user and other for not loggedin user===*/
 
-     $rootScope.toState = toState;
-     var url = $rootScope.toState; 
-     var _isAccesUrl = url.url; 
-     console.log(_isAccesUrl);
-     if(!window.localStorage.getItem("userData")){
-      if(_isAccesUrl === '/u/:name'){
-        $window.location.href="/"; 
-      }
-     }else{
-       if(_isAccesUrl === '/login'){
-        $window.location.href="/"; 
-      }
-     }
+     // $rootScope.toState = toState;
+     // console.log('$rootScope', $rootScope.toState);
+     // var url = $rootScope.toState; 
+     // var _isAccesUrl = url.url; 
+     // console.log('_isAccesUrl', _isAccesUrl);
+     // if(!window.localStorage.getItem("userData")){
+     //  if(_isAccesUrl === '/u/:name'){
+        
+     //    $window.location.href="/"; 
+     //  }
+     // }
+     // else{
+     //   if(_isAccesUrl === '/login'){
+     //    $window.location.href="/"; 
+     //  }
+     // }
     });
 
  });

@@ -15,25 +15,25 @@ var testsession = 0;
    
 exports.getVideos = function(req, res) {
     testsession = testsession + 1;
-    console.log('rwq',req.session)
+   
     //connection.query('SELECT * FROM uploads WHERE state = "finished"', function(err, media) {
         var query="SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewcount from uploads u  where u.state='finished' and isPrivate != 1";
         
     connection.query(query, function(err, media) {
-    console.log('media1 fir se',media);
+    
         if (!err) {
             if(req.session.user){
                 query="SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewcount from uploads u  where u.state='finished' and isPrivate=1 and userId="+req.session.user.id+"";
             
            connection.query(query, function(err, media1) {
-            console.log('media1',media1);
+            
                 var total= media.concat(media1);
                 if(media1 != null){
                     return res.status(200).json({ "total": total, "testsession": testsession });
                 }
             })
        }else{
-console.log('media',media);
+
          return res.status(200).json({ "total": media, "testsession": testsession});
        }
         } else {
@@ -51,7 +51,7 @@ exports.allUserVedioAndInfo = function(req,res){
     query = "SELECT *,(select count(count) from likes where video_id=u.id and count=1) as likecount,(select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikecount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewscount  FROM uploads u WHERE isPrivate != 1 and u.userId='" + req.params.userId + "'";
   }
 
-  connection.query(query, function(err, media) {
+  connection.query(query, function(err, media) {console.log('media', media);
         if (!err && media) {
             return res.status(200).send(media);
         } else {

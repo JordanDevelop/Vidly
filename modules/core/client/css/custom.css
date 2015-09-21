@@ -980,20 +980,20 @@ section#contact-inner {
     text-align: center;
 }
 .btn-u {
-    background: #ee3e3e none repeat scroll 0 0;
+    background: none repeat scroll 0 0 #ee3e3e;
     border: 0 none;
     border-radius: 0;
     color: #fff;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
     height: 45px;
     padding: 8px 30px;
-    position: relative;
     text-decoration: none;
     white-space: nowrap;
     width: 100%;
+    z-index: 999;
 }
 .input > input:hover, .textarea > textarea:hover{
     border-color: #ee3e3e;
@@ -1222,12 +1222,13 @@ section#login-inner {
     background: #f35b5b none repeat scroll 0 0;
 }
 .or_identified {
+    color: #353535;
+    display: inline-block;
     font-size: 18px;
+    margin-bottom: 0;
     margin-top: 10px;
     text-align: center;
     width: 100%;
-    color: #353535;
-    margin-bottom: 0px;
 }
 #contact-inner .btn-u {
     width: auto;
@@ -1998,4 +1999,9 @@ ul.thumbnails.row li  a.cross:hover{background:rgba(0, 0, 0, 1);}
   margin: 0;
   width: auto;      
 }
+body #login-inner .btn-u.pull-right {
+  float: none !important;
+}
+
+
 
