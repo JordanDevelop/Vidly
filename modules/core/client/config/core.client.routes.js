@@ -84,6 +84,11 @@
         templateUrl: 'modules/core/client/views/user.client.view.html',
         controller: 'HomeController'
       })
+      .state('publicuser', {
+        url: '/p/u/:name',
+        templateUrl: 'modules/core/client/views/user.frofile.public.html',
+        controller: 'HomeController'
+      })
       .state('signout', {
         url: '/signout',
         templateUrl: 'modules/core/client/views/signout.client.view.html',
@@ -196,3 +201,25 @@ app.config(function(toastrConfig) {
       };
     }
   ]);
+  app.run(function($rootScope,$state,$timeout,$window){
+   
+   $rootScope.$on('$stateChangeStart', function(event,toState, toParams, fromState, fromParams) {
+    
+  /* ====Tow seprate module were injected over here one for logged user and other for not loggedin user===*/
+
+     $rootScope.toState = toState;
+     var url = $rootScope.toState; 
+     var _isAccesUrl = url.url; 
+     console.log(_isAccesUrl);
+     if(!window.localStorage.getItem("userData")){
+      if(_isAccesUrl === '/u/:name'){
+        $window.location.href="/"; 
+      }
+     }else{
+       if(_isAccesUrl === '/login'){
+        $window.location.href="/"; 
+      }
+     }
+    });
+
+ });
