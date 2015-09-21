@@ -349,21 +349,36 @@ exports.signup = function(req, res) {
 };
 
 exports.listing = function(req, res) {
-    connection.query("SELECT * FROM users WHERE username != '"+req.session.user.username+"'", function(err, data) {
-        if(data) {
-            return res.send({
-                listing: data
-            });
-        }
-    });
+    //console.log('req', req.session.user);
+    if(req.session.user != undefined) {
+        connection.query("SELECT * FROM users WHERE username != '"+req.session.user.username+"'", function(err, data) {
+            if(data) {
+                return res.send({
+                    listing: data
+                });
+            }
+        });
+    }else {
+        return res.send({
+            message: 'You are not login!'
+        })
+    }
 }
 
 exports.updateUserData = function(req, res) {console.log('req------>', req.body);
-    connection.query('UPDATE users SET isActive = '+ req.body.val +' WHERE id ='+ req.body.userId , function(err, response) {
-        if(response) {
-            return res.send('Updated successfully!');
-        }
-    });
+    if(req.body.value == 'isActive') {
+        connection.query('UPDATE users SET isActive = '+ req.body.val +' WHERE id ='+ req.body.userId , function(err, response) {
+            if(response) {
+                return res.send('Updated successfully!');
+            }
+        });
+    }else {
+        connection.query('UPDATE users SET makeAdmin = '+ req.body.val +' WHERE id ='+ req.body.userId , function(err, response) {
+            if(response) {
+                return res.send('Updated successfully.');
+            }
+        });
+    }
 }
 
 exports.videoListing = function(req, res) {

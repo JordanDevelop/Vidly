@@ -21,7 +21,7 @@
                     <td>{{list.username}}</td>  
                     <td>{{list.email}}</td>  
                     <td>
-                      <select name="isActive" ng-model="list.isActive" ng-change="selectValue(list.isActive, list.id, isActive)">
+                      <select name="isActive" ng-model="list.isActive" ng-change="selectValue(list.isActive, list.id, 'isActive')">
                         <option value="1">Active</option>
                         <option value="0">Inactive</option>
                       </select>
@@ -29,7 +29,7 @@
                     <td>
                       <div class="checkbox-inline">
                        <div class="checkbox">
-                          <input id="check{{$index}}" type="checkbox" ng-model="list.makeAdmin" ng-checked="list.makeAdmin" ng-change="checkValue(list.makeAdmin, list.id, makeAdmin)" name="check" ng-true-value=1 ng-false-value=0>
+                          <input id="check{{$index}}" type="checkbox" ng-model="list.makeAdmin" ng-checked="list.makeAdmin" ng-change="selectValue(list.makeAdmin, list.id, 'makeAdmin')" name="check" ng-true-value=1 ng-false-value=0>
                           <label for="check{{$index}}">Make Admin</label>
                        </div>
                       </div>

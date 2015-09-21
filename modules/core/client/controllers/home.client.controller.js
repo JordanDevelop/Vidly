@@ -3,12 +3,19 @@
 app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr','$localStorage',
     function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage) {
 
+$scope.toggleClose = 0;
 
-
+$scope.toggle = function(itemPos) {
+    console.log('here', itemPos);
+   if ($scope.toggleClose === itemPos) {
+       $scope.toggleClose = 0;
+   }
+   else {
+       $scope.toggleClose = itemPos;
+   }
+}
 
 /*-----------make user makeUsernfsw Enabled Start-------------------*/ 
- 
- 
 $scope.makeUsernfsw = function(id){
 
     
@@ -321,7 +328,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.upload = function(e) {
             if($scope.urlProtocol == 'http:') {
-                var socket = io('http://192.168.0.163:8005');
+                var socket = io('http://192.168.0.148:8005');
             }else {
                 var socket = io('https://vidly.io:8005');
             }
@@ -447,7 +454,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.id = {};
         $scope.openVideo = function(data) {
-            
+            console.log('data', data);
             $scope.id.video_id = data.v_id;
 
 
@@ -457,6 +464,7 @@ $scope.urlProtocol = window.location.protocol;
                     });
                 }
             $http.get('/media/' + data.v_id).success(function(response, header, status, config) { 
+                console.log('response', response[0]);
                 if ($scope.currentUser && response[0].isPrivate == 1) {
 
                      $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].v_id);

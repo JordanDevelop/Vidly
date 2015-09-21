@@ -37,8 +37,8 @@
               <li><a ui-sref="gallery">Gallery</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right right-menu" ng-show="!currentUser && !currentRedditUser" >
-            <li class="front-login"><a ui-sref="login" ><i class="fa fa-lock"></i><span>Login</span></a></li>
-            <li class="front-signup"><a ui-sref="signup"><i class="fa fa-location-arrow"></i><span>Sign Up</span></a></li>
+            <li class="front-login"><a ui-sref="login" ng-click="toggle(1)"><i class="fa fa-lock"></i><span>Login</span></a></li>
+            <li class="front-signup"><a ui-sref="signup" ng-click="toggle(2)"><i class="fa fa-location-arrow"></i><span>Sign Up</span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right top-nav right-menu" ng-show="currentUser">
             <li class="dropdown" dropdown>
