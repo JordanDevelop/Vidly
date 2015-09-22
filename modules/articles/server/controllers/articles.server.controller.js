@@ -17,13 +17,13 @@ exports.getVideos = function(req, res) {
     testsession = testsession + 1;
    
     //connection.query('SELECT * FROM uploads WHERE state = "finished"', function(err, media) {
-        var query="SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewcount from uploads u  where u.state='finished' and isPrivate != 1";
+        var query="SELECT *, (select count(count) from likes l where l.video_id=u.v_id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.v_id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u  where u.state='finished' and isPrivate != 1";
         
     connection.query(query, function(err, media) {
     
         if (!err) {
             if(req.session.user){
-                query="SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewcount from uploads u  where u.state='finished' and isPrivate=1 and userId="+req.session.user.id+"";
+                query="SELECT *, (select count(count) from likes l where l.video_id=u.v_id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.v_id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u  where u.state='finished' and isPrivate=1 and userId="+req.session.user.id+"";
             
            connection.query(query, function(err, media1) {
             

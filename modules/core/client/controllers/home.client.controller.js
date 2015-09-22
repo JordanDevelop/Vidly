@@ -62,7 +62,7 @@ $scope.urlProtocol = window.location.protocol;
 
        if($stateParams.id) {
         $http.post('/view', $stateParams).success(function(res) {
-
+console.log('res', res);
         });
         $scope.paramVideoId = $stateParams.id;
         $http.get('/media/' + $scope.paramVideoId).success(function(response) {
@@ -131,8 +131,6 @@ $scope.urlProtocol = window.location.protocol;
 
 
        $scope.redditUser = function() {
-
-console.log('here', $location.path());
             if ($location.path().indexOf("id") > -1) {
                 console.log('here1');
                 var myparams = [];
@@ -459,7 +457,7 @@ console.log('here', $location.path());
 
             if (data.v_id) {
                     $http.post('/view', $scope.id).success(function(res) {
-
+                        console.log('res1', res);
                     });
                 }
             $http.get('/media/' + data.v_id).success(function(response, header, status, config) { 
@@ -521,6 +519,7 @@ console.log('here', $location.path());
                         $("#imgloader").css("display", "none");
                         $scope.loader = false;
                         for (var i = 0; i < response.total.length; i++) {
+                            console.log('response[i]', response.total[i]);
                                $scope.mediaObj = {
                                     "channel": response.total[i].channel,
                                     "userID":response.total[i].userId,

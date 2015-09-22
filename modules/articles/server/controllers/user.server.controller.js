@@ -34,7 +34,7 @@ exports.view = function(req, res) {
 
     var ipstr = req.connection.remoteAddress
 
-    var video_id = req.body.video_id||req.body.id;
+    var video_id = req.body.video_id || req.body.id;
     connection.query("SELECT * FROM views WHERE ip ='" + ipstr + "' AND video_id = '" + video_id + "'", function(err, ipresult) {console.log('ipresult11111111111111111111111', ipresult);
         if (err) {
             console.log("Errors", err);
