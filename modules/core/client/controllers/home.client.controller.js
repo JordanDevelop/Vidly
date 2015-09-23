@@ -4,6 +4,7 @@ app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$st
     function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage,$timeout) {
 
 
+
 $scope.toggle = function() {
     $('.navbar-toggle').addClass('collapsed');
     $("button").attr("aria-expanded","false");
@@ -55,8 +56,7 @@ $scope.makeUsernfsw = function(id){
 }
 /*-----------make user makeUsernfsw Enabled End-------------------*/
 
-
-        
+       
 
 $scope.urlProtocol = window.location.protocol;
        if($stateParams.id ) {
@@ -697,12 +697,15 @@ $scope.urlProtocol = window.location.protocol;
     // }
 
 
-
     $scope.userInfo = function(user,userID,reddit,is_nsfw) { 
-            console.log('reddit',reddit)
+
+        console.log('user info');
+       
        var isreddit;
+       
        if(reddit == 1) {
             isreddit = 'reddit';
+            console.log('hererrere');
             if(window.localStorage.getItem("userData"))
         {  
         $location.path("/u/"+user).search('type', isreddit);
@@ -719,9 +722,12 @@ $scope.urlProtocol = window.location.protocol;
     }
 
 var type=$location.search().type;
-    console.log('$location',$location)
+    
          $rootScope.particluarUserVedio = [];
          $http.get('/allUserVedioAndInfo/'+user+"?type="+type+"&id="+userID).success(function(response, header, status, config) {
+            // window.localStorage.setItem("val",true);
+            $rootScope.val = true;
+             
             console.log('responseReddit', response);
                 if (response) {
                    
@@ -772,16 +778,7 @@ var type=$location.search().type;
                             pagesShown = pagesShown + 1;       
                         };  
                         
-                    //     if (!$localStorage.testid) 
-                    //     {
-                    //     $location.path("/u/" +user);
-                    // }
-$location.path("/u/"+user).search('type', 'reddit');
-                    // if (reddit == 'redditcase') {
-                    //     $location.path("/u/"+user).search('type', 'reddit');
-                    // }else {
-                        
-                    // }
+                    
 
 
                 } else {
@@ -793,6 +790,31 @@ $location.path("/u/"+user).search('type', 'reddit');
 
   
     }
+
+
+
+
+var refresh=window.localStorage.getItem("val");
+    if($stateParams.name && !$rootScope.val) {
+        var user = $stateParams.name;
+    
+    var type=$location.search().type;
+    console.log('type', type);
+    var userData = JSON.parse(window.localStorage.getItem("userData"));
+    console.log('userdata', userData);
+    if(userData) {
+        console.log('localstorage check', window.localStorage.getItem("userData"));
+        var userID = userData.userData.id;
+    }else {
+        var userID = 0;
+    }
+    console.log('refresh here');
+    $scope.userInfo(user,userID,type,0);
+
+    }else {
+        console.log('not refresh');
+    }
+
  
     $scope.likeValue = {};
     $scope.likeClick = function (id, index, value) {
