@@ -34,7 +34,7 @@ exports.view = function(req, res) {
 
     var ipstr = req.connection.remoteAddress
 
-    var video_id = req.body.video_id||req.body.id;
+    var video_id = req.body.video_id || req.body.id;
     connection.query("SELECT * FROM views WHERE ip ='" + ipstr + "' AND video_id = '" + video_id + "'", function(err, ipresult) {console.log('ipresult11111111111111111111111', ipresult);
         if (err) {
             console.log("Errors", err);
@@ -267,7 +267,7 @@ exports.signup = function(req, res) {
     if (req.body) {
 
         //Check if enter email alredy exists
-        connection.query('SELECT * FROM users WHERE (email="' + req.body.email + '" OR username="' + req.body.username + '")', function(err, rows) {
+        connection.query('SELECT * FROM users WHERE (email="' + req.body.email + '" OR username="' + req.body.username + 'AND isReddit=0")', function(err, rows) {
             if (err) {
                 console.log("errrr????", err, "rows-->>", rows);
             } else {
@@ -460,11 +460,6 @@ exports.upload = function(req, res) {
     if (req.body) {
         
         var desid = randomToken(req.body.description);
-        
-         console.log(desid);
-
-
-
         var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description +  '" WHERE id = "' + req.body.mediaId + '"';
       
         if (req.session && req.session.user) {
@@ -655,9 +650,9 @@ config.filepicker = 'Av4QSKNOQSObS35rGlB8Bz';
 config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
     output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
-    notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    //notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     cdn: 'https://c.vidly.io/', // CDN URL
-    //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
+    notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{

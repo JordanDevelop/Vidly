@@ -59,15 +59,21 @@ $scope.makeUsernfsw = function(id){
         
 
 $scope.urlProtocol = window.location.protocol;
-
-       if($stateParams.id) {
+       if($stateParams.id ) {
+        console.log('$stateparamssss', $stateParams);
         $http.post('/view', $stateParams).success(function(res) {
-
         });
         $scope.paramVideoId = $stateParams.id;
         $http.get('/media/' + $scope.paramVideoId).success(function(response) {
             if ($scope.currentUser && response[0].isPrivate == 1) {
-                 $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].v_id);
+                 $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
+                $rootScope.media = response[0];
+                $rootScope.singleMedia = $rootScope.media.outputs;
+                $rootScope.movie = {
+                    src: $rootScope.singleMedia
+                };
+            }else if(!$scope.currentUser && response[0].isPrivate == 1) {
+                $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
                 $rootScope.media = response[0];
                 $rootScope.singleMedia = $rootScope.media.outputs;
                 $rootScope.movie = {
@@ -131,27 +137,22 @@ $scope.urlProtocol = window.location.protocol;
 
 
        $scope.redditUser = function() {
-
-console.log('here', $location.path());
             if ($location.path().indexOf("id") > -1) {
-                console.log('here1');
                 var myparams = [];
                 myparams = $location.path().split('/')[2];
-                console.log('myparams', myparams);
+                
                 var myId = myparams.split('&')[0];
                 var myNo = myparams.split('&')[1];
-                console.log('myId', myId, 'myNo', myNo);
+
                 var id = myId.split('=')[1];
                 var random_no = myNo.split('=')[1];
-                console.log('id', id, 'random_no', random_no);
 
                 var confirmSignup = {
                     "id": id,
                     "random_no": random_no
                 }
-                console.log('confirmSignup', confirmSignup);
                 $.post('/usersignup', confirmSignup, function(data) {
-                    console.log('data', data);
+                    
                     if (data && data.user) {
                         var User = {
                             "userData": data.user
@@ -167,6 +168,7 @@ console.log('here', $location.path());
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
 
                 $http.get('/reddituser').success(function(response) {
+                    console.log('response', response);
                     if(response.alldata != undefined){
                         $scope.currentRedditUser = response.alldata;
                     }else if(response.message) {
@@ -350,7 +352,7 @@ console.log('here', $location.path());
                     NFWS = 0;
                 }
                  if($('#check1').is(":checked")){
-                    Private = 'checked';
+                    Private = 1;
                 }else{
                    Private = 0;
                 }
@@ -377,7 +379,7 @@ console.log('here', $location.path());
                                 keywords:keywords,
                                 NFWS : NFWS
                             }
-                            checked = false;
+                            Private = '';
                             $("#description").val("");
                             $("#keywords").val("");
                             $.post('/upload', saveObj, function(response) {
@@ -456,26 +458,28 @@ console.log('here', $location.path());
         $scope.openVideo = function(data) {
             $scope.id.video_id = data.v_id;
 
-
             if (data.v_id) {
                     $http.post('/view', $scope.id).success(function(res) {
-
+                    
                     });
                 }
             $http.get('/media/' + data.v_id).success(function(response, header, status, config) { 
                 if ($scope.currentUser && response[0].isPrivate == 1) {
-
-                     $location.path("/u/" +$scope.currentUser.username+ "/" +response[0].v_id);
+                     $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
 
                     $rootScope.media = response[0];
-                     
-
                     $rootScope.singleMedia = $rootScope.media.outputs;
                     $rootScope.movie = {
                         src: $rootScope.singleMedia
                     };
+                } else if(!$scope.currentUser && response[0].isPrivate == 1) {
+                    $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
+                    $rootScope.media = response[0];
+                    $rootScope.singleMedia = $rootScope.media.outputs;
+                    $rootScope.movie = {
+                        src: $rootScope.singleMedia
+                    }; 
                 } else {
-
                     $location.path("/p/" +response[0].v_id);
                     $rootScope.media = response[0];
 
@@ -507,7 +511,7 @@ console.log('here', $location.path());
             $scope.jobs = [];
             $scope.mediaObj = {};
             $http.get('/media').success(function(response, header, status, config) {
-               
+               console.log('response', response);
 
                 if(response.testsession == '1') {
                     $http.get('/signout').success(function(res) {
@@ -530,6 +534,7 @@ console.log('here', $location.path());
                                     "input": JSON.parse(response.total[i].input),
                                     "input_file": response.total[i].input_file,
                                     "isPrivate": response.total[i].isPrivate,
+                                    "isReddit": response.total[i].isReddit,
                                     "outputs": response.total[i].outputs,
                                     "state": response.total[i].state,
                                     "submitted_at": response.total[i].submitted_at,
@@ -589,9 +594,6 @@ console.log('here', $location.path());
 
   }
 
-   $scope.redirecttouser = function (un) {
-       $location.path("/u/" + un);
-   }
 
     if (window.localStorage.getItem("userData") != null || window.localStorage.getItem("userData") != undefined) {
         $scope.user = JSON.parse(window.localStorage.getItem("userData"));
@@ -639,71 +641,88 @@ console.log('here', $location.path());
 
     }
 
-    $scope.redditredirect=function() {
-
-
-        var uid= $localStorage.userid;
-        var uname= $localStorage.username;
-        if (uid && uname) {
-
+//     $scope.redditredirect=function() {
+//         var uid= $localStorage.userid;
+//         var uname= $localStorage.username;
+//         if (uid && uname) {
+// alert('1');
           
-           $scope.userid = uid;
-           $scope.username = uname;
-           $scope.userInfo($scope.username, $scope.userid,'');
+//            $scope.userid = uid;
+//            $scope.username = uname;
+//            $scope.userInfo($scope.username, $scope.userid,'');
+//         }
+
+//         else if($localStorage.testid)
+//         {alert('2');
+//             $scope.username=$stateParams.name;
+//             $scope.userInfo($scope.username, $localStorage.testid,'');
+
+//         }
+//         else
+//         {
+//             alert('3');
+//             $http.get('/reddituser').success(function(response) {
+//                 console.log('checking reddit response', response.alldata);
+//                 if (response.alldata != undefined) {
+//                     $scope.matchId = response.alldata.id;
+//                     $scope.userid = response.alldata.id;
+//                     $scope.username = response.alldata.username;
+//                     if ($stateParams.name == $scope.username) {
+
+//                         console.log('checking case',$scope.username, $scope.userid)
+//                         $scope.userInfo($scope.username, $scope.userid,'redditcase');
+//                     };
+//                 }
+//             });
+//         }
+//     }
+ 
+
+
+    // $scope.redirecttouser=function(name,id, reddit) {
+    //     $scope.toggle();
+    //     //$localStorage.testid=id;
+    //     var isreddit;
+    //     console.log('redditredditreddit',reddit)
+    //     //$localStorage.userName = name;
+    //     if(reddit == 1) {alert('4');
+    //         isreddit = 'reddit';
+    //     }   
+    //     if(window.localStorage.getItem("userData"))
+    //     {  alert('5');
+    //     $location.path("/u/"+name).search('type', isreddit);
+    //     }else{alert('6');
+    //     $location.path("/p/u/"+name).search('type', isreddit);
+    //     }
+    // }
+
+
+
+    $scope.userInfo = function(user,userID,reddit,is_nsfw) { 
+            console.log('reddit',reddit)
+       var isreddit;
+       if(reddit == 1) {
+            isreddit = 'reddit';
+            if(window.localStorage.getItem("userData"))
+        {  
+        $location.path("/u/"+user).search('type', isreddit);
+        }else{
+        $location.path("/p/u/"+user).search('type', isreddit);
         }
-
-        else if($localStorage.testid)
-        {
-            $scope.username=$stateParams.name;
-            $scope.userInfo($scope.username, $localStorage.testid,'');
-
-        }
-        else
-        {
-            
-            $http.get('/reddituser').success(function(response) {
-                if (response.alldata != undefined) {
-                    $scope.matchId = response.alldata.id;
-                    $scope.userid = response.alldata.id;
-                    $scope.username = response.alldata.username;
-                    if ($stateParams.name == $scope.username) {
-                        $scope.userInfo($scope.username, $scope.userid,'redditcase');
-                    };
-                }
-            });
-        }
-    }
-
-
-
-    $scope.redirecttouser=function(name,id)
-    {
-        // console.log('window.localStorage.getItem("userData")',window.localStorage.getItem("userData"));
-        $localStorage.testid=id;
+        }  else{ 
         if(window.localStorage.getItem("userData"))
         {  
-        $location.path("/u/"+name);
+        $location.path("/u/"+user);
         }else{
-        $location.path("/p/u/"+name);
+        $location.path("/p/u/"+user);
         }
     }
 
-
-
-    $scope.userInfo = function(user,userID,cases,is_nsfw) { 
-       $localStorage.userid=userID;
-       $localStorage.username=user;       
-
-        $rootScope.usersName = user;
-        $scope.is_nsfw_user = is_nsfw; 
-        if($localStorage.testid && cases != 'redditcase')
-        {
-           
-           userID=$localStorage.testid;
-
-        }
+var type=$location.search().type;
+    console.log('$location',$location)
          $rootScope.particluarUserVedio = [];
-         $http.get('/allUserVedioAndInfo/'+userID).success(function(response, header, status, config) {
+         $http.get('/allUserVedioAndInfo/'+user+"?type="+type+"&id="+userID).success(function(response, header, status, config) {
+            console.log('responseReddit', response);
                 if (response) {
                    
                     for (var i = 0; i < response.length; i++) {
@@ -753,19 +772,16 @@ console.log('here', $location.path());
                             pagesShown = pagesShown + 1;       
                         };  
                         
-                        if (!$localStorage.testid) 
-                        {
-                        $location.path("/u/" +user);
-                    }
-
-                    if (cases == 'redditcase') 
-                        {
-
-                            $localStorage.testid="";
-                            $localStorage.userid="";
-                            $localStorage.username="";
-                        $location.path("/u/" +user);
-                    }
+                    //     if (!$localStorage.testid) 
+                    //     {
+                    //     $location.path("/u/" +user);
+                    // }
+$location.path("/u/"+user).search('type', 'reddit');
+                    // if (reddit == 'redditcase') {
+                    //     $location.path("/u/"+user).search('type', 'reddit');
+                    // }else {
+                        
+                    // }
 
 
                 } else {
@@ -829,6 +845,7 @@ console.log('here', $location.path());
                 $scope.currentUser = '';
                 $scope.signupUser = '';
                 $scope.currentRedditUser = '';
+                $localStorage.testid="";
                 $state.go('home');
                /* $Timeout(function(){
                     $window.location.reload()

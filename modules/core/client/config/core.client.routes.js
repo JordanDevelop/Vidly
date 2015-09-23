@@ -89,6 +89,11 @@
         templateUrl: 'modules/core/client/views/user.frofile.public.html',
         controller: 'HomeController'
       })
+      // .state('reddituser', {
+      //   url: '/u/reddit/:name',
+      //   templateUrl: 'modules/core/client/views/user.client.view.html',
+      //   controller: 'HomeController'
+      // })
       .state('signout', {
         url: '/signout',
         templateUrl: 'modules/core/client/views/signout.client.view.html',
