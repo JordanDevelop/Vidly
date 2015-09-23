@@ -93,6 +93,14 @@ $scope.urlProtocol = window.location.protocol;
             }
 
             }
+             /*==Add the some meta tag here for SEO purpose updated by vipin Date:23 Sep 2015=====*/
+               
+               $('title').text("vidly");
+               $('meta[name=description]').attr('content', response[0].description);
+               $('meta[name=keywords]').attr('content', response[0].keywords);
+               $('meta[name=img]').attr('content', response[0].thumbnail);
+            
+            /*==Add the some meta tag here for SEO purpose updated by vipin Date:23 Sep 2015=====*/   
         });
     }
         
