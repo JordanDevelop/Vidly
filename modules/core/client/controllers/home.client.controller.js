@@ -95,12 +95,13 @@ $scope.urlProtocol = window.location.protocol;
             }
              /*==Add the some meta tag here for SEO purpose updated by vipin Date:23 Sep 2015=====*/
                
-               $('title').text("vidly");
-               $('meta[name=description]').attr('content', response[0].description);
-               $('meta[name=keywords]').attr('content', response[0].keywords);
-               $('meta[name=img]').attr('content', response[0].thumbnail);
+               
+
+               $('meta[property=og\\:title]').attr('content',"Vidly | "+ response[0].description);
+               $('meta[property=og\\:url]').attr('content', response[0].outputs);
+               $('meta[property=og\\:image]').attr('content', response[0].thumbnail);
             
-            /*==Add the some meta tag here for SEO purpose updated by vipin Date:23 Sep 2015=====*/   
+            /*==Add the some meta tag here for SEO purpose updated by vipin Date:23 Sep 2015=====*/        
         });
     }
         
