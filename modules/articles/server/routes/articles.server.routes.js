@@ -53,7 +53,8 @@ config.zencoder = {
     cdn: 'https://c.vidly.io/', // CDN URL
 
 
-    notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    //notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
     
 
 
@@ -120,7 +121,7 @@ module.exports = function(app) {
     //video routes
     app.route('/media').get(articles.getVideos);
     app.route('/media/:id').get(articles.play);
-    app.route('/allUserVedioAndInfo/:userId').get(articles.allUserVedioAndInfo);
+    app.route('/allUserVedioAndInfo/:user').get(articles.allUserVedioAndInfo);
     app.route('/updateValue').post(articles.updatevalue);
 
     app.post('/notify/:id', function(req, res) {

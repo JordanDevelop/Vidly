@@ -32,22 +32,9 @@
               <span ng-show="userRegister.username.$error.pattern" class="text-danger inner-error">Please use characters only.</span>
             </div>
 
-
-
-
             <div>
               <textarea class="form-control" placeholder="keywords Ex: hd,clarity,etc" id="keywords" required></textarea>
             </div>
-             
-
-
-
-
-
-
-
-
-
 
 			     <div class="checkbox-inline" ng-show="currentUser || currentRedditUser">
              <div class="checkbox">
@@ -74,7 +61,32 @@
 
             </div>
             </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="succes-body" ng-show="{{msg}}">{{msg}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+
+
         </div>
       </div>
     </section>
+
+ 
+
+
+
+
 
