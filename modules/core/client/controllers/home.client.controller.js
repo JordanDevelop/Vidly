@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr','$localStorage','$timeout',
-    function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage,$timeout) {
+app.controller('HomeController', ['$scope', '$http', '$state', '$location', '$stateParams', '$window', 'Menus', '$rootScope', '$sce', 'toastr','$localStorage','$timeout', '$modal', '$log',
+    function($scope, $http, $state, $location, $stateParams, $window, Menus, $rootScope, $sce, toastr,$localStorage,$timeout, $modal, $log) {
 
 
 
@@ -60,7 +60,7 @@ $scope.makeUsernfsw = function(id){
 
 $scope.urlProtocol = window.location.protocol;
        if($stateParams.id ) {
-        console.log('$stateparamssss', $stateParams);
+    
         $http.post('/view', $stateParams).success(function(res) {
         });
         $scope.paramVideoId = $stateParams.id;
@@ -177,7 +177,7 @@ $scope.urlProtocol = window.location.protocol;
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
 
                 $http.get('/reddituser').success(function(response) {
-                    console.log('response', response);
+                    
                     if(response.alldata != undefined){
                         $scope.currentRedditUser = response.alldata;
                     }else if(response.message) {
@@ -413,30 +413,41 @@ $scope.urlProtocol = window.location.protocol;
                          toastr.error('Request Failed: We were unable to create a job at this time. Sorry about that.');
                     }
                 } else {
-                    jobState(data);
+                    var rawurl=data.outputs.MP4.url.split('/');
+                    var url="//c.vidly.io/"+rawurl[rawurl.length-1];
+                 $http.get('/getfinishedurl?url='+url).success(function(res) {
+
+                    jobState(res);
+                 })                    
                 }
             }); 
             function jobState(notification) {
-                switch (notification.state) {
-                    case 'failed':
+                
+                switch (notification.status) {
+                    case 'fail':
                         toastr.error('Request Failed: Some of the outputs may have succeeded, but at least one failed.');
                         break;
-                    case 'finished':
-                        toastr.success('Success: Congratulations, the job is finished.');
-                        $('#jobs').prepend('<div class="col-sm-3 job-item">' +
-                            '  <div class="thumbnail">' +
-                            '    <div class="video-thumb">' +
-                            '      <a href="/media/' + notification._id + '" class="view-media"><img src="' + notification.thumbnail.url + '"/></a>' +
-                            '    </div>' +
-                            '  </div>' +
+                    case 'ok':
+                        //toastr.success('Success: Congratulations, the job is finished.');
+
+                        $('body .content').append('<div class="overlay"></div>' + '<div class="col-sm-3 job-item">' +
+                            '<p class="alert-success">Congratulations, Your video has been uploaded.</p>'+
+                           '<a href="'+notification.url+'" target="_blank">Click here</a> to view this video.'+
+                           '<div class="congrats-close">'+
+                            '<i class="fa fa-times"></i>'+
+                            '</div>'+
                             '</div>');
+                        $(".congrats-close").click(function(){
+                            $(".col-sm-3.job-item").hide();
+                            $(".overlay").hide();
+                        });
+                         
                         break;
                 }
             }
         }
 
  /*-------To validate the keyword of vedio start-------------*/
-    
 
             function validatekeywords(keywords)
                {
@@ -520,7 +531,7 @@ $scope.urlProtocol = window.location.protocol;
             $scope.jobs = [];
             $scope.mediaObj = {};
             $http.get('/media').success(function(response, header, status, config) {
-               console.log('response', response);
+               
 
                 if(response.testsession == '1') {
                     $http.get('/signout').success(function(res) {
@@ -650,87 +661,30 @@ $scope.urlProtocol = window.location.protocol;
 
     }
 
-//     $scope.redditredirect=function() {
-//         var uid= $localStorage.userid;
-//         var uname= $localStorage.username;
-//         if (uid && uname) {
-// alert('1');
-          
-//            $scope.userid = uid;
-//            $scope.username = uname;
-//            $scope.userInfo($scope.username, $scope.userid,'');
-//         }
-
-//         else if($localStorage.testid)
-//         {alert('2');
-//             $scope.username=$stateParams.name;
-//             $scope.userInfo($scope.username, $localStorage.testid,'');
-
-//         }
-//         else
-//         {
-//             alert('3');
-//             $http.get('/reddituser').success(function(response) {
-//                 console.log('checking reddit response', response.alldata);
-//                 if (response.alldata != undefined) {
-//                     $scope.matchId = response.alldata.id;
-//                     $scope.userid = response.alldata.id;
-//                     $scope.username = response.alldata.username;
-//                     if ($stateParams.name == $scope.username) {
-
-//                         console.log('checking case',$scope.username, $scope.userid)
-//                         $scope.userInfo($scope.username, $scope.userid,'redditcase');
-//                     };
-//                 }
-//             });
-//         }
-//     }
- 
-
-
-    // $scope.redirecttouser=function(name,id, reddit) {
-    //     $scope.toggle();
-    //     //$localStorage.testid=id;
-    //     var isreddit;
-    //     console.log('redditredditreddit',reddit)
-    //     //$localStorage.userName = name;
-    //     if(reddit == 1) {alert('4');
-    //         isreddit = 'reddit';
-    //     }   
-    //     if(window.localStorage.getItem("userData"))
-    //     {  alert('5');
-    //     $location.path("/u/"+name).search('type', isreddit);
-    //     }else{alert('6');
-    //     $location.path("/p/u/"+name).search('type', isreddit);
-    //     }
-    // }
-
-
     $scope.userInfo = function(user,userID,reddit,is_nsfw) { 
-
-        console.log('user info');
+        $rootScope.usersName = user;
+        console.log('user info', user);
        
        var isreddit;
        
        if(reddit == 1) {
             isreddit = 'reddit';
-            console.log('hererrere');
-            if(window.localStorage.getItem("userData"))
-        {  
-        $location.path("/u/"+user).search('type', isreddit);
-        }else{
-        $location.path("/p/u/"+user).search('type', isreddit);
-        }
-        }  else{ 
         if(window.localStorage.getItem("userData"))
         {  
-        $location.path("/u/"+user);
+            $location.path("/u/"+user).search('type', isreddit);
         }else{
-        $location.path("/p/u/"+user);
+            $location.path("/p/u/"+user).search('type', isreddit);
         }
-    }
+        }else{ 
+            if(window.localStorage.getItem("userData"))
+            {  
+            $location.path("/u/"+user);
+            }else{
+            $location.path("/p/u/"+user);
+            }
+        }
 
-var type=$location.search().type;
+        var type=$location.search().type;
     
          $rootScope.particluarUserVedio = [];
          $http.get('/allUserVedioAndInfo/'+user+"?type="+type+"&id="+userID).success(function(response, header, status, config) {
@@ -786,9 +740,7 @@ var type=$location.search().type;
                         $rootScope.MoreItems = function() {
                             pagesShown = pagesShown + 1;       
                         };  
-                        
-                    
-
+   console.log('user infoaftre', user);
 
                 } else {
                     console.log("empty response");
@@ -808,16 +760,16 @@ var refresh=window.localStorage.getItem("val");
         var user = $stateParams.name;
     
     var type=$location.search().type;
-    console.log('type', type);
+    
     var userData = JSON.parse(window.localStorage.getItem("userData"));
-    console.log('userdata', userData);
+    
     if(userData) {
-        console.log('localstorage check', window.localStorage.getItem("userData"));
+        
         var userID = userData.userData.id;
     }else {
         var userID = 0;
     }
-    console.log('refresh here');
+    
     $scope.userInfo(user,userID,type,0);
 
     }else {
@@ -913,5 +865,6 @@ function validateName(Name) {
     var re = /^[a-zA-Z0-9 ]*$/;
     return re.test(Name);
 }
+
 
 

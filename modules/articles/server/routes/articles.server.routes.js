@@ -28,6 +28,8 @@ var xFrameOptions = require('x-frame-options')
 
 //  res.json({msg: 'This is CORS-enabled for all origins!'});
 //});
+
+
    var allowCrossDomain = function (req, res, next) {
        res.header("Access-Control-Allow-Origin", "*");
        res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -56,8 +58,6 @@ config.zencoder = {
     //notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
     
-
-
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{
@@ -109,7 +109,7 @@ module.exports = function(app) {
     app.get('/logins', user.loginHtml);
     app.get('/signups', user.signupHtml);
     app.get('/change_pwd', user.passwordHtml);
-
+    app.get('/getfinishedurl', user.getfinishedurl);
     app.post('/resetPassword/:email', user.resetPwd);
     //app.get('/forgotPassword',user.forgot);
     app.post('/update_pwd', user.updatePwd);

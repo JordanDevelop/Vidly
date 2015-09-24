@@ -750,4 +750,20 @@ exports.io = function (req) {
     console.log("called from ios", req);
     io.sockets.emit(req.id, req.jobDoc);
 
-}
+};
+
+exports.getfinishedurl = function (req, res) {
+    query="select v_id from uploads where outputs='"+req.query.url+"'";
+    console.log('query', query);
+    connection.query(query, function(err, doc) {
+
+        console.log('doc',doc);
+        if(doc && doc.length>0){
+            return res.send({status:"ok",url:req.protocol+"://"+req.get('host')+"/p/"+doc[0].v_id});
+       
+        }else{
+            return res.send({status:"fail",msg:err});
+        }
+    });
+
+};
