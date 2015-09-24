@@ -25,8 +25,6 @@
 
 
 	              <li data-value="dog"><a href ng-click="tab = 2"  ng-class="{active:tab===2}">Most Viewed</a></li>
-
-	              
 	             
 	             
 	              <li data-value="bird"><a href ng-click="tab = 4"  ng-class="{active:tab===4}">Latest</a></li>
@@ -102,7 +100,7 @@
 	                        
 	                        <h3>{{job.description}}</h3>
 
-	                        <div ng-if="job.user" ng-click="redirecttouser(job.user,job.userID)"> <p>by {{job.user}} </p> </div>
+	                        <div ng-if="job.user" ng-click="userInfo(job.user,0, job.isReddit, job.nsfw)"> <p>by {{job.user}} </p> </div>
 	                        
 	                        <div ng-if="!job.user"> <p style="cursor:default;">by Anonymous </p> </div>
 	                      
@@ -146,7 +144,7 @@
 	                        <h3>{{job.description}}</h3>
 
  
-	                        <div ng-if="job.user" ng-click="userInfo(job.user,job.userID)"> <p>by {{job.user}} </p> </div>
+	                        <div ng-if="job.user" ng-click="userInfo(job.user,0, job.isReddit, job.nsfw)"> <p>by {{job.user}} </p> </div>
 	                        
  
 	                        <div ng-if="!job.user"> <p style="cursor:default;">by Anonymous </p> </div>
@@ -192,7 +190,7 @@
 	                      <div class="col-md-6">
 	                        <h3>{{job.description}}</h3>
 
-	                        <div ng-if="job.user" ng-click="redirecttouser(job.user,job.userID)"> <p>by {{job.user}} </p> </div>
+	                        <div ng-if="job.user" ng-click="userInfo(job.user,0, job.isReddit, job.nsfw)"> <p>by {{job.user}} </p> </div>
 	                        <div ng-if="!job.user"> <p style="cursor:default;">by Anonymous </p> </div>
 	                      </div>
 
