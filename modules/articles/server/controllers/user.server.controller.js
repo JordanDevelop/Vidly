@@ -458,8 +458,9 @@ exports.changeUsernsfw = function(req,res){
 
 exports.upload = function(req, res) {
     if (req.body) {
+        
         var desid = randomToken(req.body.description);
-        var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ',nsfw = ' + req.body.NFWS + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description +  '" WHERE id = "' + req.body.mediaId + '"';
+        var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description +  '" WHERE id = "' + req.body.mediaId + '"';
       
         if (req.session && req.session.user) {
             console.log('Seesion is maintyned');
@@ -538,17 +539,15 @@ exports.updatePwd = function(req, res) {
                 if (rows && rows.length > 0) {
                     if (rows[0].password == md5(req.body.current)) {
                         if (req.body.new == req.body.confirm) {
-                        var pw=md5(req.body.new);
-                            var query = 'UPDATE users SET password = "' +pw + '" WHERE id = "' + rows[0].id + '"';
+                            var query = 'UPDATE users SET password = "' + md5(req.body.new) + '" WHERE id = "' + rows[0].id + '"';
                             connection.query(query, function(err, update) {
                                 console.log("CHANRGE PASSWORD--->>>", req.session.user);
                                 if (!err && update != "") {
-                                    req.session.user.password = pw;
-                                  
-                                    res.status(200).json({
-                                      title: 'Zensockets!',
+                                    req.session.user.password = md5(req.body.new);
+                                    res.status(200).send('upload', {
+                                        title: 'Zensockets!',
                                         user: req.session.user.username
-                                });
+                                    });
                                 } else {
                                     return res.status(400).send({
                                         message: "Something wrong occured, Try Again!"
@@ -561,7 +560,7 @@ exports.updatePwd = function(req, res) {
                             });
                         }
                     } else {
-                        return res.send({
+                        return res.status(200).send({
                             message: "Invalid password you entered!"
                         });
                     }
@@ -653,7 +652,7 @@ config.zencoder = {
     output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     cdn: 'https://c.vidly.io/', // CDN URL
-   // notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
+    //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{
