@@ -288,7 +288,7 @@ $scope.urlProtocol = window.location.protocol;
                             "userData": data.user[0]
                         }
                        window.localStorage.setItem("userData", JSON.stringify(User));
-                        $scope.user = JSON.parse(window.localStorage.get("userData")); 
+                        $scope.user = JSON.parse(window.localStorage.getItem("userData")); 
                         $scope.currentUser = $scope.user.userData;
                         
                         if (data && !data.message) {
