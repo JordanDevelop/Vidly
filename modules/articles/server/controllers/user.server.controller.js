@@ -545,7 +545,7 @@ exports.updatePwd = function(req, res) {
                                 console.log("CHANRGE PASSWORD--->>>", req.session.user);
                                 if (!err && update != "") {
                                     req.session.user.password = pw;
-                                    res.send('upload', {
+                                    res.status(200).send('upload', {
                                         title: 'Zensockets!',
                                         user: req.session.user.username
                                     });
