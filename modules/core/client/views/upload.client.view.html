@@ -27,9 +27,7 @@
     <div ng-init="redditUser()"></div>
 			<div id="notifications" class="bg-danger"></div>
             <div class="upload-comments">
-             
-              <textarea class="form-control" ng-pattern="/^[a-zA-Z0-9. ]*$/" placeholder="Give Some Description here.." id="description" maxlength="20" required></textarea>
-              <span ng-show="userRegister.username.$error.pattern" class="text-danger inner-error">Please use characters only.</span>
+              <textarea class="form-control" placeholder="Give Some Description here.." id="description" maxlength="50" required></textarea>
             </div>
 
             <div>

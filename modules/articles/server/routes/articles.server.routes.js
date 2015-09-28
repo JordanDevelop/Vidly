@@ -113,7 +113,7 @@ module.exports = function(app) {
     app.post('/resetPassword/:email', user.resetPwd);
     //app.get('/forgotPassword',user.forgot);
     app.post('/update_pwd', user.updatePwd);
-
+    app.post('/remove/:id', user.removeUser);
     //Views routes
     app.post('/view', user.view);
     app.post('/like', user.like);
@@ -175,11 +175,11 @@ module.exports = function(app) {
             var outputs = JSON.stringify(jobDoc.outputs);
             var outputUrl = jobDoc.outputs.MP4.url;
             var videoUrl = outputUrl.split("/")
-            console.log('outputs', videoUrl[1]);
+            
             var thumbnail = JSON.stringify(jobDoc.thumbnail);
             var thumbnailUrl = jobDoc.thumbnail.url;
             var URL = thumbnailUrl.split("/")
-            console.log('thumbnail', URL[1]);
+            
             var query = "UPDATE uploads SET zencoder_id = " + jobDoc.zencoder_id + ", input = '" + input + "', outputs = '" +"//c.vidly.io/"+videoUrl[videoUrl.length-1] + "', state= '" + jobDoc.state + "', thumbnail = '" +"//c.vidly.io/"+ URL[URL.length-1] + "' WHERE id = " + req.body.job.pass_through + "";
             connection.query(query, function(err, doc) {
                 console.log("Updated in ROUTES=======>> ", doc);

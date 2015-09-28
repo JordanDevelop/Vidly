@@ -1727,7 +1727,24 @@ section#video-gallery {
 .upload-section p{
     font-size: 21px;
 }
-
+body .congrats-close .fa.fa-times {
+  position: relative;
+  top: 1px;
+}
+body .col-sm-3.job-item {
+  font-size: 15px;
+  height: 145px;
+  left: 10px;
+  line-height: 21px;
+  padding: 25px 15px 0;
+  top: 33%;
+  width: 94%;
+}
+body .col-sm-3.job-item p {
+  font-size: 15px;
+  line-height: 22px;
+  padding: 10px;
+}
 
 
 
@@ -2043,6 +2060,8 @@ body #login-inner .btn-u.pull-right {
   z-index: 10;
   background-color: rgba(0,0,0,0.5); /*dim the background*/
 }
-
+.col-md-6.views-eye > h3 .download-icon.for-first-tab i {
+  padding-right: 6px;
+}
 
 

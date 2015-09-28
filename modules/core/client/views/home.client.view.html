@@ -62,9 +62,9 @@
 	                      </div>
 
 	                      <div class="col-md-6 views-eye">
-	                        <h3><strong class="download-icon">
+	                        <h3><strong class="download-icon for-first-tab">
 
-	                        <a href="#" ng-click="downloadLink(job)"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i>
+	                        <a href="#" ng-click="downloadLink(job)" download><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i>
 
 	                        </a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{job.viewcount}}</span></h3>
 	                        <div class="like-dislike">
@@ -107,7 +107,7 @@
 	                      </div>
 
 	                      <div class="col-md-6 views-eye">
-	                        <h3><strong class="download-icon"><a href="javascript:void(0);"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{job.viewcount}}</span></h3>
+	                        <h3><strong class="download-icon"><a href="javascript:void(0);" ng-click="downloadLink(job)" download><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{job.viewcount}}</span></h3>
 	                          
 	                        <div class="like-dislike">
 	                          <button ng-click="likeClick(job.id, $index, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{$index}}">{{job.likcount}}</div></button>
@@ -152,7 +152,7 @@
 	                      </div>
 
 	                      <div class="col-md-6 views-eye">
-	                        <h3><strong class="download-icon"><a href="javascript:void(0);"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{job.viewcount}}</span></h3>
+	                        <h3><strong class="download-icon"><a href="javascript:void(0);" ng-click="downloadLink(job)" download><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{job.viewcount}}</span></h3>
 	                          
 	                        <div class="like-dislike">
 	                          <button ng-click="likeClick(job.id, $index, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{$index}}">{{job.likcount}}</div></button>
@@ -195,7 +195,7 @@
 	                      </div>
 
 	                      <div class="col-md-6 views-eye">
-	                        <h3><strong class="download-icon"><a href="javascript:void(0);"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="views" tooltip-side="top"></i><span>{{job.viewcount}}</span></h3>
+	                        <h3><strong class="download-icon"><a href="javascript:void(0);" ng-click="downloadLink(job)" download><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="views" tooltip-side="top"></i><span>{{job.viewcount}}</span></h3>
 	                        <div class="like-dislike">
 
 	                          <button ng-click="likeClick(job.id, $index, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{$index}}">{{job.likcount}}</div></button>
