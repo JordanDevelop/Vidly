@@ -685,7 +685,11 @@ $scope.urlProtocol = window.location.protocol;
         }
 
         var type=$location.search().type;
-    
+        if(userID==0 && user){
+           userID = user.split('=');
+           userID = userID[1].split("&");
+           userID = userID[0];  
+        }
          $rootScope.particluarUserVedio = [];
          $http.get('/allUserVedioAndInfo/'+user+"?type="+type+"&id="+userID).success(function(response, header, status, config) {
             
