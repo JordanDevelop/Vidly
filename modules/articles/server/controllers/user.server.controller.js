@@ -545,10 +545,11 @@ exports.updatePwd = function(req, res) {
                                 console.log("CHANRGE PASSWORD--->>>", req.session.user);
                                 if (!err && update != "") {
                                     req.session.user.password = pw;
-                                    res.status(200).send('upload', {
-                                        title: 'Zensockets!',
+                                  
+                                    res.status(200).json({
+                                      title: 'Zensockets!',
                                         user: req.session.user.username
-                                    });
+                                });
                                 } else {
                                     return res.status(400).send({
                                         message: "Something wrong occured, Try Again!"
