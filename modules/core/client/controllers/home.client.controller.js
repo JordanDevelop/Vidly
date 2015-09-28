@@ -13,44 +13,32 @@ $scope.toggle = function() {
 }
 
 
-/*-----------make user makeUsernfsw Enabled Start-------------------*/ 
-$scope.makeUsernfsw = function(id){
+/*-----------make user makeUsernfsw Enabled Start-------------------*/
+$scope.updatenfsw = {}; 
+$scope.makeUsernfsw = function(id, value){
 
+$scope.updatenfsw.userid = id;
+$scope.updatenfsw.nfsw = value;
     
     var user = JSON.parse(window.localStorage.getItem("userData"));
     window.localStorage.removeItem("userData");
       
-     $localStorage['userData'] = '';
-    var nfsw = '';
-    var userid = id;
-    if($('#nfwsuser').is(":checked")){
-         nfsw = 1;
-         user.userData.is_nsfw = 1;
-          window.localStorage.setItem("userData", JSON.stringify(user));
+        $localStorage['userData'] = '';
          
-         
-    }else{
+            user.userData.is_nsfw = value;
 
-        nfsw = 0;
-        user.userData.is_nsfw = 0;
-        window.localStorage.setItem("userData", JSON.stringify(user)); 
+            window.localStorage.setItem("userData", JSON.stringify(user));
          
-    }
-    var data =
-    {
-      userid:id,
-      nfsw:nfsw
-    }
-     $http.post('/changeUsernsfw', data).success(function(res) {
-           if(res.message =='success'){
-            if(nfsw===1){
-            toastr.success('NSFW activated.');
+    $http.post('/changeUsernsfw', $scope.updatenfsw).success(function(res) {
+        if(res.message =='success'){
+            if(value===1){
+                toastr.success('NSFW activated.');
             }else{
                 toastr.success('NSFW deactivated.');
             }
-           }else{
-            toastr.error('Error ! has been occured');
-           }
+        }else{
+            toastr.error('An error has been occured');
+        }
         });
 
 }
@@ -353,6 +341,7 @@ $scope.urlProtocol = window.location.protocol;
                 var desc = $("#description").val();
                 var length = desc.length;
                 var keywords = $("#keywords").val();
+                var keyLength = keywords.length;
                 var NFWS = '';
                 var Private = '';
                 if($('#nfws').is(":checked")){
@@ -365,42 +354,51 @@ $scope.urlProtocol = window.location.protocol;
                 }else{
                    Private = 0;
                 }
+                var validDescription = validateDesc(desc);
+                var validKeys = validateKey(keywords);
                 var isValidKeywords = validatekeywords(keywords);
-                if(!isValidKeywords){
-                  toastr.error('Request Failed: You can enter maximum 4 keywords!');
-                  return false;  
-                }      
+                    if(!validDescription || !validKeys) {
+                        toastr.error('Request failed: Please use charaters only!');
+                        return false;
+                    }else if(!isValidKeywords || keyLength < 4 && keywords != null){
+                        toastr.error('Request Failed: You can enter maximum 4 keywords!');
+                        return false;  
+                    } else {
 
-                if (length >= 5 && desc != null) {
-                    filepicker.pick(function(FPFile) {
-                        $('#pick').addClass('disabled');
-                        var videoSrc = FPFile.url;
-                        var request_body = {
-                            input_file: videoSrc,
-                            channel: personalChannel
-                        };
-                        $.post('/job', request_body, function(data) {
-                            $('#pick').removeClass('disabled');
-                            var saveObj = {
-                                mediaId: data.internal_record,
-                                isPrivate: Private,
-                                description: desc,
-                                keywords:keywords,
-                                NFWS : NFWS
-                            }
-                            Private = '';
-                            $("#description").val("");
-                            $("#keywords").val("");
-                            $.post('/upload', saveObj, function(response) {
-                                
+                        if (length >= 5 && desc != null) {
+                            filepicker.pick(function(FPFile) {
+                                $('#pick').addClass('disabled');
+                                var videoSrc = FPFile.url;
+                                var request_body = {
+                                    input_file: videoSrc,
+                                    channel: personalChannel
+                                };
+                                $.post('/job', request_body, function(data) {
+                                    $('#pick').removeClass('disabled');
+                                    var saveObj = {
+                                        mediaId: data.internal_record,
+                                        isPrivate: Private,
+                                        description: desc,
+                                        keywords:keywords,
+                                        NFWS : NFWS
+                                    }
+                                    Private = '';
+                                    $("#description").val("");
+                                    $("#keywords").val("");
+                                    $.post('/upload', saveObj, function(response) {
+                                        
+                                    });
+                                });
+                            }, function(FPError) {
+                                console.log(FPError.toString());
                             });
-                        });
-                    }, function(FPError) {
-                        console.log(FPError.toString());
-                    });
-                } else {
-                    toastr.error('Request Failed: Give Some minimum 5 chracters Description for Your File to Upload');
-                } 
+                        } else {
+                            toastr.error('Request Failed: Give Some minimum 5 chracters Description for Your File to Upload');
+                        } 
+                    }   
+                    
+                      
+                
             socket.on('system', function(data) {
                 
             }); 
@@ -447,7 +445,7 @@ $scope.urlProtocol = window.location.protocol;
             }
         }
 
- /*-------To validate the keyword of vedio start-------------*/
+ /*-------To validate the description and keyword of vedio start-------------*/
 
             function validatekeywords(keywords)
                {
@@ -457,18 +455,25 @@ $scope.urlProtocol = window.location.protocol;
                          if( keywordsarray.length >= 5){
                            return 0;
                          }else{
-
                            return isSeprateBycomma;
                          }
                   
                      }else{
-                        
                         return isSeprateBycomma;
                      }
                 
                 }
+            function validateDesc(desc) {
+                var re = /^[a-zA-Z0-9. ]*$/;
+                return re.test(desc);
+            }
+            function validateKey(desc) {
+                var re = /^[a-zA-Z0-9., ]*$/;
+                return re.test(desc);
+            }
 
-/*-------To validate the keyword of vedio End-------------*/
+
+/*-------To validate the description and keyword of vedio End-------------*/
 
         $scope.trustSrc = function(src) {
             return $sce.trustAsResourceUrl(src);
@@ -667,31 +672,24 @@ $scope.urlProtocol = window.location.protocol;
        
        var isreddit;
        
-       if(reddit == 1) {
+       if(reddit == 1) {console.log('here reddit');
             isreddit = 'reddit';
         if(window.localStorage.getItem("userData"))
-        {  
+        {  console.log('in reddit')
             $location.path("/u/"+user).search('type', isreddit);
         }else{
             $location.path("/p/u/"+user).search('type', isreddit);
         }
         }else{ 
-            if(window.localStorage.getItem("userData"))
-            {  
-            $location.path("/u/"+user);
-            }else{
-            $location.path("/p/u/"+user);
-            }
+            console.log('normal user')
         }
 
         var type=$location.search().type;
     
          $rootScope.particluarUserVedio = [];
          $http.get('/allUserVedioAndInfo/'+user+"?type="+type+"&id="+userID).success(function(response, header, status, config) {
-            // window.localStorage.setItem("val",true);
+            
             $rootScope.val = true;
-             
-            console.log('responseReddit', response);
                 if (response) {
                    
                     for (var i = 0; i < response.length; i++) {
@@ -740,7 +738,13 @@ $scope.urlProtocol = window.location.protocol;
                         $rootScope.MoreItems = function() {
                             pagesShown = pagesShown + 1;       
                         };  
-   console.log('user infoaftre', user);
+
+                        if(window.localStorage.getItem("userData"))
+                        {  
+                        $location.path("/u/"+user);
+                        }else{
+                        $location.path("/p/u/"+user);
+                        }
 
                 } else {
                     console.log("empty response");
@@ -752,9 +756,6 @@ $scope.urlProtocol = window.location.protocol;
   
     }
 
-
-
-
 var refresh=window.localStorage.getItem("val");
     if($stateParams.name && !$rootScope.val) {
         var user = $stateParams.name;
@@ -762,15 +763,16 @@ var refresh=window.localStorage.getItem("val");
     var type=$location.search().type;
     
     var userData = JSON.parse(window.localStorage.getItem("userData"));
-    
     if(userData) {
         
         var userID = userData.userData.id;
+        $scope.nfsw = userData.userData.is_nsfw;
     }else {
         var userID = 0;
+        $scope.nfsw = 0;
     }
     
-    $scope.userInfo(user,userID,type,0);
+    $scope.userInfo(user,userID,type,$scope.nsfw);
 
     }else {
         console.log('not refresh');

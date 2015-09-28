@@ -10,6 +10,7 @@ app.controller('AdminController', ['$scope','$window','$http','toastr', function
     //for listing of users
     $scope.usersList = function() {
     	$http.get('/userListing').success(function(res, header, status, config) {
+            console.log('listing', res.listing);
             $scope.allUsers = res.listing;
             $scope.curPage = 0;
             $scope.pageSize = 10;
@@ -31,13 +32,23 @@ app.controller('AdminController', ['$scope','$window','$http','toastr', function
     //for edit details
     $scope.userData = {};
     $scope.selectValue = function(val, userId, value) {
-        console.log('value', value, 'userId', userId, 'val', val);
         $scope.userData.userId = userId; 
         $scope.userData.value = value; 
         $scope.userData.val = val; 
         $http.post('/updateUserData', $scope.userData).success(function(response) {
             toastr.success('Success: '+response);
         });
+    }
+
+    $scope.removeRow = function(id) {
+        console.log('id', id);
+        var Confirm = confirm("Are you sure you want to delete?");
+        if (Confirm == true) {    
+            $http.post('/remove/'+id).success(function(response) {
+                console.log('response', response);
+                toastr.success('Success: Deleted successfully!');
+            });
+        }
     }
 
 }]);
