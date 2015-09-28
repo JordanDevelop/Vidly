@@ -458,9 +458,8 @@ exports.changeUsernsfw = function(req,res){
 
 exports.upload = function(req, res) {
     if (req.body) {
-        
         var desid = randomToken(req.body.description);
-        var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description +  '" WHERE id = "' + req.body.mediaId + '"';
+        var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ',nsfw = ' + req.body.NFWS + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description +  '" WHERE id = "' + req.body.mediaId + '"';
       
         if (req.session && req.session.user) {
             console.log('Seesion is maintyned');
@@ -652,7 +651,7 @@ config.zencoder = {
     output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
     notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     cdn: 'https://c.vidly.io/', // CDN URL
-    //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
+   // notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{

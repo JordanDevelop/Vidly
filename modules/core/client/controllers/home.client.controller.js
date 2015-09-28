@@ -333,7 +333,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.upload = function(e) {
             if($scope.urlProtocol == 'http:') {
-                var socket = io('http://192.168.0.148:8005');
+                var socket = io('http://192.168.0.163:8005');
             }else {
                 var socket = io('https://vidly.io:8005');
             }
@@ -551,7 +551,7 @@ $scope.urlProtocol = window.location.protocol;
                                     "created": response.total[i].created,
                                     "description": response.total[i].description,
                                     "id": response.total[i].id,
-                                    "input": JSON.parse(response.total[i].input),
+                                    "input": response.total[i].input,
                                     "input_file": response.total[i].input_file,
                                     "isPrivate": response.total[i].isPrivate,
                                     "isReddit": response.total[i].isReddit,
