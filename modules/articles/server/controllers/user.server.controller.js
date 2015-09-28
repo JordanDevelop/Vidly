@@ -539,12 +539,13 @@ exports.updatePwd = function(req, res) {
                 if (rows && rows.length > 0) {
                     if (rows[0].password == md5(req.body.current)) {
                         if (req.body.new == req.body.confirm) {
-                            var query = 'UPDATE users SET password = "' + md5(req.body.new) + '" WHERE id = "' + rows[0].id + '"';
+                        var pw=md5(req.body.new);
+                            var query = 'UPDATE users SET password = "' +pw + '" WHERE id = "' + rows[0].id + '"';
                             connection.query(query, function(err, update) {
                                 console.log("CHANRGE PASSWORD--->>>", req.session.user);
                                 if (!err && update != "") {
-                                    req.session.user.password = md5(req.body.new);
-                                    res.status(200).send('upload', {
+                                    req.session.user.password = pw;
+                                    res.send('upload', {
                                         title: 'Zensockets!',
                                         user: req.session.user.username
                                     });
@@ -560,7 +561,7 @@ exports.updatePwd = function(req, res) {
                             });
                         }
                     } else {
-                        return res.status(200).send({
+                        return res.send({
                             message: "Invalid password you entered!"
                         });
                     }
