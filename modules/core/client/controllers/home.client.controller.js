@@ -705,6 +705,7 @@ $scope.urlProtocol = window.location.protocol;
         //    userID = userID[1].split("&");
         //    userID = userID[0];  
         // }
+
          $rootScope.particluarUserVedio = [];
          $http.get('/allUserVedioAndInfo/'+user+"?type="+type+"&id="+userID).success(function(response, header, status, config) {
             
