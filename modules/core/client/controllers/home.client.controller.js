@@ -685,7 +685,7 @@ $scope.urlProtocol = window.location.protocol;
         }
 
         var type=$location.search().type;
-        if(userID==0 && user){
+        if(userID==0 && (user && typeof user=='object')){
            userID = user.split('=');
            userID = userID[1].split("&");
            userID = userID[0];  
