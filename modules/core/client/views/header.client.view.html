@@ -62,7 +62,7 @@
                 <a href="#" class="dropdown-toggle username" data-toggle="dropdown" dropdown-toggle ng-show="currentRedditUser"><i class="fa fa-user"></i> Welcome {{currentRedditUser.username}} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li class="front-sub">
-                      <a ui-sref="user" ng-click="userInfo(currentRedditUser.username, currentRedditUser.id,'redditcase','0')"><i class="fa fa-fw fa-user"></i> My Profile</a>
+                      <a ui-sref="user" ng-click="userInfo(currentRedditUser.username, currentRedditUser.id, currentRedditUser.isReddit, currentRedditUser.is_nsfw)"><i class="fa fa-fw fa-user"></i> My Profile</a>
                   </li>
                   <li class="front-login">
                       <a ui-sref="signout" ng-click="logout()"><i class="fa fa-fw fa-power-off"></i> Signout</a>

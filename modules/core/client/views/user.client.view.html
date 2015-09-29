@@ -62,7 +62,7 @@
                         <div class="col-md-6">
                           <h3>{{vedio.description}}</h3>
 
-                          <div ng-if="vedio.user" ng-click="userInfo(vedio.user,vedio.userID,'asdsasad')"> <p>by {{vedio.user}} </p> </div>
+                          <div ng-if="vedio.user"> <p style="cursor:default;">by {{vedio.user}} </p> </div>
                           <div ng-if="!vedio.user"> <p style="cursor:default;">by Anonymous </p> </div>
                         </div>
 
