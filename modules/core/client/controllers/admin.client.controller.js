@@ -46,7 +46,7 @@ app.controller('AdminController', ['$scope','$window','$http','toastr', function
         if (Confirm == true) {    
             $http.post('/remove/'+id).success(function(response) {
                 console.log('response', response);
-                $scope.allUsers.splice( $scope.allUsers.indexOf(idx), 1);
+                $scope.allUsers.splice( $scope.allUsers.indexOf(idx), 1.);
                 toastr.success('Success: Deleted successfully!');
             });
         }

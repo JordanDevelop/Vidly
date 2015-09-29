@@ -1,5 +1,5 @@
 <!-- Middle Start here -->
-<section class="block-content top_spc" ng-init="usersList()">
+<section class="block-content top_spc" ng-init="usersList()" ng-if="currentUser.role == 'admin'">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -49,4 +49,7 @@
         </div>
       </div> 
     </div>  
+</section>
+<section class="notView" ng-if="currentUser.role == 'user' || !currentUser">
+  <div class="alert alert-danger text-center"><h2><b>You are not authorized to view this page.</b></h2></div> 
 </section>
