@@ -7,9 +7,9 @@
 
  		// 'host': 'localhost',
    //      'user': 'root',
- 		// 'password': 'root'
+ 		// 'password': ''
     },
-     'database': 'vidlydb711',
+     'database': 'vidlydb713',
      //'database': 'vidly',
     'port':61337
  };

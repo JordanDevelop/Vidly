@@ -460,7 +460,7 @@ exports.upload = function(req, res) {
     if (req.body) {
         
         var desid = randomToken(req.body.description);
-        var query = 'UPDATE uploads SET isPrivate = ' + req.body.isPrivate + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description +  '" WHERE id = "' + req.body.mediaId + '"';
+        var query = 'UPDATE uploads SET nsfw = ' + req.body.NFWS + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description +  '" WHERE id = "' + req.body.mediaId + '"';
       
         if (req.session && req.session.user) {
             console.log('Seesion is maintyned');

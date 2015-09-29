@@ -165,9 +165,16 @@ $scope.urlProtocol = window.location.protocol;
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
 
                 $http.get('/reddituser').success(function(response) {
-                    
+                    console.log('response', response.alldata);
                     if(response.alldata != undefined){
                         $scope.currentRedditUser = response.alldata;
+                        var User = {
+                                "userData": response.alldata
+                            }
+                            window.localStorage.setItem("userData", JSON.stringify(User));
+                            $scope.reddituserData = JSON.parse(window.localStorage.getItem("userData"));
+                            console.log('$scope.reddituserData',$scope.reddituserData); 
+
                     }else if(response.message) {
                         toastr.error('Request failed: '+response.message);
                     }
@@ -321,7 +328,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.upload = function(e) {
             if($scope.urlProtocol == 'http:') {
-                var socket = io('http://192.168.0.163:8005');
+                var socket = io('http://192.168.0.14:8005');
             }else {
                 var socket = io('https://vidly.io:8005');
             }
@@ -360,7 +367,7 @@ $scope.urlProtocol = window.location.protocol;
                     if(!validDescription || !validKeys) {
                         toastr.error('Request failed: Please use charaters only!');
                         return false;
-                    }else if(!isValidKeywords || keyLength < 4 && keywords != null){
+                    }else if(!isValidKeywords){
                         toastr.error('Request Failed: You can enter maximum 4 keywords!');
                         return false;  
                     } else {
@@ -382,7 +389,9 @@ $scope.urlProtocol = window.location.protocol;
                                         keywords:keywords,
                                         NFWS : NFWS
                                     }
-                                    Private = '';
+                                   
+                                    $('#check1').attr('checked', false);
+                                    $('#nfws').attr('checked', false);
                                     $("#description").val("");
                                     $("#keywords").val("");
                                     $.post('/upload', saveObj, function(response) {
@@ -449,6 +458,8 @@ $scope.urlProtocol = window.location.protocol;
 
             function validatekeywords(keywords)
                {
+                if(keywords != '') {
+
                   var isSeprateBycomma = (keywords.split(",").indexOf("") === -1 ? 1:0);
                       if(isSeprateBycomma){
                         var keywordsarray = keywords.split(",");
@@ -461,6 +472,9 @@ $scope.urlProtocol = window.location.protocol;
                      }else{
                         return isSeprateBycomma;
                      }
+                 }else{
+                    return true;
+                 }
                 
                 }
             function validateDesc(desc) {
@@ -545,67 +559,68 @@ $scope.urlProtocol = window.location.protocol;
                         $location.path('/'); 
                     });
                 } 
-                    if (response.total) {
-                        
-                        $("#imgloader").css("display", "none");
-                        $scope.loader = false;
-                        for (var i = 0; i < response.total.length; i++) {
-                               $scope.mediaObj = {
-                                    "channel": response.total[i].channel,
-                                    "userID":response.total[i].userId,
-                                    "created": response.total[i].created,
-                                    "description": response.total[i].description,
-                                    "id": response.total[i].id,
-                                    "input": response.total[i].input,
-                                    "input_file": response.total[i].input_file,
-                                    "isPrivate": response.total[i].isPrivate,
-                                    "isReddit": response.total[i].isReddit,
-                                    "outputs": response.total[i].outputs,
-                                    "state": response.total[i].state,
-                                    "submitted_at": response.total[i].submitted_at,
-                                    "thumbnail": response.total[i].thumbnail,
-                                    "zencoder_id": response.total[i].zencoder_id,
-                                    "dislikcount": response.total[i].dislikcount,
-                                    "likcount": response.total[i].likcount,
-                                    "viewcount": response.total[i].viewcount,
-                                    "nsfw": response.total[i].nsfw,
-                                    "v_id": response.total[i].v_id    
-                                };
-
-                            if (response.total && response.total[i].userId) {
-                              $scope.mediaObj["user"]= response.total[i].user
-                            }
-                            
-                             $scope.novedioFoundmsg_msg = true;
-                             $scope.novedioFoundmsg = false;
-                            $scope.jobs.push($scope.mediaObj);
-                        };
-
-                        var pagesShown = 1;
-                        var pageSize = 9;
-                        $scope.paginationLimit = function(data) {
-                            return pageSize * pagesShown;
-                        };
-                        $scope.hasMoreItemsToShow = function() {
-                            return pagesShown < ($scope.jobs.length / pageSize);
-                        };
-                        $scope.showMoreItems = function() {
-                            pagesShown = pagesShown + 1;
-                        };
-                    } else {
-
-                        $scope.novedioFoundmsg_msg = false;
+                console.log('response', response.total.length);
+                if(response.total.length == 0) {
+                    $scope.novedioFoundmsg_msg = false;
                         $scope.novedioFoundmsg = true;
                          $("#imgloader").css("display", "none");
-                          
-                    }
+                         $scope.loader = false;
+                     }else {
+                        if (response.total) {
+                            
+                            $("#imgloader").css("display", "none");
+                            $scope.loader = false;
+                            for (var i = 0; i < response.total.length; i++) {
+                                   $scope.mediaObj = {
+                                        "channel": response.total[i].channel,
+                                        "userID":response.total[i].userId,
+                                        "created": response.total[i].created,
+                                        "description": response.total[i].description,
+                                        "id": response.total[i].id,
+                                        "input": response.total[i].input,
+                                        "input_file": response.total[i].input_file,
+                                        "isPrivate": response.total[i].isPrivate,
+                                        "isReddit": response.total[i].isReddit,
+                                        "outputs": response.total[i].outputs,
+                                        "state": response.total[i].state,
+                                        "submitted_at": response.total[i].submitted_at,
+                                        "thumbnail": response.total[i].thumbnail,
+                                        "zencoder_id": response.total[i].zencoder_id,
+                                        "dislikcount": response.total[i].dislikcount,
+                                        "likcount": response.total[i].likcount,
+                                        "viewcount": response.total[i].viewcount,
+                                        "nsfw": response.total[i].nsfw,
+                                        "v_id": response.total[i].v_id    
+                                    };
+
+                                if (response.total && response.total[i].userId) {
+                                  $scope.mediaObj["user"]= response.total[i].user
+                                }
+                                
+                                 $scope.novedioFoundmsg_msg = true;
+                                 $scope.novedioFoundmsg = false;
+                                $scope.jobs.push($scope.mediaObj);
+                            };
+
+                            var pagesShown = 1;
+                            var pageSize = 9;
+                            $scope.paginationLimit = function(data) {
+                                return pageSize * pagesShown;
+                            };
+                            $scope.hasMoreItemsToShow = function() {
+                                return pagesShown < ($scope.jobs.length / pageSize);
+                            };
+                            $scope.showMoreItems = function() {
+                                pagesShown = pagesShown + 1;
+                            };
+                        }
+                     }
                  
             }).error(function(err, header, status, config) {
 
                 console.log(err, header, status, config);
             });
         }
-
 
  
 
@@ -672,24 +687,25 @@ $scope.urlProtocol = window.location.protocol;
        
        var isreddit;
        
-       if(reddit == 1) {console.log('here reddit');
-            isreddit = 'reddit';
-        if(window.localStorage.getItem("userData"))
-        {  console.log('in reddit')
-            $location.path("/u/"+user).search('type', isreddit);
-        }else{
-            $location.path("/p/u/"+user).search('type', isreddit);
-        }
-        }else{ 
-            console.log('normal user')
-        }
+       // if(reddit == 1) {
+       //      isreddit = 'reddit';
+       //  if(window.localStorage.getItem("userData"))
+       //  {  
+       //      $location.path("/u/"+user).search('type', isreddit);
+       //  }else{
+       //      $location.path("/p/u/"+user).search('type', isreddit);
+       //  }
+       //  }else{ 
+       //      console.log('normal user')
+       //  }
 
         var type=$location.search().type;
-        if(userID==0 && (user && typeof user=='object')){
-           userID = user.split('=');
-           userID = userID[1].split("&");
-           userID = userID[0];  
-        }
+        // if(userID==0 && user){
+        //    userID = user.split('=');
+        //    userID = userID[1].split("&");
+        //    userID = userID[0];  
+        // }
+
          $rootScope.particluarUserVedio = [];
          $http.get('/allUserVedioAndInfo/'+user+"?type="+type+"&id="+userID).success(function(response, header, status, config) {
             
@@ -743,11 +759,21 @@ $scope.urlProtocol = window.location.protocol;
                             pagesShown = pagesShown + 1;       
                         };  
 
-                        if(window.localStorage.getItem("userData"))
-                        {  
-                        $location.path("/u/"+user);
-                        }else{
-                        $location.path("/p/u/"+user);
+                        if(reddit == 1) {
+                            isreddit = 'reddit';
+                            if(window.localStorage.getItem("userData"))
+                            {  
+                                $location.path("/u/"+user).search('type', isreddit);
+                            }else{
+                                $location.path("/p/u/"+user).search('type', isreddit);
+                            }
+                        }else {
+                            if(window.localStorage.getItem("userData"))
+                            {  
+                            $location.path("/u/"+user);
+                            }else{
+                            $location.path("/p/u/"+user);
+                            }
                         }
 
                 } else {

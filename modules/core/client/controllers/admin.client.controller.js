@@ -40,12 +40,13 @@ app.controller('AdminController', ['$scope','$window','$http','toastr', function
         });
     }
 
-    $scope.removeRow = function(id) {
+    $scope.removeRow = function(id, idx) {
         console.log('id', id);
         var Confirm = confirm("Are you sure you want to delete?");
         if (Confirm == true) {    
             $http.post('/remove/'+id).success(function(response) {
                 console.log('response', response);
+                $scope.allUsers.splice( $scope.allUsers.indexOf(idx), 1.);
                 toastr.success('Success: Deleted successfully!');
             });
         }
