@@ -39,7 +39,7 @@
                   </tr>             
                 </tbody>  
               </table> 
-              <div class="pagination-div text-right" ng-show="numberOfPages()>'0'">
+              <div class="pagination-div text-right" ng-show="allusersCount>10">
                 <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">PREV</button>
                 <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                 <button type="button" class="btn btn-primary" ng-disabled="curPage >= allusersCount/pageSize - 1" ng-click="curPage = curPage+1">NEXT </button>

@@ -382,7 +382,7 @@ exports.updateUserData = function(req, res) {console.log('req------>', req.body)
 }
 
 exports.videoListing = function(req, res) {
-    connection.query("SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewcount from uploads u  where u.state='finished'", function(err, data) {
+    connection.query("SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewcount from uploads u  where u.state='finished' and u.isDelete = 0", function(err, data) {
         //console.log('listing', data);
         if(data) {
             return res.send({
@@ -544,7 +544,7 @@ exports.updatePwd = function(req, res) {
                                 console.log("CHANRGE PASSWORD--->>>", req.session.user);
                                 if (!err && update != "") {
                                     req.session.user.password = md5(req.body.new);
-                                    res.status(200).send('upload', {
+                                    res.status(200).send({ 
                                         title: 'Zensockets!',
                                         user: req.session.user.username
                                     });
@@ -768,9 +768,20 @@ exports.getfinishedurl = function (req, res) {
 
 };
 
-exports.removeUser = function(req, res) {console.log('params', req.params);
+exports.removeUser = function(req, res) {
     if(req.session.user && req.params.id) {
         connection.query('UPDATE users SET isDelete = 1 WHERE id ='+ req.params.id , function(err, response) {
+            if(response) {
+                return res.send('Deleted successfully!');
+            }
+        });
+    }
+}
+exports.deleteVideo = function(req, res) {
+    console.log('req', req.params.id);
+    if(req.session.user && req.params.id) {
+        var query = 
+        connection.query('UPDATE uploads SET isDelete = 1 WHERE id ='+ req.params.id , function(err, response) {
             console.log('response', response)
             if(response) {
                 return res.send('Deleted successfully!');

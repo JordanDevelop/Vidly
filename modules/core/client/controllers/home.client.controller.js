@@ -438,7 +438,7 @@ $scope.urlProtocol = window.location.protocol;
                         //toastr.success('Success: Congratulations, the job is finished.');
 
                         $('body .content').append('<div class="overlay"></div>' + '<div class="col-sm-3 job-item">' +
-                            '<p class="alert-success">Congratulations, Your video has been uploaded.</p>'+
+                            '<p class="alert-success">Congratulations! Your video has been uploaded.</p>'+
                            '<a href="'+notification.url+'" target="_blank">Click here</a> to view this video.'+
                            '<div class="congrats-close">'+
                             '<i class="fa fa-times"></i>'+
@@ -551,15 +551,6 @@ $scope.urlProtocol = window.location.protocol;
             $scope.mediaObj = {};
             $http.get('/media').success(function(response, header, status, config) {
                
-
-                if(response.testsession == '1') {
-                    $http.get('/signout').success(function(res) {
-                        sessionStorage.removeItem('userData');
-                        $scope.currentUser = '';
-                        $location.path('/'); 
-                    });
-                } 
-                console.log('response', response.total.length);
                 if(response.total.length == 0) {
                     $scope.novedioFoundmsg_msg = false;
                         $scope.novedioFoundmsg = true;
@@ -601,10 +592,10 @@ $scope.urlProtocol = window.location.protocol;
                                  $scope.novedioFoundmsg = false;
                                 $scope.jobs.push($scope.mediaObj);
                             };
-
+console.log('$scope.jobs.length', $scope.jobs.length)
                             var pagesShown = 1;
                             var pageSize = 9;
-                            $scope.paginationLimit = function(data) {
+                            $scope.paginationLimit = function() {
                                 return pageSize * pagesShown;
                             };
                             $scope.hasMoreItemsToShow = function() {
