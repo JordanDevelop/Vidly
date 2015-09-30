@@ -383,7 +383,7 @@ exports.updateUserData = function(req, res) {console.log('req------>', req.body)
 
 exports.videoListing = function(req, res) {
     connection.query("SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.id) as viewcount from uploads u  where u.state='finished' and u.isDelete = 0", function(err, data) {
-        //console.log('listing', data);
+        console.log('listing?????????', err);
         if(data) {
             return res.send({
                 listing: data
