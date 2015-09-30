@@ -2008,7 +2008,7 @@ section#contact-inner {
 }
 
 ul.thumbnails.row li{position:relative;}
-ul.thumbnails.row li  a.cross{position:absolute; top:-10px; right:-10px; z-index:9; background:rgba(0, 0, 0, 0.6); padding:0px 5px; color:#fff; font-size:20px; line-height:normal; cursor:pointer; border-radius:50%;}
+ul.thumbnails.row li  a.cross{position:absolute; top:-10px; right:-10px; z-index:9; background:#ff2c2c none repeat scroll 0 0; padding:0px 5px; color:#fff; font-size:20px; line-height:normal; cursor:pointer; border-radius:50%;}
 ul.thumbnails.row li  a.cross:hover{background:rgba(0, 0, 0, 1);}
 #description.form-control{
     width: 100%;

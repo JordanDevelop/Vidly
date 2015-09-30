@@ -2,15 +2,14 @@
 
 app.controller('AdminController', ['$scope','$window','$http','toastr', function($scope, $window, $http, toastr) {
 
-	if ($window.sessionStorage["userData"] != null || $window.sessionStorage["userData"] != undefined) {
-        $scope.user = JSON.parse($window.sessionStorage["userData"]);
+	if (window.localStorage.getItem("userData") != null || window.localStorage.getItem("userData") != undefined) {
+        $scope.user = JSON.parse(window.localStorage.getItem("userData"));
         $scope.currentUser = $scope.user.userData;
     }
 
     //for listing of users
     $scope.usersList = function() {
     	$http.get('/userListing').success(function(res, header, status, config) {
-            console.log('listing', res.listing);
             $scope.allUsers = res.listing;
             $scope.curPage = 0;
             $scope.pageSize = 10;
@@ -25,7 +24,20 @@ app.controller('AdminController', ['$scope','$window','$http','toastr', function
     //for listing of videos
     $scope.videoList = function() {
     	$http.get('/videoListing').success(function(response) {
-    		$scope.allVideos = response.listing;
+            if(response.listing != undefined) {    
+                $scope.allVideos = response.listing;
+                var pagesShown = 1;
+                var pageSize = 9;
+                $scope.paginationLimit = function() {
+                    return pageSize * pagesShown;
+                };
+                $scope.hasMoreItemsToShow = function() {
+                    return pagesShown < ($scope.allVideos.length / pageSize);
+                };
+                $scope.showMoreItems = function() {
+                    pagesShown = pagesShown + 1;
+                };
+            }
     	});
     }	
 
@@ -47,6 +59,18 @@ app.controller('AdminController', ['$scope','$window','$http','toastr', function
             $http.post('/remove/'+id).success(function(response) {
                 console.log('response', response);
                 $scope.allUsers.splice( $scope.allUsers.indexOf(idx), 1.);
+                toastr.success('Success: Deleted successfully!');
+            });
+        }
+    }
+
+    $scope.removeVideo = function(id, data) {
+        console.log('id', id);
+        var Confirm = confirm("Are you sure you want to delete?");
+        if (Confirm == true) {    
+            $http.post('/deleteVideo/'+id).success(function(response) {
+                console.log('response', response);
+                $scope.allVideos.splice( $scope.allVideos.indexOf(data), 1.);
                 toastr.success('Success: Deleted successfully!');
             });
         }

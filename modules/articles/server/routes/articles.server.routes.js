@@ -115,6 +115,7 @@ module.exports = function(app) {
     //app.get('/forgotPassword',user.forgot);
     app.post('/update_pwd', user.updatePwd);
     app.post('/remove/:id', user.removeUser);
+    app.post('/deleteVideo/:id', user.deleteVideo);
     //Views routes
     app.post('/view', user.view);
     app.post('/like', user.like);

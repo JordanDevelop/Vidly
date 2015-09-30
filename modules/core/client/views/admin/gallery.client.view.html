@@ -6,8 +6,8 @@
                     <img src="24.GIF" ng-show="loader = true" > 
                 </div> -->
               <ul class="thumbnails row">
-                  <li data-type="dog" data-id="id-1" class="col-md-4" ng-repeat="videos in allVideos">
-                    <a class="cross" tooltips tooltip-title="Cancel" tooltip-side="right"><i class="fa fa-times"></i></a>
+                  <li data-type="dog" data-id="id-1" class="col-md-4" ng-repeat="videos in allVideos | limitTo:paginationLimit()">
+                    <a class="cross" tooltips tooltip-title="Cancel" tooltip-side="right" ng-click="removeVideo(videos.id, videos)"><i class="fa fa-times"></i></a>
 
                   <a class="thumbnail" id="dog1" id="" class="view-media" ng-click="">
                     <div class="thumb-img">
@@ -26,7 +26,7 @@
                         <div class="col-md-6">
                           <h3>{{videos.description}}</h3>
 
-                          <div ng-if="videos.user"> <p>by {{videos.user}} </p> </div>
+                          <div ng-if="videos.user"> <p style="cursor:default;">by {{videos.user}} </p> </div>
                           <div ng-if="!videos.user"> <p style="cursor:default;">by Anonymous </p> </div>
                         </div>
 
