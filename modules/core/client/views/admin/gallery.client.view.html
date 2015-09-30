@@ -1,4 +1,4 @@
-<section id="video-gallery" ng-init="videoList()" ng-if="currentUser.role == 'admin'">
+<section id="video-gallery" ng-init="videoList()" ng-if="currentUser.role == 'admin' || currentUser.makeAdmin == 1" ng-controller="HomeController">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -9,7 +9,7 @@
                   <li data-type="dog" data-id="id-1" class="col-md-4" ng-repeat="videos in allVideos | limitTo:paginationLimit()">
                     <a class="cross" tooltips tooltip-title="Cancel" tooltip-side="right" ng-click="removeVideo(videos.id, videos)"><i class="fa fa-times"></i></a>
 
-                  <a class="thumbnail" id="dog1" id="" class="view-media" ng-click="">
+                  <a class="thumbnail" id="dog1" id="" class="view-media" ng-click="openVideo(videos)">
                     <div class="thumb-img">
                      <img ng-src="{{videos.thumbnail}}" tooltips tooltip-title="Play" tooltip-side="right">
 					

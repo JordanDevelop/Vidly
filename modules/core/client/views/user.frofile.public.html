@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="col-md-6 views-eye">
-                          <h3><strong class="download-icon"><a href="javascript:void(0);"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{vedio.viewcount}}</span></h3> 
+                          <h3><strong class="download-icon"><a href="javascript:void(0);" ng-click="downloadLink(vedio)"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{vedio.viewcount}}</span></h3> 
                           <div class="like-dislike">
 
                             <button ng-click="likeClick(vedio.id, $index, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{$index}}">{{vedio.likcount}}</div></button>
