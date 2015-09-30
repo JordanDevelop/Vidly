@@ -67,7 +67,7 @@
                         </div>
 
                         <div class="col-md-6 views-eye">
-                          <h3><strong class="download-icon"><a href="javascript:void(0);"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{vedio.viewcount}}</span></h3> 
+                          <h3><strong class="download-icon"><a href="javascript:void(0);" ng-click="downloadLink(vedio)"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{vedio.viewcount}}</span></h3> 
                           <div class="like-dislike">
 
                             <button ng-click="likeClick(vedio.id, $index, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{$index}}">{{vedio.likcount}}</div></button>
@@ -86,7 +86,7 @@
                  <form ng-show="tab === 3">
                       <img src="/modules/core/client/img/user-icon.png" alt="user icon">
                      <div class="checkbox-inline">
-                       <div class="checkbox">
+                       <div class="checkbox" ng-hide="usersName != currentUser.username">
                           <input id="check{{$index}}" type="checkbox" ng-model="currentUser.is_nsfw" ng-checked="currentUser.is_nsfw" ng-change="makeUsernfsw(currentUser.id, currentUser.is_nsfw)" name="check" ng-true-value=1 ng-false-value=0>
                           <label for="check{{$index}}">NSFW</label>
                        </div>

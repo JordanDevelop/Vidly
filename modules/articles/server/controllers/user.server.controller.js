@@ -199,19 +199,23 @@ exports.login = function(req, res) {
     if (req.body && req.body.password) {
         var user = req.body.username;
         var hashedpwd = md5(req.body.password);
-        connection.query('SELECT * FROM users WHERE (email="' + user + '" OR username="' + user + '") AND password="' + hashedpwd + '"', function(err, rows) {
-            if (err) {
+        connection.query('SELECT * FROM users WHERE (email="' + user + '" OR username="' + user + '") AND password="' + hashedpwd + '"', function(err, rows) {console.log('rows', rows[0])
+            if (err) {console.log('hereeeeeeee');
                 return res.status(204).send({
                     message: "Invalid Username & Password!"
                 });
             } else {
                 if (rows && rows.length > 0) {
-                    console.log("LOGIN ROWS-->>>> ", rows[0]);
+                    if(rows[0].IsDelete == 1) {
+                        return res.status(204).send({
+                        message: "Invalid Username or Password!"
+                });
+                    }
                     if (rows[0].isActive == true) {
-                        console.log("LOGIN isActive ROWS-->>>> ", rows[0].isActive);
+                        
                         req.session.user = rows[0];
 
-                        console.log("::::::::::::::::::::::::::::",req.session);
+                        
 
                         return res.status(200).json({
                             status: 200,
@@ -460,6 +464,7 @@ exports.upload = function(req, res) {
     if (req.body) {
         
         var desid = randomToken(req.body.description);
+        desid.replace(/ /g,'');
         var query = 'UPDATE uploads SET nsfw = ' + req.body.NFWS + ',v_id = "' + desid + '",keywords = "' + req.body.keywords + '", description = "' + req.body.description +  '" WHERE id = "' + req.body.mediaId + '"';
       
         if (req.session && req.session.user) {
@@ -544,7 +549,7 @@ exports.updatePwd = function(req, res) {
                                 console.log("CHANRGE PASSWORD--->>>", req.session.user);
                                 if (!err && update != "") {
                                     req.session.user.password = md5(req.body.new);
-                                    res.status(200).send({ 
+                                    res.status(200).send({
                                         title: 'Zensockets!',
                                         user: req.session.user.username
                                     });
