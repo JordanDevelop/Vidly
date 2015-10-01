@@ -53,33 +53,39 @@ $scope.urlProtocol = window.location.protocol;
         });
         $scope.paramVideoId = $stateParams.id;
         $http.get('/media/' + $scope.paramVideoId).success(function(response) {
-            if ($scope.currentUser && response[0].isPrivate == 1) {
-                 $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
-                $rootScope.media = response[0];
-                $rootScope.singleMedia = $rootScope.media.outputs;
-                $rootScope.movie = {
-                    src: $rootScope.singleMedia
-                };
-            }else if(!$scope.currentUser && response[0].isPrivate == 1) {
-                $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
-                $rootScope.media = response[0];
-                $rootScope.singleMedia = $rootScope.media.outputs;
-                $rootScope.movie = {
-                    src: $rootScope.singleMedia
-                };
-            } else {
-                if(response.length > 0){
-                $location.path("/p/" +response[0].v_id);
-                $rootScope.media = response[0];
-                $rootScope.singleMedia = $rootScope.media.outputs;
+            console.log('response12', response)
+            if(response[0].isDelete == 1) {console.log('here')
+                $location.path('/not-found');
+            }else {
                 
-                $rootScope.movie = {
-                    src: $rootScope.singleMedia
-                };
-            }else{
-                console.log('error page not found');
-            }
+                if ($scope.currentUser && response[0].isPrivate == 1) {
+                     $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
+                    $rootScope.media = response[0];
+                    $rootScope.singleMedia = $rootScope.media.outputs;
+                    $rootScope.movie = {
+                        src: $rootScope.singleMedia
+                    };
+                }else if(!$scope.currentUser && response[0].isPrivate == 1) {
+                    $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
+                    $rootScope.media = response[0];
+                    $rootScope.singleMedia = $rootScope.media.outputs;
+                    $rootScope.movie = {
+                        src: $rootScope.singleMedia
+                    };
+                } else {
+                    if(response.length > 0){
+                    $location.path("/p/" +response[0].v_id);
+                    $rootScope.media = response[0];
+                    $rootScope.singleMedia = $rootScope.media.outputs;
+                    
+                    $rootScope.movie = {
+                        src: $rootScope.singleMedia
+                    };
+                    }else{
+                        console.log('error page not found');
+                    }
 
+                }
             }
              /*==Add the some meta tag here for SEO purpose updated by vipin Date:23 Sep 2015=====*/
                
@@ -101,9 +107,9 @@ $scope.urlProtocol = window.location.protocol;
             $scope.loader = true;
             if ($scope.loginObj != null && $scope.loginObj.username != "" && $scope.loginObj.password !== "") {
                 $.post('/userlogin', $scope.loginObj, function(data) {
-                    if(data == undefined) {
-                        toastr.error('Request failed: Invalid username or password!')
-                    }
+                    // if(data == undefined) {
+                    //     toastr.error('Request failed: Invalid username or password!')
+                    // }
                         if (data && data.user && data.status==200 ) {
                             $scope.loader = false;
                             $("#imgloader").css("display", "none");
@@ -151,15 +157,16 @@ $scope.urlProtocol = window.location.protocol;
                     "random_no": random_no
                 }
                 $.post('/usersignup', confirmSignup, function(data) {
-                    
-                    if (data && data.user) {
+                    if(data && data.user.isActive == 1) {
+                        window.location.href = "/not-found";
+                    }else if (data && data.user) {
                         var User = {
                             "userData": data.user
                         }
                          window.localStorage.setItem("userData", JSON.stringify(User));
                          $scope.user = JSON.parse(window.localStorage.getItem("userData")); 
                          $scope.currentUser = $scope.user.userData;
-                        window.location.href = "/upload";
+                        //window.location.href = "/upload";
                     } else {
                         toastr.error('Request Failed: Invalid Username');
                     }
@@ -193,10 +200,15 @@ $scope.urlProtocol = window.location.protocol;
            $scope.loader = true;
            
             if ($scope.signupObj && $scope.signupObj != null && $scope.signupObj.email != "" && $scope.signupObj.username != "" && $scope.signupObj.password != "" && $scope.signupObj.cpassword != "") {
+
+                $scope.loader = false;
+                $("#imgloader").css("display", "none");
+                //toastr.error('Request failed: Please use characters only.');
                 if (validateEmail($scope.signupObj.email)) {
                     if (validateName($scope.signupObj.username)) {
                         if ($scope.signupObj.password == $scope.signupObj.cpassword) {
                             $.post('/auth/signup', $scope.signupObj, function(data) {
+                                console.log('data', data);
                                 if (data && data.status == 200) {
                                     $scope.loader = false;
                                     $("#imgloader").css("display", "none");
@@ -217,7 +229,7 @@ $scope.urlProtocol = window.location.protocol;
                             $("#imgloader").css("display", "none");
                             toastr.error('Request Failed: Password & Confirm Password doesnot match');
                         }
-                    } else {
+                    } else {console.log('here');
                         $scope.loader = false;
                         $("#imgloader").css("display", "none");
                         toastr.error('Request Failed: Please Fill Valid Username');
@@ -280,17 +292,17 @@ $scope.urlProtocol = window.location.protocol;
             pwdObj.confirm = $("#pwd-confirm").val();
             if ($("#pwd-new").val() == $("#pwd-confirm").val()) {
                 if (pwdObj && pwdObj !== null && pwdObj.current !== "" && pwdObj.new !== "" && pwdObj.confirm !== "") {
-                    $.post('/update_pwd', pwdObj, function(data) {
-                        var User = {
-                            "userData": data.user[0]
-                        }
-                       window.localStorage.setItem("userData", JSON.stringify(User));
-                        $scope.user = JSON.parse(window.localStorage.getItem("userData")); 
-                        $scope.currentUser = $scope.user.userData;
+                    $.post('/update_pwd', pwdObj, function(data) {console.log('data', data)
                         
                         if (data && !data.message) {
                             $scope.loader = false;
                             $("#imgloader").css("display", "none");
+                            var User = {
+                                "userData": data.user[0]
+                            }
+                           window.localStorage.setItem("userData", JSON.stringify(User));
+                            $scope.user = JSON.parse(window.localStorage.getItem("userData")); 
+                            $scope.currentUser = $scope.user.userData;
                             toastr.success('Success: Your Password has been Updated successfully');
                            
                         } else if (data && data.message) {
@@ -414,7 +426,7 @@ $scope.urlProtocol = window.location.protocol;
                 
             }); 
             socket.on(personalChannel, function(data) {
-              
+              console.log('dataaaa', data);
                 if (data.type == 'job.create') {  
                     if (!data.error) {
                          toastr.success('Success: File is currently processing.');
@@ -505,6 +517,7 @@ $scope.urlProtocol = window.location.protocol;
                     });
                 }
             $http.get('/media/' + data.v_id).success(function(response, header, status, config) { 
+                console.log('response', response);
                 if ($scope.currentUser && response[0].isPrivate == 1) {
                      $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
 
@@ -936,6 +949,7 @@ function validateEmail(email) {
 }
 
 function validateName(Name) {
+    console.log('name', Name);
     var re = /^[a-zA-Z0-9 ]*$/;
     return re.test(Name);
 }

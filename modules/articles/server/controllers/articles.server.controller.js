@@ -21,8 +21,6 @@ exports.getVideos = function(req, res) {
 
         if (!err) {
             if (req.session.user && req.session.user.is_nsfw==1) { 
-                console.log("hi i am here");
-                console.log('req.session.user.idreq.session.user.id===>',req.session.user.id);
                 query = "SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select isReddit from users where id=u.userId) as isReddit, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u  where u.state='finished' and isDelete=0 and Active=1 and nsfw=1 and  isPrivate!=1";
                 connection.query(query, function(err, media1) {
 
