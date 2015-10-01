@@ -199,23 +199,16 @@ exports.login = function(req, res) {
     if (req.body && req.body.password) {
         var user = req.body.username;
         var hashedpwd = md5(req.body.password);
-        connection.query('SELECT * FROM users WHERE (email="' + user + '" OR username="' + user + '") AND password="' + hashedpwd + '"', function(err, rows) {console.log('rows', rows[0])
-            if (err) {console.log('hereeeeeeee');
+        connection.query('SELECT * FROM users WHERE (email="' + user + '" OR username="' + user + '") AND password="' + hashedpwd + '"', function(err, rows) {
+            if (err) {
                 return res.status(204).send({
                     message: "Invalid Username & Password!"
                 });
             } else {
-                if (rows && rows.length > 0) {
-                    if(rows[0].IsDelete == 1) {
-                        return res.status(204).send({
-                        message: "Invalid Username or Password!"
-                });
-                    }
+                if (rows && rows.length > 0 && rows[0].IsDelete == 0) { console.log('rows[0].IsDelete', rows[0]);
                     if (rows[0].isActive == true) {
                         
                         req.session.user = rows[0];
-
-                        
 
                         return res.status(200).json({
                             status: 200,
@@ -229,6 +222,7 @@ exports.login = function(req, res) {
                             message: "Activate your Account First by clicking on Confirmation Link send to your registered emailid"
                         });
                     }
+                    
                 } else {
                     return res.status(200).send({
                         status: 204,
@@ -248,11 +242,11 @@ exports.login = function(req, res) {
 
 exports.existence = function(req, res) {
     if(req.params.value) {
-        connection.query('SELECT * FROM users WHERE (isReddit=0 AND email="' + req.params.value + '")', function(err, response) {
+        connection.query('SELECT * FROM users WHERE (isReddit=0 AND email="' + req.params.value + '" AND IsDelete=0)', function(err, response) {
             if(response != undefined && response.length) {
                 return res.send({message: 'This email is already registered with us!'});
             }else {
-                connection.query('SELECT * FROM users WHERE (isReddit=0 AND username="' + req.params.value + '")', function(err, response) {
+                connection.query('SELECT * FROM users WHERE (isReddit=0 AND username="' + req.params.value + '" AND IsDelete=0)', function(err, response) {
                     if(response != undefined && response.length) {
                         return res.send({message: 'This username is already registered with us!'});
                     }else {
@@ -271,13 +265,12 @@ exports.signup = function(req, res) {
     if (req.body) {
 
         //Check if enter email alredy exists
-        connection.query('SELECT * FROM users WHERE (email="' + req.body.email + '" OR username="' + req.body.username + 'AND isReddit=0")', function(err, rows) {
+        connection.query('SELECT * FROM users WHERE (email="' + req.body.email + '" OR username="' + req.body.username + '") AND isReddit=0 AND IsDelete=0', function(err, rows) {
+            
             if (err) {
-                console.log("errrr????", err, "rows-->>", rows);
+                console.log("errrr????", err);
             } else {
-
                 if (rows.length == 0) {
-                    console.log("req.body>>>>>>", req.body);
                     var random_no = randomToken();
                     var today = new Date();
                     var post = {
@@ -541,8 +534,8 @@ exports.updatePwd = function(req, res) {
             if (err) {
                 console.log("errrr????>>");
             } else {
-                if (rows && rows.length > 0) {
-                    if (rows[0].password == md5(req.body.current)) {
+                if (rows && rows.length > 0) {console.log('rowss');
+                    if (rows[0].password == md5(req.body.current)) {c
                         if (req.body.new == req.body.confirm) {
                             var query = 'UPDATE users SET password = "' + md5(req.body.new) + '" WHERE id = "' + rows[0].id + '"';
                             connection.query(query, function(err, update) {
@@ -564,7 +557,7 @@ exports.updatePwd = function(req, res) {
                                 message: "Password & Confirm Password doesnot match!"
                             });
                         }
-                    } else {
+                    } else {console.log('invalid');
                         return res.status(200).send({
                             message: "Invalid password you entered!"
                         });
