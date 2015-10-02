@@ -53,7 +53,6 @@ $scope.urlProtocol = window.location.protocol;
         });
         $scope.paramVideoId = $stateParams.id;
         $http.get('/media/' + $scope.paramVideoId).success(function(response) {
-            console.log('response12', response)
             if(response[0].isDelete == 1) {console.log('here')
                 $location.path('/not-found');
             }else {
@@ -342,7 +341,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.upload = function(e) {
             if($scope.urlProtocol == 'http:') {
-                var socket = io('http://192.168.0.14:8005');
+                var socket = io('http://192.168.0.148:8005');
             }else {
                 var socket = io('https://vidly.io:8005');
             }
@@ -517,7 +516,6 @@ $scope.urlProtocol = window.location.protocol;
                     });
                 }
             $http.get('/media/' + data.v_id).success(function(response, header, status, config) { 
-                console.log('response', response);
                 if ($scope.currentUser && response[0].isPrivate == 1) {
                      $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
 

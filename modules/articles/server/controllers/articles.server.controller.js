@@ -11,7 +11,6 @@ var dbconfig = require('../../../../db');
 var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
-
 exports.getVideos = function(req, res) { 
 
     //connection.query('SELECT * FROM uploads WHERE state = "finished"', function(err, media) {
@@ -133,3 +132,27 @@ exports.play = function(req, res) {
         }
     });
 };
+
+
+exports.addComments = function(req, res) {
+    console.log('req', req.body);
+    if(req.body.v_id) {
+        connection.query('SELECT id FROM uploads WHERE v_id ="'+req.body.v_id+'"', function(err, videoId) {
+            console.log('videoId', videoId);
+            if(videoId != undefined) {
+            var today = new Date();
+            console.log('today', today);
+            
+            
+            var queryString = 'INSERT INTO comments (videoID,comments,userID,createdAt) VALUES('+videoId[0].id+',"'+req.body.comment+'",'+ req.body.userId+',"'+today +'")';
+            console.log('queryString',queryString);
+                connection.query(queryString, function(err, newComments) {
+                    console.log('newComments', err);
+                    return res.send({
+                        message: 'comment inserted'
+                    });
+                });
+            }
+        });
+    }
+}

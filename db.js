@@ -11,7 +11,19 @@
     },
      'database': 'vidlydb713',
      //'database': 'vidly',
-    'port':61337
+    'port':61337,
+
+    'url': {
+    	'vidlyUrl': 'https://vidly.io/notify/',
+    	//'notifyUrl': 'http://mastersoftwaretechnologies.com:61337/notify/',
+    	'redditUrl': 'https://vidly.io/auth/reddit/callback'
+    	//'redditUrl': 'http://mastersoftwaretechnologies.com:61337/auth/reddit/callback',
+
+    	//'redditKey': 'DRiZeimles1i_w',
+    	'redditKey': 'HrDqC32DOzsTtw',
+    	//'redditSecret': 'f-Cj_BizGJPhI_Q7u9o2GbHqaAU'
+    	'redditSecret': '5aYBvF6fLEtlFXxGQmHLN8kjjmk'
+    }
  };
  
 

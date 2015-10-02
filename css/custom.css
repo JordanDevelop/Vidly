@@ -4,33 +4,7 @@
 }
 body{
 	font-family: 'open_sanslight' !important;
-    padding: 0px !important;
 }
-html {
-    min-height: 100%;
-    position: relative;
-}
-body {
-    margin-bottom: 60px;
-    background:#f2f2f2;
-    min-height: 100%;
-}
-footer {
-  bottom: 0;
-  height: 60px;
-  position: fixed;
-  width: 100%;
-}
-
-.block-content.top_spc {
-    margin-top: 96px;
-}
-.well.tab_wl table tr td a.btn {
-    border-radius: 0;
-    font-size: 15px;
-    padding: 2px 6px;
-}
-.well.tab_wl{background:#fff;}
 .navbar {
     margin-bottom: 0;
     min-height: 65px;
@@ -39,7 +13,7 @@ footer {
     padding-bottom: 22px;
     padding-top: 22px;
     color: #fff !important;
-    font-size: 18px !important;
+    font-size: 16px;
     transition: height 0.4s ease 0s, opacity 0.3s ease 0s;
     font-family: 'open_sansregular' !important;
 }
@@ -65,33 +39,6 @@ footer {
 	background: #f35b5b none repeat scroll 0 0;
 	color: #fff !important;
 }
-.navbar-right .dropdown-menu {
-    left: auto;
-    padding: 0;
-    right: 0;
-    width: 206px;
-}
-.nav.navbar-nav.navbar-right.right-menu .front-sub {
-    border-bottom: 1px solid #cccccc;
-    padding: 0;
-}
-.nav.navbar-nav.navbar-right.right-menu .front-sub:last-child {
-    border-bottom: none;
-}
-.nav.navbar-nav.navbar-right.right-menu .front-sub  a {
-     background: #ffffff none repeat scroll 0 0;
-    border-radius: 0px;
-    color: #000000 !important;
-    padding: 13px 11px;
-}
-.nav.navbar-nav.navbar-right.right-menu .front-sub  a:hover{
-	background: #f35b5b none repeat scroll 0 0;
-	color: #fff !important;
-}
-
-
-
-
 .nav.navbar-nav.navbar-right.right-menu .front-login a span {
     padding-left: 7px;
 }
@@ -111,13 +58,12 @@ footer {
 .nav.navbar-nav.navbar-right.right-menu .front-signup a span {
     padding-left: 7px;
 }
-#loginform  .form-control{height: 40px;   border-radius: 0;}
 section#high-quality-video {
-  background: #fff none repeat scroll 0 0;
-  margin-top: 65px;
-  padding: 0px 0;
-  text-align: center;
-  width: 100%;
+    padding: 30px 0;
+    position: relative;
+    text-align: center;
+    top: 65px;
+    width: 100%;
 }
 #high-quality-video h1 {
     color: #000;
@@ -157,12 +103,9 @@ section#high-quality-video {
 section#video-gallery {
     background: #f1f1f1 none repeat scroll 0 0;
     border-top: 1px solid #f1f1f1;
-    padding: 80px 0 44px;
+    padding: 40px 0 20px;
     position: relative;
-}
-section.form-build {
-  margin-top: 20px;
-  padding: 40px 0;
+    top: 65px;
 }
 #filter.filter.nav.nav-pills li {
     display: inline-block;
@@ -211,7 +154,6 @@ section.form-build {
     margin-bottom: 0px;
     padding: 0;
     transition: border 0.2s ease-in-out 0s;
-    cursor:pointer;
 }
 .thumb-img > img {
     width: 100%;
@@ -232,7 +174,6 @@ section.form-build {
 .thumb-content p {
     color: #757575;
     margin-bottom: 0;
-    cursor:pointer;
 }
 .thumb-content h3 span{
 	color: #f31e21;
@@ -282,7 +223,7 @@ section#footer {
     padding: 20px 0;
     position: relative;
     text-align: center;
-
+    top: 65px;
 }
 section#footer p{
 	color: #fff;
@@ -295,9 +236,10 @@ a.thumbnail:hover .time-count{
 	background: #f31e21;
 }
 section#video-inner {
-  background: #f1f1f1 none repeat scroll 0 0;
-  padding: 40px 0;
-  top: 65px;
+    position: relative;
+    top: 65px;
+    padding: 40px 0;
+    background: #f1f1f1 none repeat scroll 0 0;
 }
 .embend-code h4 {
     border-bottom: 1px solid #ddd;
@@ -679,12 +621,13 @@ section#user-content {
 /*about us page css start here*/
 
 .breadcrumbs {
-  background: rgba(0, 0, 0, 0) url("../../../modules/core/client/img/breadcrumbs.png") repeat scroll 0 0;
-  border-bottom: 1px solid #eee;
-  margin-top: 65px;
-  overflow: hidden;
-  padding: 10px 0 6px;
-  width: 100%;
+    background: rgba(0, 0, 0, 0) url("../img/breadcrumbs.png") repeat scroll 0 0;
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+    padding: 10px 0 6px;
+    position: relative;
+    top: 65px;
+    width: 100%;
 }
 .breadcrumb {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -699,8 +642,10 @@ section#user-content {
     margin-top: 13px;
 }
 section#about-content {
-  padding: 40px 0;
-  width: 100%;
+    padding: 40px 0;
+    position: relative;
+    top: 65px;
+    width: 100%;
 }
 .margin-bottom-40 {
     margin-bottom: 40px;
@@ -887,6 +832,8 @@ blockquote:hover{
 }
 section#contact-inner {
     padding: 35px 0;
+    position: relative;
+    top: 65px;
 }
 .sky-changes-3.sky-form{
     border: medium none;
@@ -975,26 +922,18 @@ section#contact-inner {
     left: -9999px;
     position: absolute;
 }
-.btn.btn-danger.reserve-more {
-    display: block;
-    margin: 0 auto;
-    text-align: center;
-}
 .btn-u {
-    background: none repeat scroll 0 0 #ee3e3e;
+    background: #ee3e3e none repeat scroll 0 0;
     border: 0 none;
-    border-radius: 0;
     color: #fff;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
-    font-weight: 700;
-    height: 45px;
-    padding: 8px 30px;
+    font-weight: 400;
+    padding: 6px 30px;
+    position: relative;
     text-decoration: none;
     white-space: nowrap;
-    width: 100%;
-    z-index: 999;
 }
 .input > input:hover, .textarea > textarea:hover{
     border-color: #ee3e3e;
@@ -1020,7 +959,7 @@ section#contact-inner {
     color: #777;
     text-decoration: none;
 }
-.who li a:focus {
+..who li a:focus {
     color: #777;
     text-decoration: none;
     outline: none;
@@ -1076,9 +1015,14 @@ a:focus {
 }
 /* checkbox css close here*/
 
+section#map-view {
+    position: relative;
+    top: 65px;
+}
 section#login-inner {
-  margin-top: 65px;
-  padding: 40px 0;
+    padding: 40px 0;
+    position: relative;
+    top: 65px;
 }
 .reg-page {
     background: #fefefe none repeat scroll 0 0;
@@ -1086,9 +1030,6 @@ section#login-inner {
     box-shadow: 0 0 3px #eee;
     color: #555;
     padding: 30px;
-}
-#login-inner.sign-up-inner {
-  margin: 0;
 }
 .reg-header {
     border-bottom: 1px solid #eee;
@@ -1184,24 +1125,11 @@ section#login-inner {
     box-shadow: none;
     font-size: 12px;
     background: #f7f7f7;
-    height: 45px;
-}
-.download-icon > a {
-  color: #000;
-  padding: 0 7px;
-}
-.download-icon > a:hover {
-  color: #f35b5b;
-}
-.video-liked span {
-  color: #f35b5b;
-  font-weight: bold;
-  font-family: "open_sanssemibold" !important;
+    height: 32px;
 }
 .search-open .btn-u {
     padding: 6px 20px;
     background: #353535;
-    width: auto;
 }
 .search-open .btn-u:hover {
     background: #f35b5b;
@@ -1215,7 +1143,7 @@ section#login-inner {
 }
 .btn-u.login-reditt {
     background: #353535 none repeat scroll 0 0;
-    margin-top: 13px;
+    margin-top: 18px;
     padding: 8px;
     width: 100%;
 }
@@ -1223,19 +1151,17 @@ section#login-inner {
     background: #f35b5b none repeat scroll 0 0;
 }
 .or_identified {
-    color: #353535;
-    display: inline-block;
-    font-size: 18px;
-    margin-bottom: 0;
-    margin-top: 10px;
+    font-size: 20px;
+    margin-top: 15px;
     text-align: center;
     width: 100%;
-}
-#contact-inner .btn-u {
-    width: auto;
+    color: #353535;
+    margin-bottom: 0px;
 }
 #upload.confirmation_content {
     padding: 60px 0 50px;
+    position: relative;
+    top: 65px;
 }
 .order-desp span {
     background: #ee3e3e none repeat scroll 0 0;
@@ -1344,38 +1270,22 @@ input#uploadFile {
     color: #fff !important;
 }
 
-/*4 september css start here kamal with love:)*/
-
-.like-dislike button .fa {
-    float: left;
-    margin-left: 18px;
-    padding-top: 3px;
-    width: auto;
-}
-.like-dislike > button {
-    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-    border: medium none;
-    display: inline-block;
-    width: 50px;
-    text-align: right;
-    cursor: pointer;
-    padding: 0;
-}
-.like-dislike > button:hover{
-    color: #f35b5b;
-}
 
 
-
-
-
-
-
-
-
-
-
-
+/**raman's css**/
+.comment1{margin-left:4%; width:auto; }
+.comment2{margin-left:8%;  width:auto;}
+.comment3{margin-left:12%; width:auto;}
+.comment4{margin-left:16%;  width:auto;}
+.comment5{margin-left:20%;  width:auto;}
+.comment6{margin-left:24%;  width:auto;}
+.comment7{margin-left:28%; }
+.comment8{margin-left:32%; }
+.comment9{margin-left:36%;}
+.comment10{margin-left:40%;}
+.comment11{margin-left:44%;}
+.comment-scroll{width:100%;}
+.scrolling{overflow-x:scroll;}
 
 /*===============================Responsive css start here================================*/
 
@@ -1529,7 +1439,7 @@ input#uploadFile {
 
 
 
-
+    
 }
 
 @media (max-width: 767px){
@@ -1667,7 +1577,7 @@ section#video-gallery {
 }
 .col-lg-4.col-sm-4.col-md-4.text-right{
     float: right;
-    width: 29%;
+    width: 29%; 
 }
 .sky-changes-3.sky-form {
     margin-bottom: 25px;
@@ -1727,30 +1637,13 @@ section#video-gallery {
 .upload-section p{
     font-size: 21px;
 }
-body .congrats-close .fa.fa-times {
-  position: relative;
-  top: 1px;
-}
-body .col-sm-3.job-item {
-  font-size: 15px;
-  height: 145px;
-  left: 10px;
-  line-height: 21px;
-  padding: 25px 15px 0;
-  top: 33%;
-  width: 94%;
-}
-body .col-sm-3.job-item p {
-  font-size: 15px;
-  line-height: 22px;
-  padding: 10px;
-}
 
 
 
 
 
 
+    
 }
 
 
@@ -1956,6 +1849,13 @@ section#contact-inner {
     padding: 20px 0;
 }
 
+
+
+
+
+
+
+    
 }
 
 @media (max-width: 320px){
@@ -1967,123 +1867,16 @@ section#contact-inner {
     top: -33px;
 }
 
-}
 
-.like-dislike .disabled {
-    cursor: not-allowed;
-}
 
-#imgloader {
-    background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
-    height: 100%;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 100%;
-    z-index: 99999;
-}
-#imgloader img {
-    left: 46%;
-    position: absolute;
-    top: 50%;
-}
-
-.download-icon > button {
-    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-    border: medium none;
-    cursor: pointer;
-    display: inline-block;
-    padding: 0;
-    text-align: right;
-    width: 50px;
-}
-.usersname {
-  color: #fff;
-  font-family: "open_sansregular" !important;
-  font-size: 15px;
-  font-weight: 500;
-  margin-bottom: 0;
-  margin-top: 6px;
-}
-
-ul.thumbnails.row li{position:relative;}
-ul.thumbnails.row li  a.cross{position:absolute; top:-10px; right:-10px; z-index:9; background:#ff2c2c none repeat scroll 0 0; padding:0px 5px; color:#fff; font-size:20px; line-height:normal; cursor:pointer; border-radius:50%;}
-ul.thumbnails.row li  a.cross:hover{background:rgba(0, 0, 0, 1);}
-#description.form-control{
-    width: 100%;
-}
-.upload-part #pick.btn.btn-primary {
-  margin: 0;
-  width: auto;      
-}
-body #login-inner .btn-u.pull-right {
-  float: none !important;
-}
-.col-sm-3.job-item {
-  background: none repeat scroll 0 0 #f3f3f3 !important;
-  border-radius: 6px;
-  box-shadow: 0 0 0 #040404;
-  font-size: 18px;
-  height: 165px;
-  left: 33%;
-  line-height: 32px;
-  padding: 50px 25px 0;
-  position: fixed !important;
-  text-align: center;
-  top: 33%;
-  width: 34%;
-  z-index: 999 !important;
-}
-.congrats-close {
-  background: none repeat scroll 0 0 #f35b5b;
-  border-radius: 50%;
-  color: #fff;
-  cursor: pointer;
-  height: 25px;
-  position: absolute;
-  right: -9px;
-  text-align: center;
-  top: -9px;
-  width: 25px;
-}
-.congrats-close .fa.fa-times {
-  position: relative;
-  top: -4px;
-}
-.overlay{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  background-color: rgba(0,0,0,0.5); /*dim the background*/
-}
-.col-md-6.views-eye > h3 .download-icon.for-first-tab i {
-  padding-right: 6px;
 }
 
 
-.notView {
-    margin-top: 67px;
-}
 
-/**raman's css**/
-.comment1{margin-left:4%; width:auto; }
-.comment2{margin-left:8%;  width:auto;}
-.comment3{margin-left:12%; width:auto;}
-.comment4{margin-left:16%;  width:auto;}
-.comment5{margin-left:20%;  width:auto;}
-.comment6{margin-left:24%;  width:auto;}
-.comment7{margin-left:28%; }
-.comment8{margin-left:32%; }
-.comment9{margin-left:36%;}
-.comment10{margin-left:40%;}
-.comment11{margin-left:44%;}
-.comment-scroll{width:100%;}
-.scrolling{overflow-x:scroll;}
 
 .see-more-content{display:none;}
 #show-more-btn{width:100%;  display:inline-block; background:#efefef; text-align:center; cursor:pointer; padding:10px; margin-bottom:20px;}
+
+
+
 

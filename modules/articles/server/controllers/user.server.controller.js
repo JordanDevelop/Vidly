@@ -11,7 +11,6 @@ var Zencoder = require('zencoder'),
 
     io.sockets.on('connection', function (socket) {
         console.log("Socket.io Started");
-
     });
 
 
@@ -273,6 +272,7 @@ exports.signup = function(req, res) {
                 if (rows.length == 0) {
                     var random_no = randomToken();
                     var today = new Date();
+                    console.log('today', today);
                     var post = {
                         email: req.body.email,
                         username: req.body.username,
@@ -648,9 +648,9 @@ config.filepicker = 'Av4QSKNOQSObS35rGlB8Bz';
 config.zencoder = {
     api_key: 'a2216d9259ff3f0e387bde6047c06a87', // API key
     output_url: 's3://vidly-bucket/', // Output location for your transcoded videos
-    notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
+    //notification_url: 'https://vidly.io/notify/', // Where Zencoder should POST notifications
     cdn: 'https://c.vidly.io/', // CDN URL
-    //notification_url: 'http://mastersoftwaretechnologies.com:61337/notify/', // Where Zencoder should POST notifications
+    notification_url: dbconfig.url.notifyUrl, // Where Zencoder should POST notifications
 
     outputs: function(id) { // Eventually we may want to pass things to our outputs array...
         var outputs = [{
@@ -745,17 +745,13 @@ exports.job = function(req, res) {
     }
 };
 exports.io = function (req) {
-    console.log("called from ios", req);
     io.sockets.emit(req.id, req.jobDoc);
 
 };
 
 exports.getfinishedurl = function (req, res) {
     query="select v_id from uploads where outputs='"+req.query.url+"'";
-    console.log('query', query);
     connection.query(query, function(err, doc) {
-
-        console.log('doc',doc);
         if(doc && doc.length>0){
             return res.send({status:"ok",url:req.protocol+"://"+req.get('host')+"/p/"+doc[0].v_id});
        
