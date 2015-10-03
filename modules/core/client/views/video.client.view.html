@@ -47,17 +47,19 @@
               </div>
             </div>
 
-<div class="main-commenting-section" ng-controller="CommentsController">
-              <h4>All Comments (1,799)</h4>
-              <form name="commentForm" ng-submit="addComment(commentForm.$valid)">
+<div class="main-commenting-section" ng-controller="CommentsController" ng-init="getComment()">
+              <h4>All Comments ({{commentCount}})</h4>
+              <div class="main-comment"><a href="#">Here is your first comment..</a></div>
+
+              <form id="first-comment" name="commentForm" ng-submit="addComment(commentForm.$valid)" style="display: none;">
                 <div class="form-group">
-                  <textarea class="form-control" ng-model="userComment.comment" placeholder="Add a comment..."></textarea>
+                  <textarea class="form-control" name="comment" ng-model="userComment.comment" placeholder="Add a comment..." ng-minlength="6"  required></textarea>
                 </div>
                 <div class="form-group">
-                  <button type="submit"  id="pick" class="btn btn-primary">Send</button>
+                  <button type="submit" ng-click="submitted=true" id="pick" class="btn btn-primary">Send</button>
                 </div>
               </form>
-
+ 
               <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Top Comments <span class="caret"></span>
@@ -70,18 +72,29 @@
 
               <div class="comment-entry"><!--comment entry start here-->
                 <div class="top-entry">
-                  <div class="user-img"><img src="img/user-1.jpg" alt="user"></div>
-                  <div class="user-desp">
-                    <h5>Vineeth kumar <span>2 weeks ago</span></h5>
-                    <p>ippo sila perukku saani lai mukki adicha maadiri irukkum saani lai mukki adicha</p>
-                    <p class="reply-review"><a href="#">Reply</a> 11<span>
+                  
+                  <div class="user-desp" ng-repeat="comments in allComments | limitTo:paginationLimit()">
+                    <h5>{{comments.username}}<span>2 weeks ago</span></h5>
+                    <p>{{comments.comments}}</p>
+                    <p class="reply-review">
+                      <a href="#" id="inner-review" ng-click="openForm($index)">Reply</a> 11<span>
                       <a href="#"><i class="fa fa-thumbs-up"></i></a>
                       <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
+
+                      
+                  <form id="reply-comment{{$index}}" style="display:none" name="commentForm" ng-submit="addComment(commentForm.$valid,$index)"> 
+                        <div class="form-group">
+                          <textarea class="form-control" ng-model="userComment.comment" placeholder="Add a comment..."></textarea>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit"  id="pick" class="btn btn-primary">Send</button>
+                        </div>
+                      </form>
                   </div>
                 </div>
-<div class="comment-scroll">
+ <!-- <div class="comment-scroll">
                 <div class="top-entry left-margin-entry">
-                  <div class="user-img"><img src="img/user-reply.jpg" alt="user"></div>
+                  
                   <div class="user-desp">
                     <h5>Bharat kumar <span>1 weeks ago</span></h5>
                     <p>vijay thambi uthavikku vanthaaraa.inimelay un magan thala fannu engiyaavathu sonnan.</p>
@@ -89,10 +102,10 @@
                       <a href="#"><i class="fa fa-thumbs-up"></i></a>
                       <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
                   </div>
-                </div>
+                </div> -->
         
         
-         <div class="top-entry left-margin-entry comment1">
+       <!--  <div class="top-entry left-margin-entry comment1">
                   <div class="user-img"><img src="img/user-reply.jpg" alt="user"></div>
                   <div class="user-desp">
                     <h5>Bharat kumar <span>1 weeks ago</span></h5>
@@ -218,76 +231,9 @@
                   </div>
                 </div>
         </div>        
-        </div>
-        <a id="show-more-btn">see more comments</a>
-        
-        
-        
-        
-        
-                <div class="top-entry left-margin-entry">
-                  <div class="user-img"><img src="img/user-reply.jpg" alt="user"></div>
-                  <div class="user-desp">
-                    <h5>Bharat kumar <span>1 weeks ago</span></h5>
-                    <p>vijay thambi uthavikku vanthaaraa.inimelay un magan thala fannu engiyaavathu sonnan.</p>
-                    <p class="reply-review"><a href="#">Reply</a> 02<span>
-                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
-                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
-                  </div>
-                </div>
-                <div class="top-entry left-margin-entry">
-                  <div class="user-img"><img src="img/user-reply.jpg" alt="user"></div>
-                  <div class="user-desp">
-                    <h5>Bharat kumar <span>1 weeks ago</span></h5>
-                    <p>vijay thambi uthavikku vanthaaraa.inimelay un magan thala fannu engiyaavathu sonnan.</p>
-                    <p class="reply-review"><a href="#">Reply</a> 02<span>
-                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
-                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
-                  </div>
-                </div>
-                <!--second entry start here-->
-
-                <div class="top-entry">
-                  <div class="user-img"><img src="img/user-1.jpg" alt="user"></div>
-                  <div class="user-desp">
-                    <h5>Vineeth kumar <span>2 weeks ago</span></h5>
-                    <p>ippo sila perukku saani lai mukki adicha maadiri irukkum saani lai mukki adicha</p>
-                    <p class="reply-review"><a href="#">Reply</a> 01<span>
-                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
-                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
-                  </div>
-                </div>
-
-                <div class="top-entry left-margin-entry">
-                  <div class="user-img"><img src="img/user-reply.jpg" alt="user"></div>
-                  <div class="user-desp">
-                    <h5>Bharat kumar <span>1 weeks ago</span></h5>
-                    <p>vijay thambi uthavikku vanthaaraa.inimelay un magan thala fannu engiyaavathu sonnan.</p>
-                    <p class="reply-review"><a href="#">Reply</a> 15<span>
-                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
-                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
-                  </div>
-                </div>
-                 <div class="top-entry">
-                  <div class="user-img"><img src="img/user-1.jpg" alt="user"></div>
-                  <div class="user-desp">
-                    <h5>Vineeth kumar <span>2 weeks ago</span></h5>
-                    <p>ippo sila perukku saani lai mukki adicha maadiri irukkum saani lai mukki adicha</p>
-                    <p class="reply-review"><a href="#">Reply</a> 0<span>
-                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
-                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
-                  </div>
-                </div>
-                <div class="top-entry">
-                  <div class="user-img"><img src="img/user-1.jpg" alt="user"></div>
-                  <div class="user-desp">
-                    <h5>Vineeth kumar <span>2 weeks ago</span></h5>
-                    <p>ippo sila perukku saani lai mukki adicha maadiri irukkum saani lai mukki adicha</p>
-                    <p class="reply-review"><a href="#">Reply</a> 0<span>
-                      <a href="#"><i class="fa fa-thumbs-up"></i></a>
-                      <a href="#"><i class="fa fa-thumbs-down"></i></a></span></p>
-                  </div>
-                </div>
+        </div> -->
+        <!-- <a id="show-more-btn">See More Comments</a> -->
+        <button class="btn btn-danger reserve-more" ng-show="hasMoreItemsToShow()" ng-click="showMoreItems()">See More Comments</button>
 
 
               </div><!--comment entry close here-->
@@ -318,4 +264,16 @@ jQuery(document).ready(function () {
     });
 });
 
+</script>
+
+<script>
+  $(document).ready(function(){
+      // $("#inner-review").click(function(){
+      //   $("#reply-comment").show();
+      // });
+      
+      $(".main-comment").click(function(){
+        $("#first-comment").show();
+      });
+  });
 </script>

@@ -119,8 +119,11 @@ module.exports = function(app) {
     //Views routes
     app.post('/view', user.view);
     app.post('/like', user.like);
+
     //route for comments
-    app.post('/comments', articles.addComments)
+    app.post('/comments', articles.addComments);
+    app.get('/getComments/:id', articles.getComments);
+
     //video routes
     app.route('/media').get(articles.getVideos);
     app.route('/media/:id').get(articles.play);

@@ -14,7 +14,7 @@
     'port':61337,
 
     'url': {
-    	'vidlyUrl': 'https://vidly.io/notify/',
+    	'notifyUrl': 'https://vidly.io/notify/',
     	//'notifyUrl': 'http://mastersoftwaretechnologies.com:61337/notify/',
     	'redditUrl': 'https://vidly.io/auth/reddit/callback'
     	//'redditUrl': 'http://mastersoftwaretechnologies.com:61337/auth/reddit/callback',

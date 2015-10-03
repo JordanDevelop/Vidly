@@ -1,5 +1,36 @@
-<h1>Page Not Found</h1>
-<div class="alert alert-danger" role="alert">
-  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-  <span class="sr-only">Error:</span> Page Not Found
-</div>
+<section id="error-page">
+   <div class="container">
+          <!-- HEADER -->
+          <div id="header">
+              <a class="broken broken-swing" id="logo" href="#">
+                <img alt="Logo" src="img/logo.png">
+              </a>
+          </div>
+          <!-- /HEADER -->
+
+          <!-- NAVIGATION -->
+          <div class="broken broken-crack" id="error-nav" style="position: relative; transform: rotate(-30deg); top: 272.813px; left: 53.8078px;">
+              <a ui-sref="home">Home</a>
+              <a ui-sref="upload">Upload</a>
+              <a href="https://blog.vidly.io">Blog</a>
+              <a href="#">Contact</a>
+              <input type="text" placeholder="Search" name="search" id="error-search">
+          </div>
+          <!-- /NAVIGATION -->
+
+          <!-- ADDITIONAL MESSAGE -->
+          <div id="message">
+              <h1 class="ultrabold">OOPS!</h1>
+              <p><span class="you-broke">you broke</span><br><span class="ultrabold">EVERYTHING.</span></p>
+          </div>
+          <!-- /ADDITIONAL MESSAGE -->
+
+          <!-- ERROR MESSAGE -->
+          <h1 id="error">
+              <span id="error-code">404</span>
+              <span id="error-text">NOT<br>FOUND</span>
+          </h1>
+          <!-- /ERROR MESSAGE -->          
+  </div>
+</section>
+

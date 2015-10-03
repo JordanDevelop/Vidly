@@ -5,7 +5,8 @@
  */
 var path = require('path'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
-    mysql = require('mysql');
+    mysql = require('mysql'),
+    async = require('async');
 
 var dbconfig = require('../../../../db');
 var connection = mysql.createConnection(dbconfig.connection);
@@ -135,24 +136,64 @@ exports.play = function(req, res) {
 
 
 exports.addComments = function(req, res) {
-    console.log('req', req.body);
     if(req.body.v_id) {
         connection.query('SELECT id FROM uploads WHERE v_id ="'+req.body.v_id+'"', function(err, videoId) {
-            console.log('videoId', videoId);
             if(videoId != undefined) {
             var today = new Date();
-            console.log('today', today);
-            
-            
-            var queryString = 'INSERT INTO comments (videoID,comments,userID,createdAt) VALUES('+videoId[0].id+',"'+req.body.comment+'",'+ req.body.userId+',"'+today +'")';
-            console.log('queryString',queryString);
+            var queryString = 'INSERT INTO comments (videoID,comments,userID,createdAt) VALUES('+videoId[0].id+',"'+req.body.comment+'",'+ req.body.userId+','+connection.escape(today) +')';
                 connection.query(queryString, function(err, newComments) {
-                    console.log('newComments', err);
-                    return res.send({
-                        message: 'comment inserted'
-                    });
+                    if(!err && newComments != undefined) {
+                        return res.send({
+                            message: 'Comment inserted successfully.'
+                        });
+                    }else {
+                        return res.send({
+                            msg: 'Something went wrong.'
+                        });
+                    }
                 });
             }
         });
     }
 }
+
+exports.getComments = function(req, res) {
+    console.log('req', req.params.id);
+    var allData = [];
+    if(req.params.id) {
+        connection.query('SELECT id FROM uploads WHERE v_id ="'+req.params.id+'"', function(err, videoId) {
+            if(videoId != undefined) {
+                connection.query('SELECT * FROM comments WHERE videoID ="'+videoId[0].id+'"', function(err, allComments) {
+                    //console.log('allComments', allComments);
+                     if(allComments != undefined) {
+
+                        async.mapSeries(allComments, function(user, callback) {
+
+                            connection.query('SELECT username FROM users WHERE id="'+user.userID+'"', function(err, userdata) {
+                                var detail={};
+                        detail.id = user.id;
+                        detail.childID = user.childID;
+                        detail.videoID = user.videoID;
+                        detail.userID = user.userID;
+                        detail.comments = user.comments;
+                        detail.createdAt = user.createdAt;
+                        detail.updatedAt = user.updatedAt;
+                        detail.username = userdata[0].username;
+                        allData.push(detail);
+                            callback(null);
+                            });
+                        }, function(err, results) {
+                            return res.send({
+                                allComments: allData,
+                               count: allData.length
+                            });
+                        });
+                    }
+                });
+            }
+        });
+    }
+}
+
+
+
