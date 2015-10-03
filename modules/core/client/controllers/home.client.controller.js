@@ -341,8 +341,10 @@ $scope.urlProtocol = window.location.protocol;
         });
 
         $scope.upload = function(e) {
+               
+
             if($scope.urlProtocol == 'http:') {
-                var socket = io('http://192.168.0.14:8005');
+                var socket = io('http://192.168.0.163:8005');
             }else {
                 var socket = io('https://vidly.io:8005');
             }
@@ -416,7 +418,7 @@ $scope.urlProtocol = window.location.protocol;
                                 console.log(FPError.toString());
                             });
                         } else {
-                            toastr.error('Request Failed: Give Some minimum 5 chracters Description for Your File to Upload');
+                            toastr.error('Request Failed: Give minimum 5 chracters Description for Your File to Upload');
                         } 
                     }   
                     
@@ -567,8 +569,8 @@ $scope.urlProtocol = window.location.protocol;
             $scope.mediaObj = {};
             $scope.media1Obj = {};
             $http.get('/media').success(function(response, header, status, config) {
-               
-                if(response.total.length == 0) {
+               console.log('response', response);
+                if(response.total.length == 0 && response.total!=undefined) {
                     $scope.novedioFoundmsg_msg = false;
                         $scope.novedioFoundmsg = true;
                          $("#imgloader").css("display", "none");

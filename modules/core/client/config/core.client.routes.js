@@ -99,6 +99,11 @@
         templateUrl: 'modules/core/client/views/signout.client.view.html',
         controller: 'HomeController'
       })
+      .state('term-condition', {
+        url: '/term-condition',
+        templateUrl: 'modules/core/client/views/terms.client.view.html',
+        controller: 'HomeController'
+      })
       .state('not-found', {
         url: '/not-found',
         templateUrl: 'modules/core/client/views/404.client.view.html',

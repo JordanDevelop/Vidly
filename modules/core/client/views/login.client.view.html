@@ -11,13 +11,13 @@
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                         <input type="text" placeholder="Username or Email" class="form-control" ng-model="loginObj.username" name="username" required>
                     </div>
-                        <span class="text-danger inner-error " ng-show="submitted && userlogin.username.$error.required">Username or Email is required.</span>
+                        <span class="text-danger inner-error" ng-show="submitted && userlogin.username.$error.required"></span>
 
                     <div class="input-group margin-bottom-20">
                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                        <input type="password" ng-model="loginObj.password" placeholder="password" name="password" class="form-control" required>
+                        <input type="password" ng-model="loginObj.password" placeholder="Password" name="password" class="form-control" required>
                     </div>
-                        <span class="text-danger inner-error " ng-show="submitted && userlogin.password.$error.required">Password is required.</span>
+                        <span class="text-danger inner-error " ng-show="submitted && userlogin.password.$error.required"></span>
                     <div id="imgloader" style="display:none">
                         <img src="24.GIF" ng-show="loader == true">
                     </div>
