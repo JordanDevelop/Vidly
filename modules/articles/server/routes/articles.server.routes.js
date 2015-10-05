@@ -123,6 +123,9 @@ module.exports = function(app) {
     //route for comments
     app.post('/comments', articles.addComments);
     app.get('/getComments/:id', articles.getComments);
+    app.post('/updateParentId', articles.updateParentId);
+    app.post('/updateParentId', articles.updateParentId);
+    app.get('/parentNodeList/:id', articles.parentNodeList);
 
     //video routes
     app.route('/media').get(articles.getVideos);

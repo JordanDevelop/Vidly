@@ -90,14 +90,6 @@ exports.allUserVedioAndInfo = function(req, res) {
 
 }
 
-// if(req.session.user) {
-
-//    }else {
-//  
-// }
-
-
-
  function getuserdata(query, callback) {
     
     connection.query(query, function(err, media) {
@@ -136,12 +128,12 @@ exports.play = function(req, res) {
 
 
 exports.addComments = function(req, res) {
-    if(req.body.v_id) {
+    if(req.body.v_id && req.session.user) {
         connection.query('SELECT id FROM uploads WHERE v_id ="'+req.body.v_id+'"', function(err, videoId) {
             if(videoId != undefined) {
             var today = new Date();
             var queryString = 'INSERT INTO comments (videoID,comments,userID,createdAt) VALUES('+videoId[0].id+',"'+req.body.comment+'",'+ req.body.userId+','+connection.escape(today) +')';
-                connection.query(queryString, function(err, newComments) {
+                connection.query(queryString, function(err, newComments) {console.log('newComments', newComments);
                     if(!err && newComments != undefined) {
                         return res.send({
                             message: 'Comment inserted successfully.'
@@ -154,6 +146,8 @@ exports.addComments = function(req, res) {
                 });
             }
         });
+    }else {
+        return res.send('Please Login First');
     }
 }
 
@@ -170,18 +164,19 @@ exports.getComments = function(req, res) {
                         async.mapSeries(allComments, function(user, callback) {
 
                             connection.query('SELECT username FROM users WHERE id="'+user.userID+'"', function(err, userdata) {
-                                var detail={};
-                        detail.id = user.id;
-                        detail.childID = user.childID;
-                        detail.videoID = user.videoID;
-                        detail.userID = user.userID;
-                        detail.comments = user.comments;
-                        detail.createdAt = user.createdAt;
-                        detail.updatedAt = user.updatedAt;
-                        detail.username = userdata[0].username;
-                        allData.push(detail);
-                            callback(null);
-                            });
+                                    var detail={};
+                                    detail.id = user.id;
+                                    detail.parentID = user.parentID;
+                                    detail.childID = user.childID;
+                                    detail.videoID = user.videoID;
+                                    detail.userID = user.userID;
+                                    detail.comments = user.comments;
+                                    detail.createdAt = user.createdAt;
+                                    detail.updatedAt = user.updatedAt;
+                                    detail.username = userdata[0].username;
+                                    allData.push(detail);
+                                    callback(null);
+                                });
                         }, function(err, results) {
                             return res.send({
                                 allComments: allData,
@@ -194,6 +189,47 @@ exports.getComments = function(req, res) {
         });
     }
 }
+
+exports.updateParentId = function(req, res) {
+    if(req.session.user && req.body) {
+    var today = new Date();
+        var parent_id = req.body.inheritComment.parentID;
+        if(parent_id !== '0' && parent_id.length >= 1) {
+            parent_id = parent_id.concat(',' + req.body.inheritComment.id);
+        }else {
+            parent_id = req.body.inheritComment.id;
+        }
+        console.log('parent_id', parent_id);
+        connection.query('INSERT INTO comments (videoID,comments,userID,createdAt, parentID) VALUES('+req.body.inheritComment.videoID+',"'+req.body.comment+'",'+ req.body.userId+','+connection.escape(today) +',"'+parent_id+'")', function(err, parentId) {
+            if(parentId != undefined) {
+
+                connection.query('UPDATE comments SET childID = 1 WHERE videoID=' + req.body.inheritComment.videoID + ' AND id="'+req.body.inheritComment.id+'" AND parentID=0', function(err, childId) {
+                    console.log('childID', childId);
+                    return res.send({message:' Comment successfully inserted.'});
+                });
+            }else {
+                return res.send({message: 'Something went wrong'})
+            }
+        });
+    }else {
+        return res.send('Please Login First!');
+    }
+}
+
+exports.parentNodeList = function(req, res) {
+    console.log('params', req.params);
+   
+
+    connection.query('SELECT * FROM comments WHERE parentID LIKE "'+req.params.id+"%"+'"', function(err, response) {console.log('err', err, 'response', response);
+        return res.send(response);
+    });
+
+
+}
+
+
+
+
 
 
 
