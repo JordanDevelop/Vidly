@@ -547,11 +547,43 @@ $scope.urlProtocol = window.location.protocol;
             });
         }
 
- 
-         
+        
+        $scope.searchVideo = function(goHit) {
+            if(goHit) {
+                $scope.searchText = '';
+                $('.search-open').fadeOut(500);
+                $('.search-btn').addClass('fa-search');
+                $('.search-btn').removeClass('fa-times');
+                $scope.searchHit = true;
+            }else {
+                $scope.searchHit = false;
+            }
+            // $scope.textValue.searchText = $scope.searchText;
+            // console.log('$scope.textValue', $scope.textValue);
+            // if($scope.searchText != undefined) {
+            //     $http.post('/search', $scope.textValue).success(function(response) {
+            //         console.log('response', response);
+            //         if(response != undefined) {
+            //             $scope.searchResult = response.result;
+            //             console.log('$scope.searchResult', $scope.searchResult);
+            //         }
+            //     });
+            // }
+        }
+
+        
+        $scope.getVideos = function(goHit) {
+            if(goHit) {
+                $http.get('/media/'+$scope.searchText).success(function(response) {
+                $scope.searchText = '';
+                $('.search-open').fadeOut(500);
+                $('.search-btn').addClass('fa-search');
+                $('.search-btn').removeClass('fa-times');
+                    console.log('response', response);
+                });
+            }else {
 
 
-        $scope.getVideos = function() {
 
             if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
                 $scope.Useris_nsfw = true;
@@ -564,7 +596,7 @@ $scope.urlProtocol = window.location.protocol;
             $scope.jobsNsfw = [];
             $scope.mediaObj = {};
             $scope.media1Obj = {};
-            $http.get('/media').success(function(response, header, status, config) {
+            $http.get('/media/null').success(function(response, header, status, config) {
                
                 if(response.total.length == 0) {
                     $scope.novedioFoundmsg_msg = false;
@@ -573,7 +605,6 @@ $scope.urlProtocol = window.location.protocol;
                          $scope.loader = false;
                      }else {
                         if (response.total) {
-                            
                             $("#imgloader").css("display", "none");
                             $scope.loader = false;
                             for (var i = 0; i < response.total.length; i++) {
@@ -584,6 +615,7 @@ $scope.urlProtocol = window.location.protocol;
                                         "userID":response.total[i].userId,
                                         "created": response.total[i].created,
                                         "description": response.total[i].description,
+                                        "keywords": response.total[i].keywords,
                                         "id": response.total[i].id,
                                         "input": response.total[i].input,
                                         "input_file": response.total[i].input_file,
@@ -614,6 +646,7 @@ $scope.urlProtocol = window.location.protocol;
                                         "userID":response.total[i].userId,
                                         "created": response.total[i].created,
                                         "description": response.total[i].description,
+                                        "keywords": response.total[i].keywords,
                                         "id": response.total[i].id,
                                         "input": response.total[i].input,
                                         "input_file": response.total[i].input_file,
@@ -640,7 +673,7 @@ $scope.urlProtocol = window.location.protocol;
                                     $scope.jobs.push($scope.media1Obj);
                                 }       
                             };
-                            
+                       
                             if($scope.jobs.length) {
                                 var pagesShown = 1;
                                 var pageSize = 9;
@@ -675,7 +708,7 @@ $scope.urlProtocol = window.location.protocol;
                 console.log(err, header, status, config);
             });
         }
-
+        }
  
 
    $scope.isnfsw = function(prop, val){
@@ -904,7 +937,7 @@ var refresh=window.localStorage.getItem("val");
         }
 
         }
-       
+     
 
         $scope.logout = function() {
             $http.get('/signout').success(function(res) {
