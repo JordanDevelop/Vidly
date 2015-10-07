@@ -22,16 +22,22 @@
             <li>
                 <i class="search fa fa-search search-btn"></i>
                 <div class="search-open">
-                    <div class="input-group animated fadeInDown">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <span class="input-group-btn">
-                            <button class="btn-u" type="button">Go</button>
-                        </span>
-                    </div>
+                  <form name="seachForm" ng-submit="searchVideo('hit')">
+                      <div class="input-group animated fadeInDown">
+                          <input type="text" class="form-control" ng-model="searchText" placeholder="Search" required>
+                          <span class="input-group-btn">
+                              <button class="btn-u" type="submit">Go</button>
+                          </span>
+                      </div>
+                  </form>
                 </div>
+            </li>
+            <li ng-show="icon">
+              <a ui-sref="home"><i class="fa fa-refresh"  ng-click="reload()"></i></a>
             </li>
             <!-- End Search Block -->
           </ul>
+          
           <ul class="nav navbar-nav left-menu" ng-show="currentUser.role == 'admin'">
               <li class="active"><a ui-sref="dashboard" ng-click="toggle()">Dashboard</a></li>
               <li><a ui-sref="gallery" ng-click="toggle()">Gallery</a></li>

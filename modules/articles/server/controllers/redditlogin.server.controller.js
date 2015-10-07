@@ -16,10 +16,10 @@ var dbconfig = require('../../../../db');
 var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE ' + dbconfig.database);
 
-var REDDIT_CONSUMER_KEY = "HrDqC32DOzsTtw";
-var REDDIT_CONSUMER_SECRET = "5aYBvF6fLEtlFXxGQmHLN8kjjmk";
-// var REDDIT_CONSUMER_KEY = "DRiZeimles1i_w";
-// var REDDIT_CONSUMER_SECRET = "f-Cj_BizGJPhI_Q7u9o2GbHqaAU";
+// var REDDIT_CONSUMER_KEY = "HrDqC32DOzsTtw";
+// var REDDIT_CONSUMER_SECRET = "5aYBvF6fLEtlFXxGQmHLN8kjjmk";
+var REDDIT_CONSUMER_KEY = dbconfig.url.redditKey;
+var REDDIT_CONSUMER_SECRET = dbconfig.url.redditSecret;
 var testname = "";
 
 var activereddituser="true";
@@ -35,8 +35,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new RedditStrategy({
         clientID: REDDIT_CONSUMER_KEY,
         clientSecret: REDDIT_CONSUMER_SECRET,
-        callbackURL: "https://vidly.io/auth/reddit/callback"
-        //callbackURL: "http://mastersoftwaretechnologies.com:61337/auth/reddit/callback"
+        callbackURL: dbconfig.url.redditUrl
         //put ur own callback url and also in reddit
     },
     function(accessToken, refreshToken, profile, done) {

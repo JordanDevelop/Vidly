@@ -53,7 +53,6 @@ $scope.urlProtocol = window.location.protocol;
         });
         $scope.paramVideoId = $stateParams.id;
         $http.get('/media/' + $scope.paramVideoId).success(function(response) {
-            console.log('response12', response)
             if(response[0].isDelete == 1) {console.log('here')
                 $location.path('/not-found');
             }else {
@@ -342,7 +341,7 @@ $scope.urlProtocol = window.location.protocol;
 
         $scope.upload = function(e) {
             if($scope.urlProtocol == 'http:') {
-                var socket = io('http://192.168.0.14:8005');
+                var socket = io('http://192.168.0.148:8005');
             }else {
                 var socket = io('https://vidly.io:8005');
             }
@@ -517,7 +516,6 @@ $scope.urlProtocol = window.location.protocol;
                     });
                 }
             $http.get('/media/' + data.v_id).success(function(response, header, status, config) { 
-                console.log('response', response);
                 if ($scope.currentUser && response[0].isPrivate == 1) {
                      $location.path("/u/" +response[0].user+ "/" +response[0].v_id);
 
@@ -549,12 +547,69 @@ $scope.urlProtocol = window.location.protocol;
             });
         }
 
- 
-         
+        $scope.textValue={};
+        $rootScope.$state = $state;
+        console.log('stateparams', $rootScope.$state.current.url);
+        if($rootScope.$state.current.url == '/upload') {
+            $rootScope.searchHit = true;
+            $scope.icon = false;
+        }else if($rootScope.$state.current.url == '/contact') {
+            $rootScope.searchHit = true;
+            $scope.icon = false;
+        }
+        $scope.searchVideo = function(goHit) {
+            $rootScope.msg = '';
+            $rootScope.searchHit = false;
+            if(goHit) {
+            $scope.textValue.searchText = $scope.searchText;
+            $rootScope.searchVal = $scope.textValue.searchText;
+            if($scope.searchText != undefined) {
+                $http.post('/search', $scope.textValue).success(function(response) {
+                    if(response != undefined && response.result.length != 0) {
+                        $scope.searchText = '';
+                        $('.search-open').fadeOut(500);
+                        $('.search-btn').addClass('fa-search');
+                        $('.search-btn').removeClass('fa-times');
+                        $rootScope.searchHit = true;
+                        $scope.icon = true;
+                        $rootScope.searchResult = response.result;
+                        $state.go('home');
+                        console.log('$rootScope.searchResult', $rootScope.searchResult);
+                        // if($rootScope.searchResult.length) {
+                        //     var pagesShown = 1;
+                        //     var pageSize = 9;
+                        //     $scope.searchPaginationLimit = function() {
+                        //         return pageSize * pagesShown;
+                        //     };
+                        //     $scope.searchHasMoreItemsToShow = function() {
+                        //         return pagesShown < ($rootScope.searchResult.length / pageSize);
+                        //     };
+                        //     $scope.searchShowMoreItems = function() {
+                        //         pagesShown = pagesShown + 1;
+                        //     };
+                        // }
 
 
+                    }else {
+                        $scope.searchText = '';
+                        $('.search-open').fadeOut(500);
+                        $('.search-btn').addClass('fa-search');
+                        $('.search-btn').removeClass('fa-times');
+                        $scope.icon = true;
+                        $rootScope.msg = 'Sorry! No Result Found for';
+                    }
+                });
+            }
+            }else {
+                $rootScope.searchHit = false;
+            }
+        }
+        $scope.reload = function() {
+            $window.location.reload();
+        }
+
+        
         $scope.getVideos = function() {
-
             if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
                 $scope.Useris_nsfw = true;
             }
@@ -567,7 +622,6 @@ $scope.urlProtocol = window.location.protocol;
             $scope.mediaObj = {};
             $scope.media1Obj = {};
             $http.get('/media').success(function(response, header, status, config) {
-               
                 if(response.total.length == 0) {
                     $scope.novedioFoundmsg_msg = false;
                         $scope.novedioFoundmsg = true;
@@ -575,7 +629,6 @@ $scope.urlProtocol = window.location.protocol;
                          $scope.loader = false;
                      }else {
                         if (response.total) {
-                            
                             $("#imgloader").css("display", "none");
                             $scope.loader = false;
                             for (var i = 0; i < response.total.length; i++) {
@@ -586,6 +639,7 @@ $scope.urlProtocol = window.location.protocol;
                                         "userID":response.total[i].userId,
                                         "created": response.total[i].created,
                                         "description": response.total[i].description,
+                                        "keywords": response.total[i].keywords,
                                         "id": response.total[i].id,
                                         "input": response.total[i].input,
                                         "input_file": response.total[i].input_file,
@@ -616,6 +670,7 @@ $scope.urlProtocol = window.location.protocol;
                                         "userID":response.total[i].userId,
                                         "created": response.total[i].created,
                                         "description": response.total[i].description,
+                                        "keywords": response.total[i].keywords,
                                         "id": response.total[i].id,
                                         "input": response.total[i].input,
                                         "input_file": response.total[i].input_file,
@@ -642,7 +697,7 @@ $scope.urlProtocol = window.location.protocol;
                                     $scope.jobs.push($scope.media1Obj);
                                 }       
                             };
-                            
+                       
                             if($scope.jobs.length) {
                                 var pagesShown = 1;
                                 var pageSize = 9;
@@ -677,7 +732,6 @@ $scope.urlProtocol = window.location.protocol;
                 console.log(err, header, status, config);
             });
         }
-
  
 
    $scope.isnfsw = function(prop, val){
@@ -865,7 +919,7 @@ var refresh=window.localStorage.getItem("val");
 
  
     $scope.likeValue = {};
-    $scope.likeClick = function (id, index, value) {
+    $scope.likeClick = function (id, index, value) { console.log('id', id, 'index', index, 'value', value);
         if(!$scope.currentUser && !$scope.currentRedditUser) {
             $state.go('login');
         }else {
@@ -906,7 +960,7 @@ var refresh=window.localStorage.getItem("val");
         }
 
         }
-       
+     
 
         $scope.logout = function() {
             $http.get('/signout').success(function(res) {
