@@ -1164,7 +1164,23 @@ section#login-inner {
     text-align: center;
     left: 5px;
 }
+.left-menu li .reset {
+    border-bottom: medium none;
+    bottom: 0;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    min-width: 35px;
+    padding: 25px 0 24px;
+    position: relative;
+    text-align: center;
+    left: 5px;
+}
 .left-menu li .search:hover {
+    color: #f35b5b;
+}
+.left-menu li .reset:hover {
     color: #f35b5b;
 }
 .left-menu .search-open {

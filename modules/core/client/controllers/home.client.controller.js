@@ -552,9 +552,10 @@ $scope.urlProtocol = window.location.protocol;
         console.log('stateparams', $rootScope.$state.current.url);
         if($rootScope.$state.current.url == '/upload') {
             $rootScope.searchHit = true;
-        }
-        if($rootScope.$state.current.url == '/contact') {
+            $scope.icon = false;
+        }else if($rootScope.$state.current.url == '/contact') {
             $rootScope.searchHit = true;
+            $scope.icon = false;
         }
         $scope.searchVideo = function(goHit) {
             $rootScope.msg = '';
@@ -570,6 +571,7 @@ $scope.urlProtocol = window.location.protocol;
                         $('.search-btn').addClass('fa-search');
                         $('.search-btn').removeClass('fa-times');
                         $rootScope.searchHit = true;
+                        $scope.icon = true;
                         $rootScope.searchResult = response.result;
                         $state.go('home');
                         console.log('$rootScope.searchResult', $rootScope.searchResult);
@@ -593,6 +595,7 @@ $scope.urlProtocol = window.location.protocol;
                         $('.search-open').fadeOut(500);
                         $('.search-btn').addClass('fa-search');
                         $('.search-btn').removeClass('fa-times');
+                        $scope.icon = true;
                         $rootScope.msg = 'Sorry! No Result Found for';
                     }
                 });
@@ -601,10 +604,12 @@ $scope.urlProtocol = window.location.protocol;
                 $rootScope.searchHit = false;
             }
         }
+        $scope.reload = function() {
+            $window.location.reload();
+        }
 
         
         $scope.getVideos = function() {
-          
             if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
                 $scope.Useris_nsfw = true;
             }
