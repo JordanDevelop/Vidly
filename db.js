@@ -15,7 +15,7 @@
 
     'url': {
     	'notifyUrl': 'https://vidly.io/notify/',
-        'redditUrl': 'https://vidly.io/auth/reddit/callback'
+        'redditUrl': 'https://vidly.io/auth/reddit/callback',
         'redditKey': 'HrDqC32DOzsTtw',
         'redditSecret': '5aYBvF6fLEtlFXxGQmHLN8kjjmk'
         
