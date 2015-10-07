@@ -15,14 +15,14 @@
 
     'url': {
     	'notifyUrl': 'https://vidly.io/notify/',
-    	//'notifyUrl': 'http://mastersoftwaretechnologies.com:61337/notify/',
-    	'redditUrl': 'https://vidly.io/auth/reddit/callback'
-    	//'redditUrl': 'http://mastersoftwaretechnologies.com:61337/auth/reddit/callback',
-
-    	//'redditKey': 'DRiZeimles1i_w',
-    	'redditKey': 'HrDqC32DOzsTtw',
-    	//'redditSecret': 'f-Cj_BizGJPhI_Q7u9o2GbHqaAU'
-    	'redditSecret': '5aYBvF6fLEtlFXxGQmHLN8kjjmk'
+        'redditUrl': 'https://vidly.io/auth/reddit/callback'
+        'redditKey': 'HrDqC32DOzsTtw',
+        'redditSecret': '5aYBvF6fLEtlFXxGQmHLN8kjjmk'
+        
+        // 'notifyUrl': 'http://mastersoftwaretechnologies.com:61337/notify/',
+        // 'redditUrl': 'http://mastersoftwaretechnologies.com:61337/auth/reddit/callback',
+        // 'redditKey': 'DRiZeimles1i_w',
+        // 'redditSecret': 'f-Cj_BizGJPhI_Q7u9o2GbHqaAU'
     }
  };
  

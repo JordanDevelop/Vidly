@@ -14,51 +14,36 @@ connection.query('USE ' + dbconfig.database);
 
 exports.getVideos = function(req, res) { 
 
-    if(req.params.searchText != 'null') { console.log('params');
-        connection.query('SELECT * FROM uploads WHERE keywords LIKE "'+"%"+req.params.searchText+"%"+'" OR description LIKE "'+"%"+req.params.searchText+"%"+'" AND isDelete=0 AND nsfw=0', function(err, response) {
-            console.log('err', err, 'response', response);
-            if(response != undefined) {
-                return res.send({
-                    result : response
-                });
-            }else {
-                return res.send({
-                    message: 'Sorry! No result Found.'
-                });
-            }
-        });
-    }else {
+    //SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select isReddit from users where id=u.userId) as isReddit, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u  where u.state='finished' and isPrivate != 1 and nsfw=0 and isDelete=0 and Active=1
 
-//SELECT *, (select count(count) from likes l where l.video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes li  where li.video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select isReddit from users where id=u.userId) as isReddit, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u  where u.state='finished' and isPrivate != 1 and nsfw=0 and isDelete=0 and Active=1
         //connection.query('SELECT * FROM uploads WHERE state = "finished"', function(err, media) {
-        var query = "SELECT u.*,ur.isDelete as delete1, (select count(count) from likes where video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select isReddit from users where id=u.userId) as isReddit, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u left join users ur on u.userId=ur.id where u.isDelete=0 and Active=1 and u.state='finished' and isPrivate!=1 and u.nsfw=0" ;
-          //console.log('query not in session', query);
-          connection.query(query, function(err, media) {
+    var query = "SELECT u.*,ur.isDelete as delete1, (select count(count) from likes where video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select isReddit from users where id=u.userId) as isReddit, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u left join users ur on u.userId=ur.id where u.isDelete=0 and Active=1 and u.state='finished' and isPrivate!=1 and u.nsfw=0" ;
+      //console.log('query not in session', query);
+      connection.query(query, function(err, media) {
 
-            if (!err) {
-                if (req.session.user && req.session.user.is_nsfw==1) { 
-                    query = "SELECT u.*,ur.isDelete as delete1, (select count(count) from likes where video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select isReddit from users where id=u.userId) as isReddit, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u left join users ur on u.userId=ur.id where u.isDelete=0 and Active=1 and u.state='finished' and isPrivate!=1 and u.nsfw=1";
-                    connection.query(query, function(err, media1) {
+        if (!err) {
+            if (req.session.user && req.session.user.is_nsfw==1) { 
+                query = "SELECT u.*,ur.isDelete as delete1, (select count(count) from likes where video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select isReddit from users where id=u.userId) as isReddit, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u left join users ur on u.userId=ur.id where u.isDelete=0 and Active=1 and u.state='finished' and isPrivate!=1 and u.nsfw=1";
+                connection.query(query, function(err, media1) {
 
-                        var total = media.concat(media1);
-                        if (media1 != null) {
-                            return res.status(200).json({
-                                "total": total,
-                            });
-                        }
-                    })
-                } else {
-                    return res.status(200).json({
-                        "total": media,
-                    });
-                }
+                    var total = media.concat(media1);
+                    if (media1 != null) {
+                        return res.status(200).json({
+                            "total": total,
+                        });
+                    }
+                })
             } else {
-                return res.status(204).json({
-                    message: "No Result found"
+                return res.status(200).json({
+                    "total": media,
                 });
             }
-        });
-    }
+        } else {
+            return res.status(204).json({
+                message: "No Result found"
+            });
+        }
+    });
 };
 
 exports.allUserVedioAndInfo = function(req, res) {
@@ -93,18 +78,14 @@ exports.allUserVedioAndInfo = function(req, res) {
                 if (!err) {
                       query = "SELECT *,(select count(count) from likes where video_id=u.id and count=1) as likecount,(select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikecount, (select username from users where id=u.userId) as user, (select count(view_count) from views where video_id=u.v_id) as viewscount  FROM uploads u WHERE isPrivate != 1 and u.userId=" + userid[0].id + "";
                      getuserdata(query, function(media) {
-           return res.status(200).send(media);
-        });
+                    return res.status(200).send(media);
+                });
                 } else {
                   
 
                 }
-            })
-
-
-        
+            });   
     }
-
 }
 
  function getuserdata(query, callback) {
@@ -264,10 +245,12 @@ exports.parentNodeList = function(req, res) {
     });
 }
 
+
 exports.search = function(req, res) {
     console.log('req.body', req.body);
     if(req.body != undefined && req.session.user && req.session.user.is_nsfw==1) {
-        connection.query('SELECT * FROM uploads WHERE keywords LIKE "'+"%"+req.body.searchText+"%"+'" OR description LIKE "'+"%"+req.body.searchText+"%"+'" AND isDelete=0 AND nsfw=1 AND state=finished', function(err, response) {
+
+        connection.query('SELECT DISTINCT u.*,ur.isDelete as delete1, (select count(count) from likes where video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select isReddit from users where id=u.userId) as isReddit, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u LEFT OUTER JOIN users ur ON u.userId=ur.id WHERE u.keywords LIKE "'+"%"+req.body.searchText+"%"+'" OR u.description LIKE "'+"%"+req.body.searchText+"%"+'" AND u.isDelete=0 and Active=1 and u.state="finished" and isPrivate!=1 and u.nsfw=1', function(err, response) {
             console.log('err', err, 'response', response);
             if(response != undefined) {
                 return res.send({
@@ -280,7 +263,7 @@ exports.search = function(req, res) {
             }
         });
     }else {
-        connection.query('SELECT * FROM uploads WHERE keywords LIKE "'+"%"+req.body.searchText+"%"+'" OR description LIKE "'+"%"+req.body.searchText+"%"+'" AND isDelete=0 AND nsfw=0 AND state=finished', function(err, response) {
+        connection.query('SELECT DISTINCT u.*,ur.isDelete as delete1, (select count(count) from likes where video_id=u.id and count=1) as likcount, (select count(dislike_count) from likes where video_id=u.id and dislike_count=1) as dislikcount, (select username from users where id=u.userId) as user, (select isReddit from users where id=u.userId) as isReddit, (select count(view_count) from views where video_id=u.v_id) as viewcount from uploads u LEFT OUTER JOIN users ur ON u.userId=ur.id WHERE u.keywords LIKE "'+"%"+req.body.searchText+"%"+'" OR u.description LIKE "'+"%"+req.body.searchText+"%"+'" AND u.isDelete=0 and Active=1 and u.state="finished" and isPrivate!=1 and u.nsfw=0', function(err, response) {
             console.log('err', err, 'response', response);
             if(response != undefined) {
                 return res.send({

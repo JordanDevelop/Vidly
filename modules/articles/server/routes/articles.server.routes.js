@@ -131,7 +131,7 @@ module.exports = function(app) {
     app.post('/search', articles.search);
 
     //video routes
-    app.route('/media/:searchText').get(articles.getVideos);
+    app.route('/media').get(articles.getVideos);
     app.route('/media/:id').get(articles.play);
     app.route('/allUserVedioAndInfo/:user').get(articles.allUserVedioAndInfo);
     app.route('/updateValue').post(articles.updatevalue);

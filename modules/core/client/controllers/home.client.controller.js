@@ -547,44 +547,64 @@ $scope.urlProtocol = window.location.protocol;
             });
         }
 
-        
+        $scope.textValue={};
+        $rootScope.$state = $state;
+        console.log('stateparams', $rootScope.$state.current.url);
+        if($rootScope.$state.current.url == '/upload') {
+            $rootScope.searchHit = true;
+        }
+        if($rootScope.$state.current.url == '/contact') {
+            $rootScope.searchHit = true;
+        }
         $scope.searchVideo = function(goHit) {
+            $rootScope.msg = '';
+            $rootScope.searchHit = false;
             if(goHit) {
-                $scope.searchText = '';
-                $('.search-open').fadeOut(500);
-                $('.search-btn').addClass('fa-search');
-                $('.search-btn').removeClass('fa-times');
-                $scope.searchHit = true;
-            }else {
-                $scope.searchHit = false;
+            $scope.textValue.searchText = $scope.searchText;
+            $rootScope.searchVal = $scope.textValue.searchText;
+            if($scope.searchText != undefined) {
+                $http.post('/search', $scope.textValue).success(function(response) {
+                    if(response != undefined && response.result.length != 0) {
+                        $scope.searchText = '';
+                        $('.search-open').fadeOut(500);
+                        $('.search-btn').addClass('fa-search');
+                        $('.search-btn').removeClass('fa-times');
+                        $rootScope.searchHit = true;
+                        $rootScope.searchResult = response.result;
+                        $state.go('home');
+                        console.log('$rootScope.searchResult', $rootScope.searchResult);
+                        // if($rootScope.searchResult.length) {
+                        //     var pagesShown = 1;
+                        //     var pageSize = 9;
+                        //     $scope.searchPaginationLimit = function() {
+                        //         return pageSize * pagesShown;
+                        //     };
+                        //     $scope.searchHasMoreItemsToShow = function() {
+                        //         return pagesShown < ($rootScope.searchResult.length / pageSize);
+                        //     };
+                        //     $scope.searchShowMoreItems = function() {
+                        //         pagesShown = pagesShown + 1;
+                        //     };
+                        // }
+
+
+                    }else {
+                        $scope.searchText = '';
+                        $('.search-open').fadeOut(500);
+                        $('.search-btn').addClass('fa-search');
+                        $('.search-btn').removeClass('fa-times');
+                        $rootScope.msg = 'Sorry! No Result Found for';
+                    }
+                });
             }
-            // $scope.textValue.searchText = $scope.searchText;
-            // console.log('$scope.textValue', $scope.textValue);
-            // if($scope.searchText != undefined) {
-            //     $http.post('/search', $scope.textValue).success(function(response) {
-            //         console.log('response', response);
-            //         if(response != undefined) {
-            //             $scope.searchResult = response.result;
-            //             console.log('$scope.searchResult', $scope.searchResult);
-            //         }
-            //     });
-            // }
+            }else {
+                $rootScope.searchHit = false;
+            }
         }
 
         
-        $scope.getVideos = function(goHit) {
-            if(goHit) {
-                $http.get('/media/'+$scope.searchText).success(function(response) {
-                $scope.searchText = '';
-                $('.search-open').fadeOut(500);
-                $('.search-btn').addClass('fa-search');
-                $('.search-btn').removeClass('fa-times');
-                    console.log('response', response);
-                });
-            }else {
-
-
-
+        $scope.getVideos = function() {
+          
             if(typeof $scope.currentUser != 'undefined' && $scope.currentUser.is_nsfw == 1){
                 $scope.Useris_nsfw = true;
             }
@@ -596,8 +616,7 @@ $scope.urlProtocol = window.location.protocol;
             $scope.jobsNsfw = [];
             $scope.mediaObj = {};
             $scope.media1Obj = {};
-            $http.get('/media/null').success(function(response, header, status, config) {
-               
+            $http.get('/media').success(function(response, header, status, config) {
                 if(response.total.length == 0) {
                     $scope.novedioFoundmsg_msg = false;
                         $scope.novedioFoundmsg = true;
@@ -707,7 +726,6 @@ $scope.urlProtocol = window.location.protocol;
 
                 console.log(err, header, status, config);
             });
-        }
         }
  
 
@@ -896,7 +914,7 @@ var refresh=window.localStorage.getItem("val");
 
  
     $scope.likeValue = {};
-    $scope.likeClick = function (id, index, value) {
+    $scope.likeClick = function (id, index, value) { console.log('id', id, 'index', index, 'value', value);
         if(!$scope.currentUser && !$scope.currentRedditUser) {
             $state.go('login');
         }else {
