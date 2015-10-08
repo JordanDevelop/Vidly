@@ -39,7 +39,7 @@
 
           <li data-type="dog" class="col-md-4 paginationclass" ng-repeat="vedio in particluarUserVedio | limitTo:pagination()"> 
          
-           <a class="thumbnail" id="dog1" id="job.id" class="view-media" ng-click="openVideo(vedio)">
+           <a class="thumbnail" id="dog1" id="vedio.id" class="view-media" ng-click="openVideo(vedio)">
                     <div class="thumb-img">
                      <img ng-src="{{vedio.thumbnail}}" tooltips tooltip-title="Play" tooltip-side="right">
                       <div class="you-tube-count">
@@ -70,10 +70,9 @@
                           <h3><strong class="download-icon"><a href="javascript:void(0);" ng-click="downloadLink(vedio)"><i class="fa fa-download" tooltips tooltip-title="Download" tooltip-side="top"></i></a></strong><i class="fa fa-eye" tooltips tooltip-title="Views" tooltip-side="top"></i><span>{{vedio.viewcount}}</span></h3> 
                           <div class="like-dislike">
 
-                            <button ng-click="likeClick(vedio.id, $index, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{$index}}">{{vedio.likcount}}</div></button>
-                            <button ng-click="likeClick(vedio.id, $index, 'dislike')" tooltips tooltip-title="Dislike" tooltip-side="top"><i class="fa fa-thumbs-down"></i><div id="dislike{{$index}}">{{vedio.dislikcount}}</div></button>
-                           <!-- <p id="msg{{$index}}">{{msg}}</p> -->
-
+                            <button ng-click="likeClick(vedio.id, $index, 'like')" tooltips tooltip-title="Like" tooltip-side="top"><i class="fa fa-thumbs-up"></i><div id="likeanchor{{vedio.id}}"  class="likecount{{vedio.id}}">{{vedio.likcount}}</div></button>
+                            <button ng-click="likeClick(vedio.id, $index, 'dislike')" tooltips tooltip-title="Dislike" tooltip-side="top"><i class="fa fa-thumbs-down"></i><div id="dislike{{vedio.id}}"  class="dislikecount{{vedio.id}}">{{vedio.dislikcount}}</div></button>
+                           
                           </div>
                         </div>
                       </div>
