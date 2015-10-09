@@ -338,34 +338,67 @@ $scope.urlProtocol = window.location.protocol;
             }
         });
 
-        $scope.uploadVideo = function() {
-            var desc = $("#description").val();
-            var length = desc.length;
-            var keywords = $("#keywords").val();
-            var keyLength = keywords.length;
-            var NFWS = '';
-            var Private = '';
-            if($('#nfws').is(":checked")){
-                NFWS = 1;
-            }else{
-                NFWS = 0;
-            }
-             if($('#check1').is(":checked")){
-                Private = 1;
-            }else{
-               Private = 0;
-            }
-            var validDescription = validateDesc(desc);
-            var validKeys = validateKey(keywords);
-            var isValidKeywords = validatekeywords(keywords);
-                if(!validDescription || !validKeys) {
-                    toastr.error('Request failed: Please use charaters only!');
-                    return false;
-                }else if(!isValidKeywords){
-                    toastr.error('Request Failed: You can enter maximum 4 keywords!');
-                    return false;  
-                }
-        }
+        // $scope.uploadVideo = function() {console.log('here');
+        //     var desc = $("#description").val();
+        //     var length = desc.length;
+        //     var keywords = $("#keywords").val();
+        //     var keyLength = keywords.length;
+        //     var NFWS = '';
+        //     var Private = '';
+        //     if($('#nfws').is(":checked")){
+        //         NFWS = 1;
+        //     }else{
+        //         NFWS = 0;
+        //     }
+        //      if($('#check1').is(":checked")){
+        //         Private = 1;
+        //     }else{
+        //        Private = 0;
+        //     }
+        //     var validDescription = validateDesc(desc);
+        //     var validKeys = validateKey(keywords);
+        //     var isValidKeywords = validatekeywords(keywords);
+        //         if(!validDescription || !validKeys) {
+        //             toastr.error('Request failed: Please use charaters only!');
+        //             return false;
+        //         }else if(!isValidKeywords){
+        //             toastr.error('Request Failed: You can enter maximum 4 keywords!');
+        //             return false;  
+        //         }else {
+        //             if (length >= 5 && desc != null) {
+        //                 filepicker.pick(function(FPFile) {
+        //                     $('#pick').addClass('disabled');
+        //                     var videoSrc = FPFile.url;
+        //                     var request_body = {
+        //                         input_file: videoSrc,
+        //                         channel: personalChannel
+        //                     };
+        //                     $.post('/job', request_body, function(data) {
+        //                         $('#pick').removeClass('disabled');
+        //                         var saveObj = {
+        //                             mediaId: data.internal_record,
+        //                             isPrivate: Private,
+        //                             description: desc,
+        //                             keywords:keywords,
+        //                             NFWS : NFWS
+        //                         }
+                               
+        //                         $('#check1').attr('checked', false);
+        //                         $('#nfws').attr('checked', false);
+        //                         $("#description").val("");
+        //                         $("#keywords").val("");
+        //                         $.post('/upload', saveObj, function(response) {
+                                    
+        //                         });
+        //                     });
+        //                 }, function(FPError) {
+        //                     console.log(FPError.toString());
+        //                 });
+        //             } else {
+        //                 toastr.error('Request Failed: Give Some minimum 5 chracters Description for Your File to Upload');
+        //             }
+        //         }
+        // }
 
         $scope.upload = function(e) {
             if($scope.urlProtocol == 'http:') {
