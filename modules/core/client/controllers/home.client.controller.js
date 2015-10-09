@@ -173,7 +173,6 @@ $scope.urlProtocol = window.location.protocol;
             } else if ((!$scope.currentUser || $scope.currentUser == '') && !$scope.CurrentUser) {
 
                 $http.get('/reddituser').success(function(response) {
-                    console.log('response', response.alldata);
                     if(response.alldata != undefined){
                         $scope.currentRedditUser = response.alldata;
                         var User = {
@@ -338,6 +337,68 @@ $scope.urlProtocol = window.location.protocol;
                 checked = false;
             }
         });
+
+        // $scope.uploadVideo = function() {console.log('here');
+        //     var desc = $("#description").val();
+        //     var length = desc.length;
+        //     var keywords = $("#keywords").val();
+        //     var keyLength = keywords.length;
+        //     var NFWS = '';
+        //     var Private = '';
+        //     if($('#nfws').is(":checked")){
+        //         NFWS = 1;
+        //     }else{
+        //         NFWS = 0;
+        //     }
+        //      if($('#check1').is(":checked")){
+        //         Private = 1;
+        //     }else{
+        //        Private = 0;
+        //     }
+        //     var validDescription = validateDesc(desc);
+        //     var validKeys = validateKey(keywords);
+        //     var isValidKeywords = validatekeywords(keywords);
+        //         if(!validDescription || !validKeys) {
+        //             toastr.error('Request failed: Please use charaters only!');
+        //             return false;
+        //         }else if(!isValidKeywords){
+        //             toastr.error('Request Failed: You can enter maximum 4 keywords!');
+        //             return false;  
+        //         }else {
+        //             if (length >= 5 && desc != null) {
+        //                 filepicker.pick(function(FPFile) {
+        //                     $('#pick').addClass('disabled');
+        //                     var videoSrc = FPFile.url;
+        //                     var request_body = {
+        //                         input_file: videoSrc,
+        //                         channel: personalChannel
+        //                     };
+        //                     $.post('/job', request_body, function(data) {
+        //                         $('#pick').removeClass('disabled');
+        //                         var saveObj = {
+        //                             mediaId: data.internal_record,
+        //                             isPrivate: Private,
+        //                             description: desc,
+        //                             keywords:keywords,
+        //                             NFWS : NFWS
+        //                         }
+                               
+        //                         $('#check1').attr('checked', false);
+        //                         $('#nfws').attr('checked', false);
+        //                         $("#description").val("");
+        //                         $("#keywords").val("");
+        //                         $.post('/upload', saveObj, function(response) {
+                                    
+        //                         });
+        //                     });
+        //                 }, function(FPError) {
+        //                     console.log(FPError.toString());
+        //                 });
+        //             } else {
+        //                 toastr.error('Request Failed: Give Some minimum 5 chracters Description for Your File to Upload');
+        //             }
+        //         }
+        // }
 
         $scope.upload = function(e) {
             if($scope.urlProtocol == 'http:') {
@@ -548,8 +609,13 @@ $scope.urlProtocol = window.location.protocol;
         }
 
         $scope.textValue={};
-        $rootScope.$state = $state;
-        console.log('stateparams', $rootScope.$state.current.url);
+        $scope.searchVideo = function(goHit) {
+            $rootScope.msg = '';
+            $rootScope.searchHit = false;
+            $rootScope.searchNsfw = [];
+            $rootScope.searchResult = [];
+            if(goHit) {
+                $rootScope.$state = $state;
         if($rootScope.$state.current.url == '/upload') {
             $rootScope.searchHit = true;
             $scope.icon = false;
@@ -557,10 +623,6 @@ $scope.urlProtocol = window.location.protocol;
             $rootScope.searchHit = true;
             $scope.icon = false;
         }
-        $scope.searchVideo = function(goHit) {
-            $rootScope.msg = '';
-            $rootScope.searchHit = false;
-            if(goHit) {
             $scope.textValue.searchText = $scope.searchText;
             $rootScope.searchVal = $scope.textValue.searchText;
             if($scope.searchText != undefined) {
@@ -572,22 +634,24 @@ $scope.urlProtocol = window.location.protocol;
                         $('.search-btn').removeClass('fa-times');
                         $rootScope.searchHit = true;
                         $scope.icon = true;
+                        
                         $rootScope.searchResult = response.result;
                         $state.go('home');
                         console.log('$rootScope.searchResult', $rootScope.searchResult);
-                        // if($rootScope.searchResult.length) {
-                        //     var pagesShown = 1;
-                        //     var pageSize = 9;
-                        //     $scope.searchPaginationLimit = function() {
-                        //         return pageSize * pagesShown;
-                        //     };
-                        //     $scope.searchHasMoreItemsToShow = function() {
-                        //         return pagesShown < ($rootScope.searchResult.length / pageSize);
-                        //     };
-                        //     $scope.searchShowMoreItems = function() {
-                        //         pagesShown = pagesShown + 1;
-                        //     };
-                        // }
+
+                        if($rootScope.searchResult.length) {
+                            var pagesShown = 1;
+                            var pageSize = 3;
+                            $scope.searchPaginationLimit = function() {
+                                return pageSize * pagesShown;
+                            };
+                            $scope.searchHasMoreItemsToShow = function() {
+                                return pagesShown < ($rootScope.searchResult.length / pageSize);
+                            };
+                            $scope.searchShowMoreItems = function() {
+                                pagesShown = pagesShown + 1;
+                            };
+                        }
 
 
                     }else {
@@ -919,7 +983,7 @@ var refresh=window.localStorage.getItem("val");
 
  
     $scope.likeValue = {};
-    $scope.likeClick = function (id, index, value) { console.log('id', id, 'index', index, 'value', value);
+    $scope.likeClick = function (id, index, value) { 
         if(!$scope.currentUser && !$scope.currentRedditUser) {
             $state.go('login');
         }else {
@@ -935,12 +999,15 @@ var refresh=window.localStorage.getItem("val");
                         toastr.info('Info: You have already review this video');
                     }
                     if (response.likecount != undefined) {
-                        var count = $("#likeanchor" + index).text();
+
+                       
+                        var count = $("#likeanchor" + id).text();
+                        
                         $scope.likeCount = response.likecount[0].likecount;
-
+                        
                         count = parseInt(count) + parseInt($scope.likeCount);
-
-                        $("#likeanchor"+index).text(count);
+  
+                        $(".likecount"+id).text(count);
                     }
                 }else {
                     if(response.message) {
@@ -948,11 +1015,11 @@ var refresh=window.localStorage.getItem("val");
                         toastr.info('Info: You have already review this video');
                     }
                     if (response.dislikecount != undefined) {
-                        var count = $("#dislike" + index).text();
+                        var count = $("#dislike" + id).text();
                         $scope.dislikeLikeCount = response.dislikecount[0].dislike;
                         count = parseInt(count) + parseInt($scope.dislikeLikeCount);
 
-                        $("#dislike"+index).text(count);
+                        $(".dislikecount"+id).text(count);
                     }
 
                 }

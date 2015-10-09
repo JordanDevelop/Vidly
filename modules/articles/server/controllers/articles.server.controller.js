@@ -91,9 +91,7 @@ exports.allUserVedioAndInfo = function(req, res) {
  function getuserdata(query, callback) {
     
     connection.query(query, function(err, media) {
-       
         if (!err && media) {
-
             callback(media);
         } else {
             'Media does not exists!'
