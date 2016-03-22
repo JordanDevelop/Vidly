@@ -2,14 +2,14 @@
  module.exports = {
      'connection': {
             'host': '10.0.10.193',
-        'user': 'VV_JyIThFn',
-   'password': 'KU6caDkvZ7B74#'
+        'user': 'DB_USER',
+   'password': 'DB_PASSWORD'
 
  		// 'host': 'localhost',
    //      'user': 'root',
  		// 'password': ''
     },
-     'database': 'vidlydb713',
+     'database': 'DB_USER',
      //'database': 'vidly',
     'port':61337,
 
