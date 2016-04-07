@@ -170,18 +170,18 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `IsDelete`, `isActive`, `is_nsfw`, `isReddit`, `makeAdmin`, `random_no`, `created`, `updatedAt`) VALUES
-(43, 'shweta21', 'shwetas@mastersoftwaresolutions.com', '3346319e7aba1929137a976bb9abfd06', 'user', 1, 1, 1, 0, 0, '', '2015-09-07', '2015-10-01 04:44:04'),
+(43, 'shweta21', 'shwetas@mastersoftwaresolutions.com', '', 'user', 1, 1, 1, 0, 0, '', '2015-09-07', '2015-10-01 04:44:04'),
 (78, 'mssavnishkumar', '', '', 'user', 0, 1, 1, 1, 0, '', '2015-09-03', '2015-09-30 12:38:26'),
-(101, 'shweta', 'shwetasaluja@mastersoftwaresolutions.com', '3346319e7aba1929137a976bb9abfd06', 'user', 1, 1, 0, 0, 0, 'bV2K2', '2015-09-07', '2015-10-01 04:47:38'),
-(103, 'shivi', 'shivi@gmail.com', '2ad1ebcb3dc247474db9c8f8fecf0c55', 'user', 1, 0, 0, 0, 0, 'FNzFx', '2015-09-07', '2015-09-29 13:02:19'),
-(107, 'Vikas', 'vikasyadav@mastersoftwaresolutions.com', 'e10adc3949ba59abbe56e057f20f883e', 'user', 1, 1, 0, 0, 0, '01jKw', '2015-09-07', '2015-09-30 06:06:52'),
+(101, 'shweta', 'shwetasaluja@mastersoftwaresolutions.com', '', 'user', 1, 1, 0, 0, 0, 'bV2K2', '2015-09-07', '2015-10-01 04:47:38'),
+(103, 'shivi', 'shivi@gmail.com', '', 'user', 1, 0, 0, 0, 0, 'FNzFx', '2015-09-07', '2015-09-29 13:02:19'),
+(107, 'Vikas', 'vikasyadav@mastersoftwaresolutions.com', '', 'user', 1, 1, 0, 0, 0, '01jKw', '2015-09-07', '2015-09-30 06:06:52'),
 (125, 'DontFindMe_', '', '', 'user', 0, 1, 0, 1, 0, '', '0000-00-00', '2015-09-10 12:59:23'),
-(126, 'Jordan', 'jordansimps@me.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'user', 0, 0, 0, 0, 0, 'GVJph', '2015-09-10', '2015-09-30 12:39:31'),
-(150, 'megha31', 'meghathareja@mastersoftwaresolutions.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin', 0, 1, 0, 0, 0, 'CDuMu', '2015-09-21', '2015-10-01 13:23:10'),
-(151, 'mssavnishkumar', 'avnishkumar@mastersoftwaresolutions.com', '61cc0e405f4b518d264c089ac8b642ef', 'user', 0, 1, 0, 0, 0, 'HsvMN', '2015-09-22', '2015-09-22 13:35:57'),
-(153, 'Admin', 'youremailid@email.com', '8d7a5ff0\r\n6950ef379391f08c31a8367f', 'admin', 0, 1, 1, 0, 0, 'n1HzO', '0000-00-00', '2015-09-30 11:31:53'),
-(166, 'shweta21', 'shwetasaluja@mastersoftwaresolutions.com', '61cc0e405f4b518d264c089ac8b642ef', 'user', 0, 1, 0, 0, 0, 'DXNpE', '2015-10-01', '2015-10-01 09:49:46'),
-(167, 'shailendra', 'shailendra@mastersoftwaresolutions.com', '61cc0e405f4b518d264c089ac8b642ef', 'user', 0, 1, 0, 0, 0, 'ztIE2', '2015-10-01', '2015-10-01 12:46:31');
+(126, 'Jordan', 'jordansimps@me.com', '', 'user', 0, 0, 0, 0, 0, 'GVJph', '2015-09-10', '2015-09-30 12:39:31'),
+(150, 'megha31', 'meghathareja@mastersoftwaresolutions.com', '', 'admin', 0, 1, 0, 0, 0, 'CDuMu', '2015-09-21', '2015-10-01 13:23:10'),
+(151, 'mssavnishkumar', 'avnishkumar@mastersoftwaresolutions.com', '', 'user', 0, 1, 0, 0, 0, 'HsvMN', '2015-09-22', '2015-09-22 13:35:57'),
+(153, 'Admin', 'youremailid@email.com', '8d7a5ff0\r\', 'admin', 0, 1, 1, 0, 0, 'n1HzO', '0000-00-00', '2015-09-30 11:31:53'),
+(166, 'shweta21', 'shwetasaluja@mastersoftwaresolutions.com', '', 'user', 0, 1, 0, 0, 0, 'DXNpE', '2015-10-01', '2015-10-01 09:49:46'),
+(167, 'shailendra', 'shailendra@mastersoftwaresolutions.com', '', 'user', 0, 1, 0, 0, 0, 'ztIE2', '2015-10-01', '2015-10-01 12:46:31');
 
 -- --------------------------------------------------------
 
